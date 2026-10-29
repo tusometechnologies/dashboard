@@ -263,6 +263,7 @@
     const r = current();
     const rows = regionRows().sort((a, b) => d3.descending(a.learners, b.learners));
     if (!rows.length) return empty(node, `Region figures for ${r ? r.label : 'this month'} have not been imported yet.`);
+    const noSchools = rows.every((d) => !d.schools); // no school list in the report: do not show 0 schools
     const W = Math.max(300, node.clientWidth), rowH = 32, H = rows.length * rowH + 6;
     const svg = svgIn(node, W, H, 'Learners by region');
     const probe = svg.selectAll('text.p').data(rows).join('text').attr('class', 'p strong').text((d) => d.region);
@@ -274,7 +275,7 @@
       svg.append('text').attr('x', left - 10).attr('y', y0 + rowH / 2).attr('dy', '0.35em').attr('text-anchor', 'end').attr('class', 'strong').text(d.region);
       const bar = svg.append('rect').attr('x', left).attr('y', y0 + 8).attr('width', Math.max(2, x(d.learners) - left)).attr('height', rowH - 16).attr('rx', 3)
         .attr('fill', i === 0 ? css('--c0') : css('--mutedbar'));
-      const schools = d.schools == null ? '' : ` · ${fmt(d.schools)} ${d.schools === 1 ? 'school' : 'schools'}`;
+      const schools = d.schools == null || noSchools ? '' : ` · ${fmt(d.schools)} ${d.schools === 1 ? 'school' : 'schools'}`;
       hover(bar, d.region, `${fmt(d.learners)} learners${schools}`);
       const t = svg.append('text').attr('x', Math.max(left + 2, x(d.learners)) + 6).attr('y', y0 + rowH / 2).attr('dy', '0.35em');
       t.append('tspan').attr('class', 'strong').text(fmt(d.learners));

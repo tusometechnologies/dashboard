@@ -52,6 +52,8 @@ do, set `source` to `entered by hand` and say so in the commit message.
 - Keep the TUSOME brand colours in `assets/styles.css` (purple #935DFB, blue #1CA8FF, ink #111111,
   light ground #F8F9FC). Public tagline: "Powering African Minds".
 - Write in clear international English. No promotional claims on the page.
+- July 2026 institutions (8) were entered by hand because the report's school list was empty. Re-importing
+  the July report resets it to 0: re-enter 8 and keep the note, or ask the user.
 
 ## First-time tasks (once)
 
