@@ -63,7 +63,7 @@ REGION_KEYS["daressallam"] = "Dar es Salaam"
 def region_name(v):
     text = re.sub(r"\s+", " ", str(v or "")).strip()
     if not text:
-        return "Not recorded"
+        return "Dar es Salaam"  # TUSOME's instruction: records with no region are counted in Dar es Salaam
     return REGION_KEYS.get(re.sub(r"[^a-z]", "", text.lower()), text.title())
 
 

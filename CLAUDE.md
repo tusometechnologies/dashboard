@@ -74,6 +74,8 @@ do, set `source` to `entered by hand` and say so in the commit message.
   level and region breakdowns come from the list, so they add up to less than learners reached.
 - December 2025: one learner has no gender recorded; the user asked to count them as female (girls 863,
   entered by hand). Re-importing December resets this to 862: re-enter 863.
+- Learners (and schools) with no region recorded are counted in Dar es Salaam (TUSOME's instruction);
+  `region_name()` in `add_month.py` does this.
 - "nursery" counts as Pre-primary. Region spellings are merged in `region_name()` in `add_month.py`.
 - Narrative reports (.docx) in Drive: names with `_2026` and "TUSOME June.docx" are 2026; "April (2)",
   "May (2)", "June (2)", July–Dec are 2025; Jan–May (no suffix) are 2026. April–July 2025 reports have no
