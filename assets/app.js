@@ -63,9 +63,8 @@
     document.querySelector('.take').textContent = 'The data files could not be loaded. If you opened index.html directly from your computer, run a local server instead (see README).';
   });
 
-  // All months: learner counts are the monthly reports added up. Learner IDs restart each month, so a
-  // learner reached in several months is counted in each. Institutions and educators are the highest
-  // monthly figure, because adding them up would count the same schools and educators again.
+  // All months: learner counts are the monthly reports added up (each month's learners are different
+  // learners). Institutions and educators are the highest monthly figure: the same ones take part each month.
   function totals() {
     const sum = (k) => (S.monthly.some((r) => r[k] != null) ? d3.sum(S.monthly, (r) => r[k]) : null);
     const t = { period: ALL, label: 'all months', months: S.monthly.length, prevRow: null, note: '', highlight: '', priority: '' };
@@ -96,11 +95,10 @@
     document.getElementById('month').value = r.period;
     const tk = document.querySelector('.take');
     if (isAll()) {
-      tk.replaceChildren('Across ', bold(`${r.months} monthly reports`), ` (${document.getElementById('range').textContent}), TABASAM recorded `,
-        bold(fmt(r.learners)), ' learners reached, and ', bold(`${r.improved_pct}%`), ' of them were marked as improved. Up to ',
-        bold(fmt(r.institutions)), ' learning institutions took part in a single month.');
+      tk.replaceChildren('Across ', bold(`${r.months} monthly reports`), ` (${document.getElementById('range').textContent}), TABASAM reached `,
+        bold(fmt(r.learners)), ' learners in ', bold(fmt(r.institutions)), ' learning institutions, and ', bold(`${r.improved_pct}%`),
+        ' of them were marked as improved.');
     } else if (tk.innerHTML !== take) tk.innerHTML = take;
-    document.querySelectorAll('.tile .basis').forEach((el) => { el.hidden = !isAll(); });
     document.querySelectorAll('[data-k]').forEach((el) => {
       const k = el.dataset.k;
       let v;
@@ -143,7 +141,7 @@
   }
   function regionRows() {
     if (!isAll()) return S.regions.filter((x) => x.period === S.period);
-    return d3.rollups(S.regions, (v) => ({ learners: d3.sum(v, (x) => x.learners), schools: d3.max(v, (x) => x.schools) }), (x) => x.region)
+    return d3.rollups(S.regions, (v) => ({ learners: d3.sum(v, (x) => x.learners) }), (x) => x.region)
       .map(([region, v]) => ({ region, ...v }));
   }
 
@@ -209,20 +207,17 @@
       svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(t)).attr('y2', y(t)).attr('stroke', css(t === 0 ? '--axis' : '--grid'));
       svg.append('text').attr('x', m.l - 6).attr('y', y(t)).attr('dy', '0.35em').attr('text-anchor', 'end').text(`${t}%`);
     });
-    const flagged = (r) => Boolean(r.note);
     const line = d3.line().x((r) => x(r.period)).y((r) => y(r.improved_pct));
     for (let i = 1; i < rows.length; i++) {
-      const a = rows[i - 1], b = rows[i], dashed = flagged(a) || flagged(b);
-      svg.append('path').attr('d', line([a, b])).attr('fill', 'none')
-        .attr('stroke', dashed ? css('--mutedbar') : css('--c1')).attr('stroke-width', 2)
-        .attr('stroke-linecap', 'round').attr('stroke-dasharray', dashed ? '4 4' : null);
+      svg.append('path').attr('d', line([rows[i - 1], rows[i]])).attr('fill', 'none')
+        .attr('stroke', css('--c1')).attr('stroke-width', 2).attr('stroke-linecap', 'round');
     }
     rows.forEach((r) => {
       const on = r.period === S.period, cx = x(r.period), cy = y(r.improved_pct);
       const c = svg.append('circle').attr('cx', cx).attr('cy', cy).attr('r', on ? 5.5 : 3.8)
-        .attr('fill', flagged(r) ? css('--warn') : css('--c1')).style('cursor', 'pointer')
+        .attr('fill', css('--c1')).style('cursor', 'pointer')
         .on('click', () => pick(r.period));
-      hover(c, r.label, `${r.improved_pct}% marked as improved (${fmt(r.improved)} of ${fmt(r.learners)})${r.note ? ' · ' + r.note : ''}`);
+      hover(c, r.label, `${r.improved_pct}% marked as improved (${fmt(r.improved)} of ${fmt(r.learners)})`);
       svg.append('text').attr('x', cx).attr('y', cy - 11).attr('text-anchor', 'middle').attr('class', on ? 'strong' : null).text(`${r.improved_pct}%`);
       svg.append('text').attr('x', cx).attr('y', H - 8).attr('text-anchor', 'middle').attr('class', on ? 'strong' : null).text(short(r.label));
     });
@@ -259,7 +254,8 @@
     const r = current();
     const rows = regionRows().sort((a, b) => d3.descending(a.learners, b.learners));
     if (!rows.length) return empty(node, `Region figures for ${r ? r.label : 'this month'} have not been imported yet.`);
-    const noSchools = rows.every((d) => !d.schools); // no school list in the report: do not show 0 schools
+    // Schools are shown for a single month only; across months they would not add up to the institutions figure.
+    const noSchools = isAll() || rows.every((d) => !d.schools);
     const W = Math.max(300, node.clientWidth), rowH = 32, H = rows.length * rowH + 6;
     const svg = svgIn(node, W, H, 'Learners by region');
     const probe = svg.selectAll('text.p').data(rows).join('text').attr('class', 'p strong').text((d) => d.region);

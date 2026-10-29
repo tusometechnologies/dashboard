@@ -10,7 +10,7 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
 - `assets/vendor/d3.v7.9.0.min.js`: charting library, kept in the repo so the site has no CDN dependency.
 - `data/monthly.csv`: one row per month (`period` = YYYY-MM). Columns: label, learners, girls, boys, pwd,
   improved, improved_girls, improved_boys, completed, institutions, educators, source, note, highlight,
-  priority. `note` is a caveat about the figures, shown when hovering the month in the improved-share chart. `highlight` is one thing that stood out in that
+  priority. `note` is kept empty: the site is public and shows no notes. Record caveats in the commit message instead. `highlight` is one thing that stood out in that
   month's narrative report (purple). `priority` is the main priority for the next month, from the report's
   "Priority Activities for the Next Month" section (blue). Highlights and priorities never flag a month in the charts.
 - `data/by_level.csv`: period, level (Pre-primary / Primary / Secondary), reached, improved.
@@ -27,7 +27,6 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
    Show the user the figures and every `!` warning. Ask them to confirm the figures match the report
    they submitted, or to explain any difference, before writing.
 3. Write: `python3 scripts/add_month.py reports/TUSOME_November_2026.xlsx --write`
-   Add `--note "..."` when the user wants a note shown for that month (for example a known reporting issue).
    Add `--highlight "..."` with one thing that stood out in that month's narrative report (the .docx), and
    `--priority "..."` with the main priority for the next month from the same report. Propose both to the user first. Keep it to one factual sentence, with no figures that could disagree with
    the dashboard. Leave out internal matters (audits, finances, contracts) and unsigned partnerships or MoUs.
@@ -52,9 +51,11 @@ do, set `source` to `entered by hand` and say so in the commit message.
 - Keep the page free of hard-coded numbers: every figure must come from `data/`.
 - Keep the TUSOME brand colours in `assets/styles.css` (purple #935DFB, blue #1CA8FF, ink #111111,
   light ground #F8F9FC). Public tagline: "Powering African Minds".
-- Write in clear international English. No promotional claims on the page.
+- Write in clear international English. No promotional claims on the page. No notes or caveats on the page.
+- Each month's learners are different learners (TUSOME confirmed): the all-months view adds months up and
+  counts each learner once. Institutions and educators use the highest monthly figure.
 - July 2026 institutions (8) were entered by hand because the report's school list was empty. Re-importing
-  the July report resets it to 0: re-enter 8 and keep the note, or ask the user.
+  the July report resets it to 0: re-enter 8, or ask the user.
 
 ## First-time tasks (once)
 

@@ -8,7 +8,7 @@ Usage:
 
 Options:
     --period YYYY-MM   use this month instead of the one in the learner list
-    --note "text"      attach a note to the month (shown on the dashboard)
+    --note "text"      internal note kept in monthly.csv (not shown on the page)
     --highlight "text" one thing that stood out in that month's narrative report (shown on the dashboard)
     --priority "text"  the main priority for the next month from the narrative report (shown on the dashboard)
 
@@ -275,7 +275,7 @@ def main():
     ap.add_argument("files", nargs="+", type=Path)
     ap.add_argument("--write", action="store_true", help="update data/*.csv (default: preview only)")
     ap.add_argument("--period", help="YYYY-MM, overrides the month in the learner list (one file only)")
-    ap.add_argument("--note", default="", help="note shown on the dashboard for this month")
+    ap.add_argument("--note", default="", help="internal note kept in monthly.csv (not shown on the page)")
     ap.add_argument("--highlight", default="", help="highlight from the narrative report, shown for this month")
     ap.add_argument("--priority", default="", help="next-month priority from the narrative report, shown for this month")
     a = ap.parse_args()

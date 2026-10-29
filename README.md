@@ -42,14 +42,12 @@ git add data && git commit -m "Add November 2026 report" && git push
 
 ## What is on the page
 
-- Headline: the selected month's learners, institutions and improved share, one highlight from that
-  month's narrative report, and a note when a month
-  has a known reporting issue.
+- Headline: learners, institutions and improved share for all months or the selected month, with that
+  month's highlight and next-month priority from the narrative report.
 - Six headline figures with the change from the previous month.
 - Learners reached each month by level; learners and schools by region for the selected month.
 - Share marked as improved by month; improved share by level and by gender for the selected month.
 - Downloadable CSVs and definitions.
 
-The page opens on **All months** (learner figures added up across the monthly reports; institutions and
-educators are the highest monthly figure). Pick a month from the menu, or click a bar or point, to see that month. Each month has its own link, for example
+The page opens on **All months** (totals across the monthly reports; each learner is counted once). Pick a month from the menu, or click a bar or point, to see that month. Each month has its own link, for example
 `dashboard.tusome.africa/#2026-10`.
