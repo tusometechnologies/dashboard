@@ -13,6 +13,8 @@
   --c0: #1CA8FF;
   --c1: #935DFB;
   --c2: #5A43C9;
+  --c3: #0B5E8E;
+  --c4: #B8A4F0;
   --mutedbar: #B8BCCB;
   --ok: #1E8E5A;
   --bad: #C8423B;
@@ -35,6 +37,8 @@
     --c0: #4CBBFF;
     --c1: #A97BFF;
     --c2: #7D6BE6;
+    --c3: #2C8FD6;
+    --c4: #CDBBFF;
     --mutedbar: #4A4A66;
     --ok: #4CC38A;
     --bad: #F07A72;
@@ -91,6 +95,7 @@ h1 { font-family: var(--display); font-weight: 500; font-size: clamp(26px, 4vw, 
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
 .sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
 .sw-0 { background: var(--c0); } .sw-1 { background: var(--c1); } .sw-2 { background: var(--c2); }
+.sw-3 { background: var(--c3); } .sw-4 { background: var(--c4); }
 
 .chart { position: relative; min-height: 240px; }
 .chart.short { min-height: 100px; }

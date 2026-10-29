@@ -13,7 +13,7 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
   priority. `note` is kept empty: the site is public and shows no notes. Record caveats in the commit message instead. `highlight` is one thing that stood out in that
   month's narrative report (purple). `priority` is the main priority for the next month, from the report's
   "Priority Activities for the Next Month" section (blue). Highlights and priorities never flag a month in the charts.
-- `data/by_level.csv`: period, level (Pre-primary / Primary / Secondary), reached, improved.
+- `data/by_level.csv`: period, level (Pre-primary / Primary / Secondary / Tertiary / Professional), reached, improved.
 - `data/regions.csv`: period, region, learners, schools.
 - `data/meta.json`: `{"updated": "YYYY-MM-DD"}`, shown in the footer.
 - `scripts/add_month.py`: reads a monthly Sahara report (.xlsx) and updates the three CSVs and meta.json.
@@ -57,17 +57,29 @@ do, set `source` to `entered by hand` and say so in the commit message.
 - July 2026 institutions (8) were entered by hand because the report's school list was empty. Re-importing
   the July report resets it to 0: re-enter 8, or ask the user.
 
-## First-time tasks (once)
+## Data decisions (keep these on re-import)
 
-- Re-import the June–October 2026 reports from their learner lists:
-  `python3 scripts/add_month.py reports/*.xlsx` (preview), then `--write` once the user agrees.
-  The current data for those months is copied from each report's summary sheet (`source` =
-  `summary sheet (as submitted)`) and has known issues: June's improved and completed figures repeat
-  learners reached, and only October has a region breakdown. Re-importing gives every month a region
-  breakdown and replaces summary figures with counts from the lists. Expect some figures to change; show
-  the user every change before writing.
-- Done: the header uses a text wordmark in TUSOME brand colours (no official logo file was available).
-  If an official logo file is supplied, put it at `assets/logo.svg` and swap the wordmark span in `index.html`.
+- All 19 months (April 2025 to October 2026) are counted from the learner lists, not the summary sheets.
+  The summary sheets often differ (for example June 2026: 174 submitted, 168 in the list; several months
+  mark every learner improved). The user agreed to use the lists.
+- April–December 2025: every learner is "Too early to measure", so improved, improved_girls, improved_boys
+  and by-level improved are blank. The page computes improved share only over months with outcomes.
+- November 2025: the list also holds 150 records dated October 2025. Only November records are counted
+  (1,966; the summary sheet says 1,965). `add_month.py` drops records dated other months.
+- December 2025: one learner has no gender recorded; the user asked to count them as female (girls 863,
+  entered by hand). Re-importing December resets this to 862: re-enter 863.
+- "nursery" counts as Pre-primary. Region spellings are merged in `region_name()` in `add_month.py`.
+- Narrative reports (.docx) in Drive: names with `_2026` and "TUSOME June.docx" are 2026; "April (2)",
+  "May (2)", "June (2)", July–Dec are 2025; Jan–May (no suffix) are 2026. April–July 2025 reports have no
+  priority section, so those months have no priority.
+- Highlights mention Carnegie Mellon University as a research partner (an agreement exists per the October
+  2026 report). Do not name partners whose agreements are unsigned (for example Patandi Teachers College).
+
+## Open items
+
+- The header uses a text wordmark in TUSOME brand colours. If an official logo file is supplied, put it at
+  `assets/logo.svg` and swap the wordmark span in `index.html`.
+- `.vercelignore` keeps README.md, CLAUDE.md, scripts/ and reports/ off the public site. Keep it current.
 
 ## Local commands
 

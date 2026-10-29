@@ -1,0 +1,6 @@
+# Publish only the page and its data. Project notes, scripts and reports stay out of the public site.
+README.md
+CLAUDE.md
+scripts
+reports
+.gitignore

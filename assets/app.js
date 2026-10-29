@@ -4,10 +4,10 @@
  */
 (() => {
   const fmt = d3.format(',');
-  const LEVELS = ['Pre-primary', 'Primary', 'Secondary'];
+  const LEVELS = ['Pre-primary', 'Primary', 'Secondary', 'Tertiary', 'Professional'];
   const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
   const short = (label) => String(label).slice(0, 3);
-  const pct = (a, b) => (b > 0 ? Math.round((a / b) * 100) : null);
+  const pct = (a, b) => (a != null && b > 0 ? Math.round((a / b) * 100) : null);
   const tipEl = document.getElementById('tip');
   const ALL = 'all';
   const S = { monthly: [], levels: [], regions: [], period: ALL, total: null };
@@ -70,7 +70,12 @@
     const t = { period: ALL, label: 'all months', months: S.monthly.length, prevRow: null, note: '', highlight: '', priority: '' };
     ['learners', 'girls', 'boys', 'pwd', 'improved', 'improved_girls', 'improved_boys', 'completed'].forEach((k) => { t[k] = sum(k); });
     ['institutions', 'educators'].forEach((k) => { t[k] = d3.max(S.monthly, (r) => r[k]) ?? null; });
-    t.improved_pct = pct(t.improved, t.learners);
+    // Improved share counts only months in which learning outcomes were assessed.
+    const assessed = S.monthly.filter((r) => r.improved != null);
+    t.assessed = d3.sum(assessed, (r) => r.learners);
+    t.assessed_girls = d3.sum(assessed, (r) => r.girls);
+    t.assessed_boys = d3.sum(assessed, (r) => r.boys);
+    t.improved_pct = pct(t.improved, t.assessed);
     return t;
   }
 
@@ -87,7 +92,6 @@
 
   const isAll = () => S.period === ALL;
   const current = () => (isAll() ? S.total : S.monthly.find((r) => r.period === S.period));
-  const take = document.querySelector('.take').innerHTML;
 
   // ---------- text, tiles ----------
   function render() {
@@ -96,9 +100,16 @@
     const tk = document.querySelector('.take');
     if (isAll()) {
       tk.replaceChildren('Across ', bold(`${r.months} monthly reports`), ` (${document.getElementById('range').textContent}), TABASAM reached `,
-        bold(fmt(r.learners)), ' learners in ', bold(fmt(r.institutions)), ' learning institutions, and ', bold(`${r.improved_pct}%`),
-        ' of them were marked as improved.');
-    } else if (tk.innerHTML !== take) tk.innerHTML = take;
+        bold(fmt(r.learners)), ' learners. ', bold(`${r.improved_pct}%`), ' of learners assessed were marked as improved.');
+    } else {
+      tk.replaceChildren('In ', bold(r.label), ', TABASAM reached ', bold(fmt(r.learners)), ' learners in ', bold(fmt(r.institutions)),
+        ` learning ${r.institutions === 1 ? 'institution' : 'institutions'}`,
+        ...(r.improved_pct == null ? ['.'] : [', and ', bold(`${r.improved_pct}%`), ' of them were marked as improved.']));
+    }
+    document.querySelectorAll('h3[data-all]').forEach((h) => {
+      h.dataset.one = h.dataset.one || h.textContent;
+      h.textContent = isAll() ? h.dataset.all : h.dataset.one;
+    });
     document.querySelectorAll('[data-k]').forEach((el) => {
       const k = el.dataset.k;
       let v;
@@ -133,8 +144,9 @@
 
   // Level and region rows for the selected month, or added up across months for the all-months view.
   function levelRows() {
+    const assessed = new Set(S.monthly.filter((r) => r.improved != null).map((r) => r.period));
     const rows = isAll()
-      ? d3.rollups(S.levels, (v) => ({ reached: d3.sum(v, (x) => x.reached), improved: d3.sum(v, (x) => x.improved) }), (x) => x.level)
+      ? d3.rollups(S.levels.filter((x) => assessed.has(x.period)), (v) => ({ reached: d3.sum(v, (x) => x.reached), improved: d3.sum(v, (x) => x.improved) }), (x) => x.level)
         .map(([level, v]) => ({ level, ...v }))
       : S.levels.filter((x) => x.period === S.period);
     return LEVELS.map((L) => rows.find((x) => x.level === L)).filter(Boolean);
@@ -149,12 +161,14 @@
     drawReach(); drawRegions(); drawTrend();
     const r = current();
     const lv = levelRows().map((x) => ({ name: x.level, reached: x.reached, improved: x.improved }));
-    hbars('#chart-level', lv, css('--c0'), `No level breakdown for ${r ? r.label : 'this month'}.`);
-    const g = r && r.girls != null ? [
-      { name: 'Girls', reached: r.girls, improved: r.improved_girls },
-      { name: 'Boys', reached: r.boys, improved: r.improved_boys }
+    const measured = r && r.improved != null;
+    const none = `Learning outcomes were not yet assessed in ${r ? r.label : 'this month'}.`;
+    hbars('#chart-level', measured ? lv : [], css('--c0'), measured ? `No level breakdown for ${r.label}.` : none);
+    const g = measured && r.girls != null ? [
+      { name: 'Girls', reached: isAll() ? r.assessed_girls : r.girls, improved: r.improved_girls },
+      { name: 'Boys', reached: isAll() ? r.assessed_boys : r.boys, improved: r.improved_boys }
     ] : [];
-    hbars('#chart-gender', g, css('--mutedbar'), 'No gender breakdown for this month.');
+    hbars('#chart-gender', g, css('--mutedbar'), measured ? 'No gender breakdown for this month.' : '');
   }
 
   const svgIn = (node, W, H, label) => d3.select(node).append('svg')
@@ -165,15 +179,16 @@
   function drawReach() {
     const node = document.querySelector('#chart-reach'); node.replaceChildren();
     if (!S.monthly.length) return empty(node, 'No data yet.');
-    const W = Math.max(300, node.clientWidth), H = 250, m = { l: 40, r: 6, t: 22, b: 26 };
-    const x = d3.scaleBand(S.monthly.map((r) => r.period), [m.l, W - m.r]).padding(0.36);
+    const W = Math.max(300, node.clientWidth), H = 262, m = { l: 40, r: 6, t: 22, b: 38 };
+    const x = d3.scaleBand(S.monthly.map((r) => r.period), [m.l, W - m.r]).padding(S.monthly.length > 8 ? 0.2 : 0.36);
+    const roomy = x.bandwidth() >= 34; // enough room to print every value and month name
     const y = d3.scaleLinear([0, d3.max(S.monthly, (r) => r.learners) || 1], [H - m.b, m.t]).nice();
     const svg = svgIn(node, W, H, 'Learners reached each month, by level');
     y.ticks(4).forEach((t) => {
       svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(t)).attr('y2', y(t)).attr('stroke', css(t === 0 ? '--axis' : '--grid'));
       svg.append('text').attr('x', m.l - 6).attr('y', y(t)).attr('dy', '0.35em').attr('text-anchor', 'end').text(fmt(t));
     });
-    const colors = [css('--c0'), css('--c1'), css('--c2')];
+    const colors = [css('--c0'), css('--c1'), css('--c2'), css('--c3'), css('--c4')];
     const bw = Math.min(x.bandwidth(), 56), off = (x.bandwidth() - bw) / 2;
     S.monthly.forEach((r) => {
       const on = isAll() || r.period === S.period;
@@ -187,10 +202,17 @@
         hover(rect, `${r.label} · ${L}`, `${fmt(seg.reached)} learners`);
         acc += seg.reached;
       });
-      svg.append('text').attr('x', x(r.period) + x.bandwidth() / 2).attr('y', y(r.learners) - 6).attr('text-anchor', 'middle')
-        .attr('class', on ? 'strong' : null).text(fmt(r.learners));
-      svg.append('text').attr('x', x(r.period) + x.bandwidth() / 2).attr('y', H - 8).attr('text-anchor', 'middle')
-        .attr('class', on ? 'strong' : null).text(short(r.label));
+      const cx = x(r.period) + x.bandwidth() / 2, picked = r.period === S.period, i = S.monthly.indexOf(r);
+      if (roomy || picked) {
+        svg.append('text').attr('x', cx).attr('y', y(r.learners) - 6).attr('text-anchor', 'middle')
+          .attr('class', on ? 'strong' : null).text(fmt(r.learners));
+      }
+      const month = r.period.slice(5), first = i === 0 || month === '01';
+      if (roomy || picked || i % 3 === 0 || first) {
+        svg.append('text').attr('x', cx).attr('y', H - 22).attr('text-anchor', 'middle')
+          .attr('class', picked ? 'strong' : null).text(roomy ? short(r.label) : short(r.label).slice(0, 1));
+      }
+      if (first) svg.append('text').attr('x', cx).attr('y', H - 6).attr('text-anchor', 'middle').text(r.period.slice(0, 4));
     });
   }
 
@@ -218,8 +240,9 @@
         .attr('fill', css('--c1')).style('cursor', 'pointer')
         .on('click', () => pick(r.period));
       hover(c, r.label, `${r.improved_pct}% marked as improved (${fmt(r.improved)} of ${fmt(r.learners)})`);
-      svg.append('text').attr('x', cx).attr('y', cy - 11).attr('text-anchor', 'middle').attr('class', on ? 'strong' : null).text(`${r.improved_pct}%`);
-      svg.append('text').attr('x', cx).attr('y', H - 8).attr('text-anchor', 'middle').attr('class', on ? 'strong' : null).text(short(r.label));
+      const i = rows.indexOf(r), show = x.step() >= 34 || on || i % 2 === 0; // thin labels on narrow screens
+      if (show) svg.append('text').attr('x', cx).attr('y', cy - 11).attr('text-anchor', 'middle').attr('class', on ? 'strong' : null).text(`${r.improved_pct}%`);
+      if (show) svg.append('text').attr('x', cx).attr('y', H - 8).attr('text-anchor', 'middle').attr('class', on ? 'strong' : null).text(short(r.label));
     });
   }
 
@@ -252,7 +275,7 @@
   function drawRegions() {
     const node = document.querySelector('#chart-regions'); node.replaceChildren();
     const r = current();
-    const rows = regionRows().sort((a, b) => d3.descending(a.learners, b.learners));
+    const rows = regionRows().filter((d) => d.learners > 0 || d.schools > 0).sort((a, b) => d3.descending(a.learners, b.learners));
     if (!rows.length) return empty(node, `Region figures for ${r ? r.label : 'this month'} have not been imported yet.`);
     // Schools are shown for a single month only; across months they would not add up to the institutions figure.
     const noSchools = isAll() || rows.every((d) => !d.schools);
@@ -268,10 +291,10 @@
       const bar = svg.append('rect').attr('x', left).attr('y', y0 + 8).attr('width', Math.max(2, x(d.learners) - left)).attr('height', rowH - 16).attr('rx', 3)
         .attr('fill', i === 0 ? css('--c0') : css('--mutedbar'));
       const schools = d.schools == null || noSchools ? '' : ` · ${fmt(d.schools)} ${d.schools === 1 ? 'school' : 'schools'}`;
-      hover(bar, d.region, `${fmt(d.learners)} learners${schools}`);
+      hover(bar, d.region, `${fmt(d.learners)} ${d.learners === 1 ? 'learner' : 'learners'}${schools}`);
       const t = svg.append('text').attr('x', Math.max(left + 2, x(d.learners)) + 6).attr('y', y0 + rowH / 2).attr('dy', '0.35em');
       t.append('tspan').attr('class', 'strong').text(fmt(d.learners));
-      t.append('tspan').text(` learners${schools}`);
+      t.append('tspan').text(` ${d.learners === 1 ? 'learner' : 'learners'}${schools}`);
     });
   }
 

@@ -48,9 +48,24 @@ REGION_COLS = ["period", "region", "learners", "schools"]
 
 LEVEL_MAP = {
     "pre primary/early childhood": "Pre-primary", "pre-primary": "Pre-primary", "pre primary": "Pre-primary",
-    "early childhood": "Pre-primary", "ecd": "Pre-primary", "primary": "Primary", "secondary": "Secondary",
+    "early childhood": "Pre-primary", "ecd": "Pre-primary", "nursery": "Pre-primary",
+    "primary": "Primary", "secondary": "Secondary",
     "tertiary": "Tertiary", "professional": "Professional", "professsional": "Professional",
 }
+
+# Region spellings in the lists vary ("DARESSALAAM", "dar es sallam"). Compare letters only.
+REGION_NAMES = ["Dar es Salaam", "Arusha", "Dodoma", "Kilimanjaro", "Morogoro", "Mwanza", "Pwani", "Tanga",
+                "Zanzibar", "Zanzibar South", "Mjini Magharibi"]
+REGION_KEYS = {re.sub(r"[^a-z]", "", n.lower()): n for n in REGION_NAMES}
+REGION_KEYS["daressallam"] = "Dar es Salaam"
+
+
+def region_name(v):
+    text = re.sub(r"\s+", " ", str(v or "")).strip()
+    if not text:
+        return "Not recorded"
+    return REGION_KEYS.get(re.sub(r"[^a-z]", "", text.lower()), text.title())
+
 
 # Header text (lower-case, spaces collapsed) -> field name. First match wins.
 HEADER_KEYS = [
@@ -154,26 +169,29 @@ def yes(v):
     return norm(v) in ("yes", "y", "true", "1")
 
 
+MONTHS = {m.lower(): i for i, m in enumerate(calendar.month_name) if m}
+
+
+def record_period(r):
+    m = MONTHS.get(norm(r.get("month")))
+    try:
+        y = int(float(r.get("year")))
+    except (TypeError, ValueError):
+        y = None
+    return f"{y}-{m:02d}" if m and y else None
+
+
 def month_period(records, override):
     if override:
         if not re.fullmatch(r"\d{4}-\d{2}", override):
             sys.exit("--period must look like 2026-11")
         return override
-    names = {m.lower(): i for i, m in enumerate(calendar.month_name) if m}
-    found = Counter()
-    for r in records:
-        m = names.get(norm(r.get("month")))
-        y = r.get("year")
-        try:
-            y = int(float(y))
-        except (TypeError, ValueError):
-            y = None
-        if m and y:
-            found[f"{y}-{m:02d}"] += 1
+    found = Counter(p for p in map(record_period, records) if p)
     if not found:
         sys.exit("Could not read the month and year from the learner list. Re-run with --period YYYY-MM.")
     if len(found) > 1:
-        print(f"  ! The learner list mixes months: {dict(found)}. Using the most common one.")
+        print(f"  ! The learner list mixes months: {dict(found)}. Using the most common one;"
+              " records dated other months are left out.")
     return found.most_common(1)[0][0]
 
 
@@ -191,18 +209,23 @@ def build(path, period_override=None, note="", highlight="", priority=""):
     educators = read_list(es) if es is not None else []
     schools = read_list(ss) if ss is not None else []
     period = month_period(learners, period_override)
+    if not period_override:  # a record dated another month belongs to that month's report
+        learners = [r for r in learners if record_period(r) in (period, None)]
 
     g = lambda r: norm(r.get("gender"))[:1]
     imp = lambda r: norm(r.get("improved")).startswith("improv")
+    # Early reports mark every learner "Too early to measure": improvement was not measured, so leave it blank.
+    measured = any(norm(r.get("improved")).startswith(("improv", "needs")) for r in learners)
+    count = lambda f: sum(map(f, learners)) if measured else ""
     row = {
         "period": period, "label": label_for(period),
         "learners": len(learners),
         "girls": sum(g(r) == "f" for r in learners),
         "boys": sum(g(r) == "m" for r in learners),
         "pwd": sum(yes(r.get("disability")) for r in learners),
-        "improved": sum(imp(r) for r in learners),
-        "improved_girls": sum(imp(r) and g(r) == "f" for r in learners),
-        "improved_boys": sum(imp(r) and g(r) == "m" for r in learners),
+        "improved": count(imp),
+        "improved_girls": count(lambda r: imp(r) and g(r) == "f"),
+        "improved_boys": count(lambda r: imp(r) and g(r) == "m"),
         "completed": sum("complet" in norm(r.get("status")) for r in learners),
         "institutions": len({norm(r.get("id")) or i for i, r in enumerate(schools)}),
         "educators": len(educators),
@@ -218,14 +241,16 @@ def build(path, period_override=None, note="", highlight="", priority=""):
         levels[lv][1] += imp(r)
     regions = defaultdict(lambda: [0, 0])
     for r in learners:
-        regions[str(r.get("region") or "Not recorded").strip()][0] += 1
+        regions[region_name(r.get("region"))][0] += 1
     for s in schools:
-        regions[str(s.get("region") or "Not recorded").strip()][1] += 1
+        regions[region_name(s.get("region"))][1] += 1
 
     warnings = []
     unknown_gender = row["learners"] - row["girls"] - row["boys"]
     if unknown_gender:
         warnings.append(f"{unknown_gender} learners have no F/M gender recorded.")
+    if not measured:
+        warnings.append("Improvement was not measured this month (too early to measure); left blank.")
     blank_imp = sum(not norm(r.get("improved")) for r in learners)
     if blank_imp:
         warnings.append(f"{blank_imp} learners have no improvement result recorded.")
@@ -236,12 +261,13 @@ def build(path, period_override=None, note="", highlight="", priority=""):
     for label, key, ours in (("learners reached", "learners reached", row["learners"]),
                              ("improved", "number of learners who demonstrate improved", row["improved"])):
         theirs = summary_total(sm, key)
-        if theirs is not None and theirs != ours:
+        if theirs is not None and ours != "" and theirs != ours:
             warnings.append(f"Summary sheet says {theirs} {label}; the learner list gives {ours}.")
     if row["institutions"] == 0:
         warnings.append("No schools found in the school list.")
 
-    level_rows = [{"period": period, "level": k, "reached": v[0], "improved": v[1]} for k, v in levels.items()]
+    level_rows = [{"period": period, "level": k, "reached": v[0], "improved": v[1] if measured else ""}
+                  for k, v in levels.items()]
     region_rows = [{"period": period, "region": k, "learners": v[0], "schools": v[1]} for k, v in regions.items()]
     return row, level_rows, region_rows, warnings, (ls.title, es.title if es else None, ss.title if ss else None)
 
