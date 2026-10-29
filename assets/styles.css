@@ -1,0 +1,112 @@
+/* TABASAM Fellowship Dashboard — TUSOME Technologies brand: purple #935DFB, blue #1CA8FF, ink #111111, light ground #F8F9FC */
+:root {
+  --bg: #F8F9FC;
+  --panel: #FFFFFF;
+  --ink: #111111;
+  --muted: #5E6170;
+  --line: #E3E5EE;
+  --grid: #ECEEF4;
+  --axis: #C9CCD8;
+  --purple: #935DFB;
+  --blue: #1CA8FF;
+  --indigo: #5A43C9;
+  --c0: #1CA8FF;
+  --c1: #935DFB;
+  --c2: #5A43C9;
+  --mutedbar: #B8BCCB;
+  --ok: #1E8E5A;
+  --bad: #C8423B;
+  --warn: #C98A12;
+  --shadow: 0 6px 24px rgba(17, 17, 17, .08);
+  --radius: 10px;
+  --font: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --display: "Outfit", "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0C0B18;
+    --panel: #15142A;
+    --ink: #F1F1F6;
+    --muted: #A3A4B8;
+    --line: #2A2944;
+    --grid: #22213A;
+    --axis: #3A3958;
+    --c0: #4CBBFF;
+    --c1: #A97BFF;
+    --c2: #7D6BE6;
+    --mutedbar: #4A4A66;
+    --ok: #4CC38A;
+    --bad: #F07A72;
+    --warn: #E8B04A;
+    --shadow: 0 6px 24px rgba(0, 0, 0, .4);
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 15px; line-height: 1.5; }
+.bar { height: 4px; background: linear-gradient(90deg, var(--purple), var(--blue)); }
+.wrap { max-width: 74rem; margin-inline: auto; padding: 28px max(16px, 3vw) 40px; display: grid; gap: 32px; }
+
+.head { display: grid; gap: 10px; }
+.wordmark { font-family: var(--display); font-weight: 600; letter-spacing: .02em; font-size: 15px; display: inline-flex; align-items: baseline; gap: 6px; }
+.wordmark small { font-size: 9px; letter-spacing: .28em; color: var(--muted); font-weight: 500; }
+h1 { font-family: var(--display); font-weight: 500; font-size: clamp(26px, 4vw, 36px); line-height: 1.15; margin: 4px 0 0; text-wrap: balance; }
+.sub { margin: 0; color: var(--muted); font-size: 13px; }
+.take { margin: 6px 0 0; font-size: clamp(16px, 2vw, 19px); max-width: 62ch; }
+.take b { font-weight: 600; font-variant-numeric: tabular-nums; }
+.row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-top: 4px; }
+.note { margin: 0; display: flex; gap: 8px; align-items: baseline; font-size: 13px; color: var(--muted); border: 1px solid var(--line); border-radius: var(--radius); padding: 6px 12px; max-width: 64ch; background: var(--panel); }
+.note .dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--warn); transform: translateY(-1px); }
+.filter { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); }
+.filter select { font: inherit; font-size: 14px; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; }
+.filter select:focus-visible, a:focus-visible { outline: 2px solid var(--purple); outline-offset: 2px; }
+
+.tiles { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.5rem), 1fr)); }
+.tile { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 18px; display: grid; gap: 4px; align-content: start; }
+.tile h3 { margin: 0; font-size: 12.5px; font-weight: 500; color: var(--muted); }
+.val { font-family: var(--display); font-weight: 400; font-size: 32px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.delta { margin: 0; font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.delta.none { visibility: hidden; }
+.up { color: var(--ok); } .down { color: var(--bad); } .flat { color: var(--muted); }
+
+.sec { display: grid; gap: 12px; }
+.sec > h2 { margin: 0; font-family: var(--display); font-size: 20px; font-weight: 500; }
+.sec > p { margin: 0; color: var(--muted); max-width: 65ch; }
+.grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 23rem), 1fr)); }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.card h3 { margin: 0; font-size: 16px; font-weight: 600; }
+.cap { margin: 0; color: var(--muted); font-size: 13px; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12.5px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.sw-0 { background: var(--c0); } .sw-1 { background: var(--c1); } .sw-2 { background: var(--c2); }
+
+.chart { position: relative; min-height: 240px; }
+.chart.short { min-height: 100px; }
+.chart svg { display: block; overflow: visible; }
+.chart text { font-family: var(--font); font-size: 12px; fill: var(--muted); font-variant-numeric: tabular-nums; }
+.chart text.strong { fill: var(--ink); font-weight: 600; }
+.chart .empty { display: flex; align-items: center; justify-content: center; min-height: inherit; color: var(--muted); font-size: 13px; text-align: center; padding: 0 12px; }
+
+.tip { position: fixed; pointer-events: none; z-index: 10; background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); padding: 6px 10px; font-size: 12.5px; max-width: 280px; }
+.tip .h { color: var(--muted); }
+
+.files { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.files li { display: grid; gap: 2px; }
+.files a { color: var(--purple); font-weight: 600; text-decoration: none; }
+.files a:hover { text-decoration: underline; }
+.files span { color: var(--muted); font-size: 13px; }
+.defs { margin: 0; display: grid; gap: 6px; font-size: 13.5px; }
+.defs dt { font-weight: 600; }
+.defs dd { margin: 0 0 6px; color: var(--muted); }
+
+.foot { color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--line); padding-top: 16px; }
+.foot p { margin: 0 0 4px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .chart svg { animation: fade .4s ease-out; }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+}

@@ -1,0 +1,8 @@
+reports/*
+!reports/README.txt
+*.xlsx
+*.xls
+*.docx
+.DS_Store
+__pycache__/
+.vercel

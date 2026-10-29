@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TABASAM Fellowship Dashboard · TUSOME Technologies</title>
+  <meta name="description" content="TABASAM reach and learning outcomes under the Mastercard Foundation EdTech Fellowship with Sahara Consult, reported monthly by TUSOME Technologies.">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <div class="bar" aria-hidden="true"></div>
+  <main class="wrap">
+    <header class="head" id="overview">
+      <div class="brand">
+        <!-- Replace with the official logo: put assets/logo.svg in place and swap this span for <img src="assets/logo.svg" alt="TUSOME Technologies" height="28"> -->
+        <span class="wordmark">TUSOME <small>TECHNOLOGIES</small></span>
+      </div>
+      <h1>TABASAM Fellowship Dashboard</h1>
+      <p class="sub">Sahara Consult · Mastercard Foundation EdTech Fellowship · monthly reports, <span id="range">—</span></p>
+      <p class="take">In <b data-k="label">—</b>, TABASAM reached <b data-k="learners">—</b> learners in <b data-k="institutions">—</b> learning institutions, and <b data-k="improved_pct">—</b> of them were marked as improved.</p>
+      <div class="row">
+        <p class="note" id="note"><span class="dot"></span><span>Figures are as reported in TUSOME's monthly reports to Sahara Consult.</span></p>
+        <label class="filter">Month
+          <select id="month" aria-label="Month"></select>
+        </label>
+      </div>
+    </header>
+
+    <section class="tiles" id="headline" aria-label="Headline figures">
+      <div class="tile"><h3>Learners reached</h3><div class="val" data-k="learners">—</div><p class="delta"><span data-d="learners">—</span> vs <span data-k="prev">—</span></p></div>
+      <div class="tile"><h3>Marked as improved</h3><div class="val" data-k="improved_pct">—</div><p class="delta"><span data-d="improved_pct">—</span> pts vs <span data-k="prev">—</span></p></div>
+      <div class="tile"><h3>Learning institutions</h3><div class="val" data-k="institutions">—</div><p class="delta"><span data-d="institutions">—</span> vs <span data-k="prev">—</span></p></div>
+      <div class="tile"><h3>Educators</h3><div class="val" data-k="educators">—</div><p class="delta"><span data-d="educators">—</span> vs <span data-k="prev">—</span></p></div>
+      <div class="tile"><h3>Learners with disability</h3><div class="val" data-k="pwd">—</div><p class="delta"><span data-d="pwd">—</span> vs <span data-k="prev">—</span></p></div>
+      <div class="tile"><h3>Completed a programme</h3><div class="val" data-k="completed">—</div><p class="delta"><span data-d="completed">—</span> vs <span data-k="prev">—</span></p></div>
+    </section>
+
+    <section class="sec" id="reach">
+      <h2>Reach</h2>
+      <div class="grid">
+        <div class="card" id="reach-by-month">
+          <h3>Learners reached each month, by level</h3>
+          <p class="cap">Learners recorded in each monthly report. The same learner may appear in several months, so months cannot be added up.</p>
+          <div class="legend"><span><i class="sw sw-0"></i>Pre-primary</span><span><i class="sw sw-1"></i>Primary</span><span><i class="sw sw-2"></i>Secondary</span></div>
+          <div class="chart" id="chart-reach"></div>
+        </div>
+        <div class="card" id="where">
+          <h3>Where learners are, <span data-k="label">—</span></h3>
+          <p class="cap">Learners and schools by region, counted from the month's learner and school lists.</p>
+          <div class="chart short" id="chart-regions"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="outcomes">
+      <h2>Learning outcomes</h2>
+      <p>Improved share is learners marked "Improved" divided by learners reached in the month.</p>
+      <div class="grid">
+        <div class="card" id="improved-trend">
+          <h3>Share marked as improved, by month</h3>
+          <p class="cap">Months shown in amber carry a note on how the figure was reported. Hover a point to read it.</p>
+          <div class="chart" id="chart-trend"></div>
+        </div>
+        <div class="card" id="improved-groups">
+          <h3>Improved share by level and gender, <span data-k="label">—</span></h3>
+          <p class="cap">Change the month at the top to compare.</p>
+          <div class="chart short" id="chart-level"></div>
+          <div class="chart short" id="chart-gender"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="data">
+      <h2>Data and definitions</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Download the data</h3>
+          <ul class="files">
+            <li><a href="data/monthly.csv" download>monthly.csv</a><span>Headline figures for each month: learners, girls, boys, learners with disability, improved, completed, institutions, educators.</span></li>
+            <li><a href="data/by_level.csv" download>by_level.csv</a><span>Learners reached and marked improved, by month and education level.</span></li>
+            <li><a href="data/regions.csv" download>regions.csv</a><span>Learners and schools by month and region.</span></li>
+          </ul>
+          <p class="cap">Totals and breakdowns only. No learner names or IDs are published.</p>
+        </div>
+        <div class="card">
+          <h3>Definitions</h3>
+          <dl class="defs">
+            <dt>Learners reached</dt><dd>Learners who used TABASAM for learning or assessment during the month.</dd>
+            <dt>Marked as improved</dt><dd>Learners recorded as "Improved" rather than "Needs Support" in the month, divided by learners reached.</dd>
+            <dt>Learning institutions</dt><dd>Schools, centres and other institutions with learners or educators using TABASAM in the month.</dd>
+            <dt>Educators</dt><dd>Teachers and other educators using TABASAM in the month.</dd>
+            <dt>Change</dt><dd>Difference from the previous month shown in the dashboard; for improved share, in percentage points.</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <p>Source: TUSOME Technologies monthly reports to Sahara Consult under the Mastercard Foundation EdTech Fellowship. Last updated <span id="updated">—</span>.</p>
+      <p>© TUSOME Technologies Limited · Powering African Minds</p>
+    </footer>
+  </main>
+  <div class="tip" id="tip" hidden></div>
+  <script src="assets/vendor/d3.v7.9.0.min.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
