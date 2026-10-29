@@ -15,7 +15,9 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
   "Priority Activities for the Next Month" section (blue). Highlights and priorities never flag a month in the charts.
 - `data/by_level.csv`: period, level (Pre-primary / Primary / Secondary / Tertiary / Professional), reached, improved.
 - `data/regions.csv`: period, region, learners, schools.
-- `data/meta.json`: `{"updated": "YYYY-MM-DD"}`, shown in the footer.
+- `data/meta.json`: `{"updated": "YYYY-MM-DD", "target": {"beneficiaries": 8000, "label": "MCF EdTech Fellowship target"}}`.
+  `updated` is shown in the footer. `target` drives the progress bar: beneficiaries (learners plus educators)
+  added up from April 2025 to the selected month. `add_month.py` keeps `target` when it updates the date.
 - `scripts/add_month.py`: reads a monthly Sahara report (.xlsx) and updates the three CSVs and meta.json.
 - `scripts/check_data.py`: checks the data files; run before every publish.
 - `reports/`: where the monthly .xlsx reports go. Git-ignored. Never commit them.

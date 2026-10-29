@@ -336,7 +336,10 @@ def main():
             upsert("regions.csv", REGION_COLS, rg, row["period"], lambda r: (r["period"], -int(r["learners"])))
             print("  written to data/")
     if a.write:
-        (DATA / "meta.json").write_text(json.dumps({"updated": date.today().isoformat()}) + "\n", encoding="utf-8")
+        meta_path = DATA / "meta.json"  # keep other settings, such as the fellowship target
+        meta = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.exists() else {}
+        meta["updated"] = date.today().isoformat()
+        meta_path.write_text(json.dumps(meta) + "\n", encoding="utf-8")
         print("\nData updated. Run: python3 scripts/check_data.py")
     else:
         print("\nPreview only. Add --write to update the dashboard data.")

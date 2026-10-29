@@ -21,6 +21,8 @@ step. Every push to `main` publishes the site through Vercel.
 
 - **All months** (the opening view): learners, institutions and educators added up across all reports, and
   the improved share in months when outcomes were assessed.
+- **Progress to the MCF EdTech Fellowship target** of 8,000 beneficiaries (learners plus educators), with
+  the percentage reached and the month the target was passed. The target is set in `data/meta.json`.
 - **One month** (pick from the menu, or click a bar or point): that month's figures with the change from
   the previous month, its highlight and its priority for the next month. Each month has its own link,
   for example `dashboard.tusome.africa/#2026-10`.

@@ -50,6 +50,7 @@
     S.levels = levels.map((r) => num(r, ['reached', 'improved']));
     S.regions = regions.map((r) => num(r, ['learners', 'schools']));
     S.total = totals();
+    S.target = meta.target || null;
     document.getElementById('updated').textContent = meta.updated ? d3.timeFormat('%-d %B %Y')(new Date(meta.updated)) : '—';
     if (S.monthly.length) {
       document.getElementById('range').textContent = `${S.monthly[0].label} to ${S.monthly[S.monthly.length - 1].label}`;
@@ -153,7 +154,30 @@
       .map(([region, v]) => ({ region, ...v }));
   }
 
+  // Progress to the fellowship target: beneficiaries (learners plus educators) added up from the first
+  // report to the selected month.
+  function renderGoal() {
+    const box = document.getElementById('goal'), T = S.target && S.target.beneficiaries;
+    box.hidden = !T; if (!T) return;
+    const reached = (r) => (r.learners || 0) + (r.educators || 0);
+    const upto = isAll() ? S.monthly : S.monthly.filter((r) => r.period <= S.period);
+    const n = d3.sum(upto, reached), last = upto[upto.length - 1], scale = Math.max(n, T);
+    let run = 0; const hit = S.monthly.find((r) => (run += reached(r)) >= T);
+    box.querySelector('.goal-label').textContent = `${S.target.label}${isAll() ? '' : `, by end of ${last.label}`}`;
+    box.querySelector('.goal-n').textContent = fmt(n);
+    box.querySelector('.goal-t').textContent = fmt(T);
+    box.querySelector('.goal-pct').textContent = `${Math.round((n / T) * 100)}%`;
+    box.querySelector('.goal-fill').style.width = `${(n / scale) * 100}%`;
+    const mark = box.querySelector('.goal-mark');
+    mark.style.left = `${(T / scale) * 100}%`;
+    mark.classList.toggle('end', T / scale > 0.9);
+    mark.firstElementChild.textContent = `Target ${fmt(T)}`;
+    box.querySelector('.goal-sub').textContent = hit && hit.period <= last.period
+      ? `Target reached in ${hit.label}.` : `${fmt(T - n)} beneficiaries to go.`;
+  }
+
   function renderCharts() {
+    renderGoal();
     drawReach(); drawRegions(); drawTrend();
     const r = current();
     const lv = levelRows().map((x) => ({ name: x.level, reached: x.reached, improved: x.improved }));

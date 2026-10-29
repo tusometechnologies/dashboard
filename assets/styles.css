@@ -93,6 +93,19 @@ h1 { font-family: var(--display); font-weight: 500; font-size: clamp(26px, 4vw, 
 .cap { margin: 0; color: var(--muted); font-size: 13px; }
 .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12.5px; color: var(--muted); }
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
+.goal { margin: 18px 0 0; padding: 16px 18px 14px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); }
+.goal[hidden] { display: none; }
+.goal-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 16px; }
+.goal-label { font-size: 13px; color: var(--muted); }
+.goal-figs { font-family: var(--display); font-size: clamp(18px, 2.4vw, 22px); font-variant-numeric: tabular-nums; }
+.goal-figs .goal-n { font-weight: 600; }
+.goal-figs .goal-pct { margin-left: 8px; font-weight: 600; color: var(--purple); }
+.goal-track { position: relative; height: 14px; margin: 12px 0 6px; background: var(--grid); border-radius: 7px; }
+.goal-fill { position: absolute; inset: 0 auto 0 0; border-radius: 7px; background: linear-gradient(90deg, var(--purple), var(--blue)); transition: width .4s ease; }
+.goal-mark { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--ink); }
+.goal-mark span { position: absolute; top: 22px; transform: translateX(-50%); font-size: 11px; color: var(--muted); white-space: nowrap; }
+.goal-mark.end span { transform: translateX(-100%); }
+.goal-sub { margin: 22px 0 0; font-size: 12.5px; color: var(--muted); }
 .sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
 .sw-0 { background: var(--c0); } .sw-1 { background: var(--c1); } .sw-2 { background: var(--c2); }
 .sw-3 { background: var(--c3); } .sw-4 { background: var(--c4); }
