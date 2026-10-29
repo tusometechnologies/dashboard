@@ -52,8 +52,8 @@ do, set `source` to `entered by hand` and say so in the commit message.
 - Keep the TUSOME brand colours in `assets/styles.css` (purple #935DFB, blue #1CA8FF, ink #111111,
   light ground #F8F9FC). Public tagline: "Powering African Minds".
 - Write in clear international English. No promotional claims on the page. No notes or caveats on the page.
-- Each month's learners are different learners (TUSOME confirmed): the all-months view adds months up and
-  counts each learner once. Institutions and educators use the highest monthly figure.
+- Each month's learners are different learners (TUSOME confirmed): the all-months view adds every count up,
+  including institutions and educators.
 - July 2026 institutions (8) were entered by hand because the report's school list was empty. Re-importing
   the July report resets it to 0: re-enter 8, or ask the user.
 
@@ -64,8 +64,12 @@ do, set `source` to `entered by hand` and say so in the commit message.
   mark every learner improved). The user agreed to use the lists.
 - April–December 2025: every learner is "Too early to measure", so improved, improved_girls, improved_boys
   and by-level improved are blank. The page computes improved share only over months with outcomes.
-- November 2025: the list also holds 150 records dated October 2025. Only November records are counted
-  (1,966; the summary sheet says 1,965). `add_month.py` drops records dated other months.
+- Count every learner reported (TUSOME's instruction). November 2025's list holds 2,116 records, 150 of them
+  dated October 2025: all are counted (imported with `--period 2025-11`, which keeps every record).
+  Without `--period`, `add_month.py` drops records dated other months, so re-import November with it.
+- Where a summary sheet reports more learners than the list (June 2026 and January, March, April and
+  May 2026), learners reached uses the summary figure; `add_month.py` does this automatically. Gender,
+  level and region breakdowns come from the list, so they add up to less than learners reached.
 - December 2025: one learner has no gender recorded; the user asked to count them as female (girls 863,
   entered by hand). Re-importing December resets this to 862: re-enter 863.
 - "nursery" counts as Pre-primary. Region spellings are merged in `region_name()` in `add_month.py`.

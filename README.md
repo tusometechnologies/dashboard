@@ -9,7 +9,7 @@ step. Every push to `main` publishes the site through Vercel.
 
 | Item | Status |
 |---|---|
-| Data | 19 monthly reports, April 2025 to October 2026, counted from each report's learner, educator and school lists |
+| Data | 19 monthly reports, April 2025 to October 2026, counted from each report's learner, educator and school lists. Where a summary sheet reports more learners than its list, the summary figure is used |
 | Learning outcomes | Assessed from January 2026. Earlier reports mark learners "Too early to measure", so those months have no improved share |
 | Highlights | One highlight and one next-month priority per month, taken from the narrative reports (.docx). April–July 2025 reports have no priority |
 | Branding | Text wordmark in TUSOME colours. No official logo file has been added yet |
@@ -19,8 +19,8 @@ step. Every push to `main` publishes the site through Vercel.
 
 ## What is on the page
 
-- **All months** (the opening view): learners reached across all reports, improved share among learners
-  assessed, and the highest number of institutions and educators in a single month.
+- **All months** (the opening view): learners, institutions and educators added up across all reports, and
+  the improved share in months when outcomes were assessed.
 - **One month** (pick from the menu, or click a bar or point): that month's figures with the change from
   the previous month, its highlight and its priority for the next month. Each month has its own link,
   for example `dashboard.tusome.africa/#2026-10`.

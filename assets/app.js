@@ -63,13 +63,12 @@
     document.querySelector('.take').textContent = 'The data files could not be loaded. If you opened index.html directly from your computer, run a local server instead (see README).';
   });
 
-  // All months: learner counts are the monthly reports added up (each month's learners are different
-  // learners). Institutions and educators are the highest monthly figure: the same ones take part each month.
+  // All months: every count is the monthly reports added up, as TUSOME reports them.
   function totals() {
     const sum = (k) => (S.monthly.some((r) => r[k] != null) ? d3.sum(S.monthly, (r) => r[k]) : null);
     const t = { period: ALL, label: 'all months', months: S.monthly.length, prevRow: null, note: '', highlight: '', priority: '' };
-    ['learners', 'girls', 'boys', 'pwd', 'improved', 'improved_girls', 'improved_boys', 'completed'].forEach((k) => { t[k] = sum(k); });
-    ['institutions', 'educators'].forEach((k) => { t[k] = d3.max(S.monthly, (r) => r[k]) ?? null; });
+    ['learners', 'girls', 'boys', 'pwd', 'improved', 'improved_girls', 'improved_boys', 'completed', 'institutions', 'educators']
+      .forEach((k) => { t[k] = sum(k); });
     // Improved share counts only months in which learning outcomes were assessed.
     const assessed = S.monthly.filter((r) => r.improved != null);
     t.assessed = d3.sum(assessed, (r) => r.learners);
@@ -100,16 +99,13 @@
     const tk = document.querySelector('.take');
     if (isAll()) {
       tk.replaceChildren('Across ', bold(`${r.months} monthly reports`), ` (${document.getElementById('range').textContent}), TABASAM reached `,
-        bold(fmt(r.learners)), ' learners. ', bold(`${r.improved_pct}%`), ' of learners assessed were marked as improved.');
+        bold(fmt(r.learners)), ' learners in ', bold(fmt(r.institutions)), ' learning institutions, with ', bold(fmt(r.educators)),
+        ' educators. ', bold(`${r.improved_pct}%`), ' of learners assessed were marked as improved.');
     } else {
       tk.replaceChildren('In ', bold(r.label), ', TABASAM reached ', bold(fmt(r.learners)), ' learners in ', bold(fmt(r.institutions)),
         ` learning ${r.institutions === 1 ? 'institution' : 'institutions'}`,
         ...(r.improved_pct == null ? ['.'] : [', and ', bold(`${r.improved_pct}%`), ' of them were marked as improved.']));
     }
-    document.querySelectorAll('h3[data-all]').forEach((h) => {
-      h.dataset.one = h.dataset.one || h.textContent;
-      h.textContent = isAll() ? h.dataset.all : h.dataset.one;
-    });
     document.querySelectorAll('[data-k]').forEach((el) => {
       const k = el.dataset.k;
       let v;

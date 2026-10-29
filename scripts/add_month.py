@@ -258,7 +258,13 @@ def build(path, period_override=None, note="", highlight="", priority=""):
     dupes = [k for k, v in Counter(ids).items() if v > 1]
     if dupes:
         warnings.append(f"{len(dupes)} learner IDs appear more than once in the month.")
-    for label, key, ours in (("learners reached", "learners reached", row["learners"]),
+    # TUSOME counts every learner reported: when the summary sheet reports more learners than the list holds,
+    # publish the summary figure. Breakdowns (gender, level, region) still come from the list.
+    reported = summary_total(sm, "learners reached")
+    if reported is not None and reported > row["learners"]:
+        warnings.append(f"Learners reached set to the summary sheet's {reported} (the learner list holds {row['learners']}).")
+        row["learners"], row["source"] = reported, "learner records; learners reached from summary sheet"
+    for label, key, ours in (("learners reached", "learners reached", len(learners)),
                              ("improved", "number of learners who demonstrate improved", row["improved"])):
         theirs = summary_total(sm, key)
         if theirs is not None and ours != "" and theirs != ours:
