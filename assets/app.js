@@ -9,7 +9,8 @@
   const short = (label) => String(label).slice(0, 3);
   const pct = (a, b) => (b > 0 ? Math.round((a / b) * 100) : null);
   const tipEl = document.getElementById('tip');
-  const S = { monthly: [], levels: [], regions: [], period: null };
+  const ALL = 'all';
+  const S = { monthly: [], levels: [], regions: [], period: ALL, total: null };
 
   // ---------- tooltip ----------
   const tip = {
@@ -48,12 +49,13 @@
       });
     S.levels = levels.map((r) => num(r, ['reached', 'improved']));
     S.regions = regions.map((r) => num(r, ['learners', 'schools']));
+    S.total = totals();
     document.getElementById('updated').textContent = meta.updated ? d3.timeFormat('%-d %B %Y')(new Date(meta.updated)) : '—';
     if (S.monthly.length) {
       document.getElementById('range').textContent = `${S.monthly[0].label} to ${S.monthly[S.monthly.length - 1].label}`;
     }
     setupSelect();
-    window.addEventListener('hashchange', () => { const p = location.hash.slice(1); if (S.monthly.some((r) => r.period === p)) { S.period = p; render(); } });
+    window.addEventListener('hashchange', () => { S.period = fromHash(); render(); });
     let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(renderCharts, 120); });
     render();
   }).catch((err) => {
@@ -61,21 +63,44 @@
     document.querySelector('.take').textContent = 'The data files could not be loaded. If you opened index.html directly from your computer, run a local server instead (see README).';
   });
 
-  function setupSelect() {
-    const sel = document.getElementById('month');
-    sel.replaceChildren(...S.monthly.slice().reverse().map((r) => new Option(r.label, r.period)));
-    const fromHash = location.hash.slice(1);
-    S.period = S.monthly.some((r) => r.period === fromHash) ? fromHash : (S.monthly.length ? S.monthly[S.monthly.length - 1].period : null);
-    sel.value = S.period;
-    sel.addEventListener('change', () => { S.period = sel.value; history.replaceState(null, '', '#' + S.period); render(); });
+  // All months: learner counts are the monthly reports added up. Learner IDs restart each month, so a
+  // learner reached in several months is counted in each. Institutions and educators are the highest
+  // monthly figure, because adding them up would count the same schools and educators again.
+  function totals() {
+    const sum = (k) => (S.monthly.some((r) => r[k] != null) ? d3.sum(S.monthly, (r) => r[k]) : null);
+    const t = { period: ALL, label: 'all months', months: S.monthly.length, prevRow: null, note: '', highlight: '' };
+    ['learners', 'girls', 'boys', 'pwd', 'improved', 'improved_girls', 'improved_boys', 'completed'].forEach((k) => { t[k] = sum(k); });
+    ['institutions', 'educators'].forEach((k) => { t[k] = d3.max(S.monthly, (r) => r[k]) ?? null; });
+    t.improved_pct = pct(t.improved, t.learners);
+    return t;
   }
 
-  const current = () => S.monthly.find((r) => r.period === S.period);
+  const fromHash = () => { const p = location.hash.slice(1); return S.monthly.some((r) => r.period === p) ? p : ALL; };
+  const pick = (p) => { S.period = p; history.replaceState(null, '', p === ALL ? location.pathname : '#' + p); render(); };
+
+  function setupSelect() {
+    const sel = document.getElementById('month');
+    sel.replaceChildren(new Option('All months', ALL), ...S.monthly.slice().reverse().map((r) => new Option(r.label, r.period)));
+    S.period = fromHash();
+    sel.value = S.period;
+    sel.addEventListener('change', () => pick(sel.value));
+  }
+
+  const isAll = () => S.period === ALL;
+  const current = () => (isAll() ? S.total : S.monthly.find((r) => r.period === S.period));
+  const take = document.querySelector('.take').innerHTML;
 
   // ---------- text, tiles ----------
   function render() {
     const r = current(); if (!r) return;
     document.getElementById('month').value = r.period;
+    const tk = document.querySelector('.take');
+    if (isAll()) {
+      tk.replaceChildren('Across ', bold(`${r.months} monthly reports`), ` (${document.getElementById('range').textContent}), TABASAM recorded `,
+        bold(fmt(r.learners)), ' learners reached, and ', bold(`${r.improved_pct}%`), ' of them were marked as improved. Up to ',
+        bold(fmt(r.institutions)), ' learning institutions took part in a single month.');
+    } else if (tk.innerHTML !== take) tk.innerHTML = take;
+    document.querySelectorAll('.tile .basis').forEach((el) => { el.hidden = !isAll(); });
     document.querySelectorAll('[data-k]').forEach((el) => {
       const k = el.dataset.k;
       let v;
@@ -87,14 +112,22 @@
     });
     document.querySelectorAll('[data-d]').forEach((el) => {
       const k = el.dataset.d, p = r.prevRow, box = el.closest('.delta');
+      if (isAll()) { box.hidden = true; return; }
+      box.hidden = false;
       if (!p || r[k] == null || p[k] == null) { box.classList.add('none'); return; }
       box.classList.remove('none');
       const d = r[k] - p[k];
       el.textContent = d > 0 ? `+${fmt(d)}` : d < 0 ? `−${fmt(-d)}` : '0';
       el.className = d > 0 ? 'up' : d < 0 ? 'down' : 'flat';
     });
-    const note = document.querySelector('#note span:last-child');
-    note.textContent = r.note
+    const hl = document.querySelector('#highlight');
+    hl.hidden = !r.highlight;
+    hl.lastElementChild.innerHTML = r.highlight ? `<b class="hl">Highlight, ${r.label}:</b> ` : '';
+    if (r.highlight) hl.lastElementChild.append(r.highlight);
+    const note = document.querySelector('#note .caveat span:last-child');
+    note.textContent = isAll()
+      ? `All months: learner figures add up the ${r.months} monthly reports. A learner reached in more than one month is counted in each month. Pick a month to see its own figures.`
+      : r.note
       ? `Note on ${r.label}: ${r.note}`
       : r.source === 'learner records'
         ? `Figures for ${r.label} are counted from the learner, educator and school lists in TUSOME's monthly report to Sahara Consult.`
@@ -102,11 +135,26 @@
     renderCharts();
   }
 
+  const bold = (text) => { const b = document.createElement('b'); b.textContent = text; return b; };
+
+  // Level and region rows for the selected month, or added up across months for the all-months view.
+  function levelRows() {
+    const rows = isAll()
+      ? d3.rollups(S.levels, (v) => ({ reached: d3.sum(v, (x) => x.reached), improved: d3.sum(v, (x) => x.improved) }), (x) => x.level)
+        .map(([level, v]) => ({ level, ...v }))
+      : S.levels.filter((x) => x.period === S.period);
+    return LEVELS.map((L) => rows.find((x) => x.level === L)).filter(Boolean);
+  }
+  function regionRows() {
+    if (!isAll()) return S.regions.filter((x) => x.period === S.period);
+    return d3.rollups(S.regions, (v) => ({ learners: d3.sum(v, (x) => x.learners), schools: d3.max(v, (x) => x.schools) }), (x) => x.region)
+      .map(([region, v]) => ({ region, ...v }));
+  }
+
   function renderCharts() {
     drawReach(); drawRegions(); drawTrend();
     const r = current();
-    const lv = LEVELS.map((L) => S.levels.find((x) => x.period === S.period && x.level === L)).filter(Boolean)
-      .map((x) => ({ name: x.level, reached: x.reached, improved: x.improved }));
+    const lv = levelRows().map((x) => ({ name: x.level, reached: x.reached, improved: x.improved }));
     hbars('#chart-level', lv, css('--c0'), `No level breakdown for ${r ? r.label : 'this month'}.`);
     const g = r && r.girls != null ? [
       { name: 'Girls', reached: r.girls, improved: r.improved_girls },
@@ -134,14 +182,14 @@
     const colors = [css('--c0'), css('--c1'), css('--c2')];
     const bw = Math.min(x.bandwidth(), 56), off = (x.bandwidth() - bw) / 2;
     S.monthly.forEach((r) => {
-      const on = r.period === S.period;
+      const on = isAll() || r.period === S.period;
       let acc = 0;
       LEVELS.forEach((L, i) => {
         const seg = S.levels.find((s) => s.period === r.period && s.level === L); if (!seg || !seg.reached) return;
         const rect = svg.append('rect').attr('x', x(r.period) + off).attr('width', bw)
           .attr('y', y(acc + seg.reached)).attr('height', Math.max(0, y(acc) - y(acc + seg.reached)))
           .attr('fill', colors[i]).attr('fill-opacity', on ? 1 : 0.38).style('cursor', 'pointer')
-          .on('click', () => { S.period = r.period; history.replaceState(null, '', '#' + r.period); render(); });
+          .on('click', () => pick(r.period));
         hover(rect, `${r.label} · ${L}`, `${fmt(seg.reached)} learners`);
         acc += seg.reached;
       });
@@ -177,7 +225,7 @@
       const on = r.period === S.period, cx = x(r.period), cy = y(r.improved_pct);
       const c = svg.append('circle').attr('cx', cx).attr('cy', cy).attr('r', on ? 5.5 : 3.8)
         .attr('fill', flagged(r) ? css('--warn') : css('--c1')).style('cursor', 'pointer')
-        .on('click', () => { S.period = r.period; history.replaceState(null, '', '#' + r.period); render(); });
+        .on('click', () => pick(r.period));
       hover(c, r.label, `${r.improved_pct}% marked as improved (${fmt(r.improved)} of ${fmt(r.learners)})${r.note ? ' · ' + r.note : ''}`);
       svg.append('text').attr('x', cx).attr('y', cy - 11).attr('text-anchor', 'middle').attr('class', on ? 'strong' : null).text(`${r.improved_pct}%`);
       svg.append('text').attr('x', cx).attr('y', H - 8).attr('text-anchor', 'middle').attr('class', on ? 'strong' : null).text(short(r.label));
@@ -213,7 +261,7 @@
   function drawRegions() {
     const node = document.querySelector('#chart-regions'); node.replaceChildren();
     const r = current();
-    const rows = S.regions.filter((x) => x.period === S.period).sort((a, b) => d3.descending(a.learners, b.learners));
+    const rows = regionRows().sort((a, b) => d3.descending(a.learners, b.learners));
     if (!rows.length) return empty(node, `Region figures for ${r ? r.label : 'this month'} have not been imported yet.`);
     const W = Math.max(300, node.clientWidth), rowH = 32, H = rows.length * rowH + 6;
     const svg = svgIn(node, W, H, 'Learners by region');
