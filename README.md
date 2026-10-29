@@ -30,6 +30,8 @@ step. Every push to `main` publishes the site through Vercel.
 - Share marked as improved by month, and by level and gender.
 - A section menu, a "How TABASAM works" explainer (linked to screen.tusome.ac.tz), the data period beside
   the month menu, beneficiaries over time against the 8,000 target, and a map of learners by region.
+- From screening to support: learners assessed, improved and identified for support for the selected period.
+- Urban, semi-urban and rural learners; quotes from a teacher and a school head (Voices).
 - Learners identified for support (marked "Needs Support") by month, and improved share by region.
 - Inclusion: learners with disability by month, and the female/male split of learners and educators.
 - Milestones from the narrative reports, filterable by type (product, implementation, training, research,

@@ -40,12 +40,14 @@
     d3.json('data/meta.json').catch(() => ({})),
     d3.csv('data/milestones.csv').catch(() => []),
     d3.csv('data/partners.csv').catch(() => []),
-    d3.json('assets/tza-regions.json').catch(() => null)
-  ]).then(([monthly, levels, regions, meta, milestones, partners, geo]) => {
+    d3.json('assets/tza-regions.json').catch(() => null),
+    d3.csv('data/voices.csv').catch(() => [])
+  ]).then(([monthly, levels, regions, meta, milestones, partners, geo, voices]) => {
     S.milestones = milestones; S.partners = partners; S.geo = geo;
+    renderVoices(voices);
     S.monthly = monthly
       .map((r) => num(r, ['learners', 'girls', 'boys', 'pwd', 'improved', 'improved_girls', 'improved_boys', 'completed', 'institutions', 'educators',
-        'needs_support', 'educators_female', 'educators_male']))
+        'needs_support', 'educators_female', 'educators_male', 'learners_urban', 'learners_semi_urban', 'learners_rural']))
       .sort((a, b) => d3.ascending(a.period, b.period))
       .map((r, i, all) => {
         r.improved_pct = pct(r.improved, r.learners);
@@ -75,7 +77,8 @@
     const sum = (k) => (S.monthly.some((r) => r[k] != null) ? d3.sum(S.monthly, (r) => r[k]) : null);
     const t = { period: ALL, label: 'all months', months: S.monthly.length, prevRow: null, note: '', highlight: '', priority: '' };
     ['learners', 'girls', 'boys', 'pwd', 'improved', 'improved_girls', 'improved_boys', 'completed', 'institutions', 'educators',
-      'needs_support', 'educators_female', 'educators_male'].forEach((k) => { t[k] = sum(k); });
+      'needs_support', 'educators_female', 'educators_male', 'learners_urban', 'learners_semi_urban', 'learners_rural']
+      .forEach((k) => { t[k] = sum(k); });
     // Improved share counts only months in which learning outcomes were assessed.
     const assessed = S.monthly.filter((r) => r.improved != null);
     t.assessed = d3.sum(assessed, (r) => r.learners);
@@ -264,6 +267,18 @@
       : S.regions.filter((x) => x.period === S.period).map((x) => ({ name: x.region, reached: x.learners, improved: x.improved })))
       .sort((a, b) => d3.descending(a.reached, b.reached));
     hbars('#chart-region-outcomes', measured ? rg : [], css('--c1'), measured ? 'No region breakdown for this month.' : none);
+    // Funnel: learners with an outcome recorded, then improved and identified for support (share of assessed).
+    const assessedN = measured ? (r.improved || 0) + (r.needs_support || 0) : 0;
+    countRows('#chart-funnel', measured ? [
+      { name: 'Learners assessed', n: assessedN, color: css('--c0') },
+      { name: 'Improved learning outcomes', n: r.improved, of: assessedN, color: css('--c1') },
+      { name: 'Identified for support', n: r.needs_support, of: assessedN, color: css('--c2') }
+    ] : [], none);
+    countRows('#chart-location', [
+      { name: 'Urban', n: r.learners_urban, color: css('--c0') },
+      { name: 'Semi-urban', n: r.learners_semi_urban, color: css('--c1') },
+      { name: 'Rural', n: r.learners_rural, color: css('--c2') }
+    ].map((x, i, all) => ({ ...x, of: d3.sum(all, (y) => y.n || 0) })), 'No location recorded for this month.');
     monthBars('#chart-support', 'needs_support', css('--c2'), 'Learners identified for support, by month');
     monthBars('#chart-pwd', 'pwd', css('--c0'), 'Learners with disability, by month');
     splits('#chart-split', [
@@ -300,6 +315,36 @@
       }
       if (first) svg.append('text').attr('x', cx).attr('y', H - 6).attr('text-anchor', 'middle').text(r.period.slice(0, 4));
     });
+  }
+
+  // Labelled count bars, scaled to the largest row; a share is shown when a row has a base ('of').
+  function countRows(selector, rows, emptyMsg) {
+    const node = document.querySelector(selector); node.replaceChildren();
+    if (!rows.length || !d3.sum(rows, (r) => r.n || 0)) return empty(node, emptyMsg);
+    const W = Math.max(300, node.clientWidth), rowH = 50, H = rows.length * rowH;
+    const svg = svgIn(node, W, H, 'Counts');
+    const max = d3.max(rows, (r) => r.n || 0) || 1;
+    rows.forEach((r, i) => {
+      const y0 = i * rowH, n = r.n || 0, w = Math.max(n ? 3 : 0, (n / max) * W);
+      const share = r.of ? ` (${n > 0 && pct(n, r.of) === 0 ? '<1' : pct(n, r.of)}%)` : '';
+      const t = svg.append('text').attr('x', 0).attr('y', y0 + 14);
+      t.append('tspan').attr('class', 'strong').text(r.name);
+      t.append('tspan').text(` · ${fmt(n)}${share}`);
+      svg.append('rect').attr('x', 0).attr('y', y0 + 22).attr('width', W).attr('height', 14).attr('rx', 3).attr('fill', css('--grid'));
+      const bar = svg.append('rect').attr('x', 0).attr('y', y0 + 22).attr('width', w).attr('height', 14).attr('rx', 3).attr('fill', r.color);
+      hover(bar, r.name, `${fmt(n)}${share}`);
+    });
+  }
+
+  function renderVoices(rows) {
+    const sec = document.getElementById('voices');
+    sec.hidden = !rows.length;
+    document.getElementById('quote-list').replaceChildren(...rows.map((v) => {
+      const f = document.createElement('figure'); f.className = 'quote';
+      const q = document.createElement('blockquote'); q.textContent = `“${v.quote}”`;
+      const c = document.createElement('figcaption'); c.append(bold(v.name), ` · ${v.role}`);
+      f.append(q, c); return f;
+    }));
   }
 
   // Female/male split bars: each row is one 100% bar with counts and shares.

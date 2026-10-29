@@ -42,7 +42,8 @@ DATA = ROOT / "data"
 
 MONTHLY_COLS = ["period", "label", "learners", "girls", "boys", "pwd", "improved", "improved_girls",
                 "improved_boys", "completed", "institutions", "educators", "source", "note",
-                "highlight", "priority", "needs_support", "educators_female", "educators_male"]
+                "highlight", "priority", "needs_support", "educators_female", "educators_male",
+                "learners_urban", "learners_semi_urban", "learners_rural"]
 LEVEL_COLS = ["period", "level", "reached", "improved"]
 REGION_COLS = ["period", "region", "learners", "schools", "improved"]
 
@@ -58,6 +59,11 @@ REGION_NAMES = ["Dar es Salaam", "Arusha", "Dodoma", "Kilimanjaro", "Morogoro", 
                 "Zanzibar", "Zanzibar South", "Mjini Magharibi"]
 REGION_KEYS = {re.sub(r"[^a-z]", "", n.lower()): n for n in REGION_NAMES}
 REGION_KEYS["daressallam"] = "Dar es Salaam"
+
+
+def location(r):
+    v = norm(r.get("geo"))
+    return "semi" if v.startswith(("semi", "peri")) else "rural" if v.startswith("rural") else "urban"
 
 
 def region_name(v):
@@ -236,6 +242,11 @@ def build(path, period_override=None, note="", highlight="", priority=""):
         "needs_support": count(lambda r: norm(r.get("improved")).startswith("needs")),
         "educators_female": sum(g(e) == "f" for e in educators),
         "educators_male": sum(g(e) == "m" for e in educators),
+        # Location from the list's geographical column. Blank counts as urban: those learners also have no
+        # region and are counted in Dar es Salaam (TUSOME's instruction).
+        "learners_urban": sum(location(r) == "urban" for r in learners),
+        "learners_semi_urban": sum(location(r) == "semi" for r in learners),
+        "learners_rural": sum(location(r) == "rural" for r in learners),
     }
     levels = defaultdict(lambda: [0, 0])
     for r in learners:

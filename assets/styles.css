@@ -115,6 +115,11 @@ h1 { font-family: var(--display); font-weight: 500; font-size: clamp(26px, 4vw, 
 .more { margin: 0; font-size: 13.5px; }
 .more a { color: var(--purple); font-weight: 600; text-decoration: none; }
 .more a:hover { text-decoration: underline; }
+.quotes { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); }
+.quote { margin: 0; background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--purple); border-radius: var(--radius); padding: 18px 20px; display: grid; gap: 10px; }
+.quote blockquote { margin: 0; font-family: var(--display); font-size: 17px; line-height: 1.45; }
+.quote figcaption { font-size: 13px; color: var(--muted); }
+.quote figcaption b { color: var(--ink); font-weight: 600; }
 .grid > .wide { grid-column: 1 / -1; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chips button { font: inherit; font-size: 12.5px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--muted); cursor: pointer; }
