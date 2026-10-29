@@ -214,17 +214,29 @@
     list.replaceChildren(...out);
   }
 
+  // Partners grouped by status: signed agreements and the fellowship first, then joint work, then talks.
+  const GROUPS = [
+    { title: 'Agreements and fellowship programme', status: ['agreement', 'programme'] },
+    { title: 'Working with', status: ['collaboration'] },
+    { title: 'Exploring', status: ['exploring'] }
+  ];
+  const TAG = { agreement: 'Agreement signed', programme: 'Fellowship programme', exploring: 'Exploring' };
   function renderPartners() {
-    const order = { agreement: 0, programme: 1, collaboration: 2 };
-    const tag = { agreement: 'Agreement signed', programme: 'Fellowship programme' };
-    document.getElementById('partner-list').replaceChildren(...S.partners.slice()
-      .sort((a, b) => (order[a.status] ?? 9) - (order[b.status] ?? 9) || d3.ascending(a.since, b.since)).map((p) => {
-        const d = document.createElement('div'); d.className = 'partner';
-        if (tag[p.status]) { const t = document.createElement('span'); t.className = 'tag'; t.textContent = tag[p.status]; d.append(t); }
+    const out = [];
+    GROUPS.forEach((g) => {
+      const ps = S.partners.filter((p) => g.status.includes(p.status))
+        .sort((a, b) => g.status.indexOf(a.status) - g.status.indexOf(b.status) || d3.ascending(a.since, b.since));
+      if (!ps.length) return;
+      const h = document.createElement('h4'); h.className = 'partner-group'; h.textContent = `${g.title} (${ps.length})`; out.push(h);
+      ps.forEach((p) => {
+        const d = document.createElement('div'); d.className = `partner ${p.status}`;
+        if (TAG[p.status]) { const t = document.createElement('span'); t.className = 'tag'; t.textContent = TAG[p.status]; d.append(t); }
         const meta = document.createElement('span'); meta.className = 'meta'; meta.textContent = `${p.type} · since ${labelOf(p.since)}`;
         const desc = document.createElement('p'); desc.textContent = p.description;
-        d.append(bold(p.name), meta, desc); return d;
-      }));
+        d.append(bold(p.name), meta, desc); out.push(d);
+      });
+    });
+    document.getElementById('partner-list').replaceChildren(...out);
   }
 
   function renderCharts() {

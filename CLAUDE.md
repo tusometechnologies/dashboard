@@ -16,15 +16,21 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
 - `data/by_level.csv`: period, level (Pre-primary / Primary / Secondary / Tertiary / Professional), reached, improved.
 - `data/regions.csv`: period, region, learners, schools, improved.
 - `monthly.csv` also holds `needs_support` (learners marked "Needs Support"; blank when outcomes were not
-  assessed), `educators_female` and `educators_male` (May 2026: 10 educators have no gender recorded).
+  assessed), `educators_female` and `educators_male`. May 2026: 10 educators have no gender recorded; TUSOME asked to
+  split them equally (female 15, male 10, entered by hand). Re-importing May 2026 resets this: re-enter.
 - `data/milestones.csv`: period, category (Product / Implementation / Training / Research / Event /
   Partnership / Organisation), title, text. Written by hand from the narrative reports (.docx), 1–4 per
-  month. Same rules as highlights: one factual sentence, no figures, no internal matters, nothing exploratory.
+  month. Same rules as highlights: one factual sentence, no figures, no internal matters. Exploratory items
+  are included (TUSOME's instruction) but worded as exploring, discussing or testing, never as established.
+  Teacher evaluation with CMU (confirmed by TUSOME): baseline July 2025, mid-point September 2025, endline
+  December 2025. Events confirmed by TUSOME: Aga Khan University conference, Nairobi (Aug 2025); Zanzibar
+  Innovation Day (Oct 2025); Women in Science Day, Dodoma, and hosting Queen's University for a month
+  (Mar 2026); product conference in Nigeria (Oct 2026).
 - `data/partners.csv`: name, type, since (YYYY-MM), status (`agreement` = signed agreement stated in a report;
-  `programme` = fellowship funder or organiser; `collaboration` = concrete joint work described), description.
-  Only organisations with a signed agreement or concrete joint work are published. Talks, plans, MoUs in
-  progress and partners that are only listed (for example The Cube, CAS, Montessori, Patandi, Rwanda
-  Learnershood, HWPL Korea, One Million Teachers) stay off until a report shows an agreement or joint work.
+  `programme` = fellowship funder or organiser; `collaboration` = concrete joint work described;
+  `exploring` = talks, plans, MoUs in preparation or partners only named in a report), description.
+  TUSOME asked for every partner named in the reports to be shown. Keep the status honest: an organisation
+  moves to `agreement` only when a report states an agreement was signed.
 - `data/meta.json`: `{"updated": "YYYY-MM-DD", "target": {"beneficiaries": 8000, "label": "MCF EdTech Fellowship target"}}`.
   `updated` is shown in the footer. `target` drives the progress bar: beneficiaries (learners plus educators)
   added up from April 2025 to the selected month. `add_month.py` keeps `target` when it updates the date.
