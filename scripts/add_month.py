@@ -10,6 +10,7 @@ Options:
     --period YYYY-MM   use this month instead of the one in the learner list
     --note "text"      attach a note to the month (shown on the dashboard)
     --highlight "text" one thing that stood out in that month's narrative report (shown on the dashboard)
+    --priority "text"  the main priority for the next month from the narrative report (shown on the dashboard)
 
 What it does
     Reads the learner, educator and school lists in the workbook (not the hand-typed
@@ -41,7 +42,7 @@ DATA = ROOT / "data"
 
 MONTHLY_COLS = ["period", "label", "learners", "girls", "boys", "pwd", "improved", "improved_girls",
                 "improved_boys", "completed", "institutions", "educators", "source", "note",
-                "highlight"]
+                "highlight", "priority"]
 LEVEL_COLS = ["period", "level", "reached", "improved"]
 REGION_COLS = ["period", "region", "learners", "schools"]
 
@@ -181,7 +182,7 @@ def label_for(period):
     return f"{calendar.month_name[int(m)]} {y}"
 
 
-def build(path, period_override=None, note="", highlight=""):
+def build(path, period_override=None, note="", highlight="", priority=""):
     wb = openpyxl.load_workbook(path, data_only=True, read_only=True)
     ls, es, ss, sm = classify_sheets(wb)
     if ls is None:
@@ -208,6 +209,7 @@ def build(path, period_override=None, note="", highlight=""):
         "source": "learner records",
         "note": note or "",
         "highlight": highlight or "",
+        "priority": priority or "",
     }
     levels = defaultdict(lambda: [0, 0])
     for r in learners:
@@ -275,12 +277,13 @@ def main():
     ap.add_argument("--period", help="YYYY-MM, overrides the month in the learner list (one file only)")
     ap.add_argument("--note", default="", help="note shown on the dashboard for this month")
     ap.add_argument("--highlight", default="", help="highlight from the narrative report, shown for this month")
+    ap.add_argument("--priority", default="", help="next-month priority from the narrative report, shown for this month")
     a = ap.parse_args()
     if a.period and len(a.files) > 1:
         sys.exit("--period can only be used with one file.")
 
     for path in a.files:
-        row, lv, rg, warnings, sheets = build(path, a.period, a.note, a.highlight)
+        row, lv, rg, warnings, sheets = build(path, a.period, a.note, a.highlight, a.priority)
         print(f"\n{path.name} -> {row['label']} ({row['period']})")
         print(f"  sheets used: learners='{sheets[0]}', educators='{sheets[1]}', schools='{sheets[2]}'")
         for k in MONTHLY_COLS[2:12]:
@@ -293,8 +296,9 @@ def main():
             existing = {r["period"]: r for r in read_csv("monthly.csv")}
             if not row["note"] and row["period"] in existing and existing[row["period"]].get("source") == "learner records":
                 row["note"] = existing[row["period"]].get("note", "")  # keep a note added on an earlier import
-            if not row["highlight"] and row["period"] in existing:
-                row["highlight"] = existing[row["period"]].get("highlight", "")  # keep an earlier highlight
+            for k in ("highlight", "priority"):  # keep text added on an earlier import
+                if not row[k] and row["period"] in existing:
+                    row[k] = existing[row["period"]].get(k, "")
             upsert("monthly.csv", MONTHLY_COLS, [row], row["period"], lambda r: r["period"])
             upsert("by_level.csv", LEVEL_COLS, lv, row["period"], lambda r: (r["period"], LEVEL_ORDER.get(r["level"], 9)))
             upsert("regions.csv", REGION_COLS, rg, row["period"], lambda r: (r["period"], -int(r["learners"])))

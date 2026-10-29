@@ -9,9 +9,10 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
 - `index.html`, `assets/styles.css`, `assets/app.js`: the page. `app.js` holds no figures; it reads `data/`.
 - `assets/vendor/d3.v7.9.0.min.js`: charting library, kept in the repo so the site has no CDN dependency.
 - `data/monthly.csv`: one row per month (`period` = YYYY-MM). Columns: label, learners, girls, boys, pwd,
-  improved, improved_girls, improved_boys, completed, institutions, educators, source, note, highlight.
-  `note` is a caveat about the figures (amber). `highlight` is one thing that stood out in that month's
-  narrative report (purple); it never flags the month in the charts.
+  improved, improved_girls, improved_boys, completed, institutions, educators, source, note, highlight,
+  priority. `note` is a caveat about the figures (amber). `highlight` is one thing that stood out in that
+  month's narrative report (purple). `priority` is the main priority for the next month, from the report's
+  "Priority Activities for the Next Month" section (blue). Highlights and priorities never flag a month in the charts.
 - `data/by_level.csv`: period, level (Pre-primary / Primary / Secondary), reached, improved.
 - `data/regions.csv`: period, region, learners, schools.
 - `data/meta.json`: `{"updated": "YYYY-MM-DD"}`, shown in the footer.
@@ -27,8 +28,8 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
    they submitted, or to explain any difference, before writing.
 3. Write: `python3 scripts/add_month.py reports/TUSOME_November_2026.xlsx --write`
    Add `--note "..."` when the user wants a note shown for that month (for example a known reporting issue).
-   Add `--highlight "..."` with one thing that stood out in that month's narrative report (the .docx).
-   Propose it to the user first. Keep it to one factual sentence, with no figures that could disagree with
+   Add `--highlight "..."` with one thing that stood out in that month's narrative report (the .docx), and
+   `--priority "..."` with the main priority for the next month from the same report. Propose both to the user first. Keep it to one factual sentence, with no figures that could disagree with
    the dashboard. Leave out internal matters (audits, finances, contracts) and unsigned partnerships or MoUs.
 4. Check: `python3 scripts/check_data.py`. Fix every ERROR. Report every WARNING to the user in plain words.
 5. Preview the site: `python3 -m http.server 8000` and open http://localhost:8000. Check the new month

@@ -68,7 +68,7 @@
   // monthly figure, because adding them up would count the same schools and educators again.
   function totals() {
     const sum = (k) => (S.monthly.some((r) => r[k] != null) ? d3.sum(S.monthly, (r) => r[k]) : null);
-    const t = { period: ALL, label: 'all months', months: S.monthly.length, prevRow: null, note: '', highlight: '' };
+    const t = { period: ALL, label: 'all months', months: S.monthly.length, prevRow: null, note: '', highlight: '', priority: '' };
     ['learners', 'girls', 'boys', 'pwd', 'improved', 'improved_girls', 'improved_boys', 'completed'].forEach((k) => { t[k] = sum(k); });
     ['institutions', 'educators'].forEach((k) => { t[k] = d3.max(S.monthly, (r) => r[k]) ?? null; });
     t.improved_pct = pct(t.improved, t.learners);
@@ -120,18 +120,17 @@
       el.textContent = d > 0 ? `+${fmt(d)}` : d < 0 ? `−${fmt(-d)}` : '0';
       el.className = d > 0 ? 'up' : d < 0 ? 'down' : 'flat';
     });
-    const hl = document.querySelector('#highlight');
-    hl.hidden = !r.highlight;
-    hl.lastElementChild.innerHTML = r.highlight ? `<b class="hl">Highlight, ${r.label}:</b> ` : '';
-    if (r.highlight) hl.lastElementChild.append(r.highlight);
-    const note = document.querySelector('#note .caveat span:last-child');
-    note.textContent = isAll()
-      ? `All months: learner figures add up the ${r.months} monthly reports. A learner reached in more than one month is counted in each month. Pick a month to see its own figures.`
-      : r.note
-      ? `Note on ${r.label}: ${r.note}`
-      : r.source === 'learner records'
-        ? `Figures for ${r.label} are counted from the learner, educator and school lists in TUSOME's monthly report to Sahara Consult.`
-        : `Figures for ${r.label} are as submitted in the summary sheet of TUSOME's monthly report to Sahara Consult.`;
+    // Up to three lines under the headline: highlight and next-month priority from the narrative report,
+    // then a caveat about the figures (a month's note, or how the all-months view is counted).
+    const line = (sel, head, text) => {
+      const el = document.querySelector(sel); el.hidden = !text;
+      el.lastElementChild.replaceChildren(...(text ? [head ? Object.assign(bold(head), { className: 'hl' }) : '', head ? ' ' : '', text] : []));
+    };
+    line('#highlight', `Highlight, ${r.label}:`, r.highlight);
+    line('#priority', 'Priority for the next month:', r.priority);
+    line('#note .caveat', isAll() ? 'All months:' : `Note on ${r.label}:`, isAll()
+      ? `learner figures add up the ${r.months} monthly reports. A learner reached in more than one month is counted in each month. Pick a month to see its own figures.`
+      : r.note);
     renderCharts();
   }
 

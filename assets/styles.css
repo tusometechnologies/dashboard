@@ -67,6 +67,8 @@ h1 { font-family: var(--display); font-weight: 500; font-size: clamp(26px, 4vw, 
 .note .hl { color: var(--ink); }
 .tile .basis { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
 #highlight .dot { background: var(--purple); }
+#priority .dot { background: var(--blue); }
+.note:not(:has(.line:not([hidden]))) { display: none; }
 .filter { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); }
 .filter select { font: inherit; font-size: 14px; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; }
 .filter select:focus-visible, a:focus-visible { outline: 2px solid var(--purple); outline-offset: 2px; }
