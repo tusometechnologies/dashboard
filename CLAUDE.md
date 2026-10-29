@@ -10,7 +10,7 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
 - `assets/vendor/d3.v7.9.0.min.js`: charting library, kept in the repo so the site has no CDN dependency.
 - `data/monthly.csv`: one row per month (`period` = YYYY-MM). Columns: label, learners, girls, boys, pwd,
   improved, improved_girls, improved_boys, completed, institutions, educators, source, note, highlight,
-  priority. `note` is a caveat about the figures (amber). `highlight` is one thing that stood out in that
+  priority. `note` is a caveat about the figures, shown when hovering the month in the improved-share chart. `highlight` is one thing that stood out in that
   month's narrative report (purple). `priority` is the main priority for the next month, from the report's
   "Priority Activities for the Next Month" section (blue). Highlights and priorities never flag a month in the charts.
 - `data/by_level.csv`: period, level (Pre-primary / Primary / Secondary), reached, improved.

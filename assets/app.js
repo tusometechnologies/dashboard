@@ -120,17 +120,14 @@
       el.textContent = d > 0 ? `+${fmt(d)}` : d < 0 ? `−${fmt(-d)}` : '0';
       el.className = d > 0 ? 'up' : d < 0 ? 'down' : 'flat';
     });
-    // Up to three lines under the headline: highlight and next-month priority from the narrative report,
-    // then a caveat about the figures (a month's note, or how the all-months view is counted).
+    // Two lines under the headline, from the month's narrative report. Notes on the figures are shown in the
+    // improved-share chart instead; the box is hidden for the all-months view.
     const line = (sel, head, text) => {
       const el = document.querySelector(sel); el.hidden = !text;
       el.lastElementChild.replaceChildren(...(text ? [head ? Object.assign(bold(head), { className: 'hl' }) : '', head ? ' ' : '', text] : []));
     };
     line('#highlight', `Highlight, ${r.label}:`, r.highlight);
     line('#priority', 'Priority for the next month:', r.priority);
-    line('#note .caveat', isAll() ? 'All months:' : `Note on ${r.label}:`, isAll()
-      ? `learner figures add up the ${r.months} monthly reports. A learner reached in more than one month is counted in each month. Pick a month to see its own figures.`
-      : r.note);
     renderCharts();
   }
 

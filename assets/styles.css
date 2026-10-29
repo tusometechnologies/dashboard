@@ -63,13 +63,13 @@ h1 { font-family: var(--display); font-weight: 500; font-size: clamp(26px, 4vw, 
 .note { display: grid; gap: 4px; font-size: 13px; color: var(--muted); border: 1px solid var(--line); border-radius: var(--radius); padding: 6px 12px; max-width: 64ch; background: var(--panel); }
 .note .line { margin: 0; display: flex; gap: 8px; align-items: baseline; }
 .note .line[hidden] { display: none; }
-.note .dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--warn); transform: translateY(-1px); }
+.note .dot { flex: none; width: 8px; height: 8px; border-radius: 50%; transform: translateY(-1px); }
 .note .hl { color: var(--ink); }
 .tile .basis { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
 #highlight .dot { background: var(--purple); }
 #priority .dot { background: var(--blue); }
 .note:not(:has(.line:not([hidden]))) { display: none; }
-.filter { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); }
+.filter { margin-left: auto; display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); }
 .filter select { font: inherit; font-size: 14px; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; }
 .filter select:focus-visible, a:focus-visible { outline: 2px solid var(--purple); outline-offset: 2px; }
 
