@@ -72,7 +72,7 @@ h1 { font-family: var(--display); font-weight: 500; font-size: clamp(26px, 4vw, 
 #highlight .dot { background: var(--purple); }
 #priority .dot { background: var(--blue); }
 .note:not(:has(.line:not([hidden]))) { display: none; }
-.filter { margin-left: auto; display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); }
+.filter { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); }
 .filter select { font: inherit; font-size: 14px; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; }
 .filter select:focus-visible, a:focus-visible { outline: 2px solid var(--purple); outline-offset: 2px; }
 
@@ -93,6 +93,28 @@ h1 { font-family: var(--display); font-weight: 500; font-size: clamp(26px, 4vw, 
 .cap { margin: 0; color: var(--muted); font-size: 13px; }
 .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12.5px; color: var(--muted); }
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
+.secnav { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
+.secnav-in { max-width: 1120px; margin: 0 auto; padding: 0 16px; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.secnav a { flex: none; padding: 10px 10px; font-size: 13px; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; }
+.secnav a:hover, .secnav a.on { color: var(--ink); border-bottom-color: var(--purple); }
+:target, section[id], .card[id] { scroll-margin-top: 56px; }
+.pick { display: grid; gap: 4px; justify-items: end; margin-left: auto; }
+.pick .filter { margin-left: 0; }
+.asof { margin: 0; font-size: 12px; color: var(--muted); }
+.steps { list-style: none; counter-reset: s; margin: 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); }
+.steps li { counter-increment: s; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; display: grid; gap: 4px; align-content: start; position: relative; }
+.steps li::before { content: counter(s); width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 600; color: #fff; background: linear-gradient(135deg, var(--purple), var(--blue)); }
+.steps b { font-family: var(--display); font-weight: 600; font-size: 15px; }
+.steps span { color: var(--muted); font-size: 13px; }
+.map { position: relative; max-width: 420px; width: 100%; margin: 0 auto; }
+.map svg { display: block; width: 100%; height: auto; }
+.map path { stroke: var(--panel); stroke-width: .8; }
+.map-key { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+.map-key i { display: inline-block; width: 120px; height: 8px; border-radius: 4px; }
+.cap.small { font-size: 11.5px; }
+.more { margin: 0; font-size: 13.5px; }
+.more a { color: var(--purple); font-weight: 600; text-decoration: none; }
+.more a:hover { text-decoration: underline; }
 .grid > .wide { grid-column: 1 / -1; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chips button { font: inherit; font-size: 12.5px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--muted); cursor: pointer; }

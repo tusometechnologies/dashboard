@@ -28,6 +28,8 @@ step. Every push to `main` publishes the site through Vercel.
   for example `dashboard.tusome.africa/#2026-10`.
 - Learners reached each month by education level (pre-primary to professional), and by region.
 - Share marked as improved by month, and by level and gender.
+- A section menu, a "How TABASAM works" explainer (linked to screen.tusome.ac.tz), the data period beside
+  the month menu, beneficiaries over time against the 8,000 target, and a map of learners by region.
 - Learners identified for support (marked "Needs Support") by month, and improved share by region.
 - Inclusion: learners with disability by month, and the female/male split of learners and educators.
 - Milestones from the narrative reports, filterable by type (product, implementation, training, research,

@@ -8,6 +8,12 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
 
 - `index.html`, `assets/styles.css`, `assets/app.js`: the page. `app.js` holds no figures; it reads `data/`.
 - `assets/vendor/d3.v7.9.0.min.js`: charting library, kept in the repo so the site has no CDN dependency.
+- `assets/tza-regions.json`: Tanzania region boundaries for the map (geoBoundaries TZA ADM1, from OpenStreetMap,
+  ODbL 1.0; simplified, rings oriented for d3). Zanzibar's five regions share `group` "Zanzibar". Keep the
+  attribution line under the map.
+- Indicator names follow the MCF EdTech Fellowship wording ("Learners demonstrating improved learning
+  outcomes", "Educators reached"). The "How TABASAM works" steps follow screen.tusome.ac.tz
+  (Assess, Analyse, Generate IEP, Support and track); keep them in line if that site changes.
 - `data/monthly.csv`: one row per month (`period` = YYYY-MM). Columns: label, learners, girls, boys, pwd,
   improved, improved_girls, improved_boys, completed, institutions, educators, source, note, highlight,
   priority. `note` is kept empty: the site is public and shows no notes. Record caveats in the commit message instead. `highlight` is one thing that stood out in that

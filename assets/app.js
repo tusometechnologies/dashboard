@@ -39,9 +39,10 @@
     d3.csv('data/regions.csv'),
     d3.json('data/meta.json').catch(() => ({})),
     d3.csv('data/milestones.csv').catch(() => []),
-    d3.csv('data/partners.csv').catch(() => [])
-  ]).then(([monthly, levels, regions, meta, milestones, partners]) => {
-    S.milestones = milestones; S.partners = partners;
+    d3.csv('data/partners.csv').catch(() => []),
+    d3.json('assets/tza-regions.json').catch(() => null)
+  ]).then(([monthly, levels, regions, meta, milestones, partners, geo]) => {
+    S.milestones = milestones; S.partners = partners; S.geo = geo;
     S.monthly = monthly
       .map((r) => num(r, ['learners', 'girls', 'boys', 'pwd', 'improved', 'improved_girls', 'improved_boys', 'completed', 'institutions', 'educators',
         'needs_support', 'educators_female', 'educators_male']))
@@ -60,6 +61,7 @@
       document.getElementById('range').textContent = `${S.monthly[0].label} to ${S.monthly[S.monthly.length - 1].label}`;
     }
     setupSelect();
+    setupNav();
     window.addEventListener('hashchange', () => { S.period = fromHash(); render(); });
     let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(renderCharts, 120); });
     render();
@@ -105,12 +107,15 @@
     if (isAll()) {
       tk.replaceChildren('Across ', bold(`${r.months} monthly reports`), ` (${document.getElementById('range').textContent}), TABASAM reached `,
         bold(fmt(r.learners)), ' learners in ', bold(fmt(r.institutions)), ' learning institutions, with ', bold(fmt(r.educators)),
-        ' educators. ', bold(`${r.improved_pct}%`), ' of learners assessed were marked as improved.');
+        ' educators. ', bold(`${r.improved_pct}%`), ' of learners assessed demonstrated improved learning outcomes.');
     } else {
       tk.replaceChildren('In ', bold(r.label), ', TABASAM reached ', bold(fmt(r.learners)), ' learners in ', bold(fmt(r.institutions)),
         ` learning ${r.institutions === 1 ? 'institution' : 'institutions'}`,
-        ...(r.improved_pct == null ? ['.'] : [', and ', bold(`${r.improved_pct}%`), ' of them were marked as improved.']));
+        ...(r.improved_pct == null ? ['.'] : [', and ', bold(`${r.improved_pct}%`), ' of them demonstrated improved learning outcomes.']));
     }
+    const first = S.monthly[0], last = S.monthly[S.monthly.length - 1];
+    document.getElementById('asof').textContent = isAll()
+      ? `Data: ${first.label} – ${last.label}` : `Showing ${r.label} · data to ${last.label}`;
     document.querySelectorAll('[data-k]').forEach((el) => {
       const k = el.dataset.k;
       let v;
@@ -240,7 +245,7 @@
 
   function renderCharts() {
     renderGoal(); renderMilestones(); renderPartners();
-    drawReach(); drawRegions(); drawTrend();
+    drawGrowth(); drawReach(); drawMap(); drawRegions(); drawTrend();
     const r = current();
     const lv = levelRows().map((x) => ({ name: x.level, reached: x.reached, improved: x.improved }));
     const measured = r && r.improved != null;
@@ -369,7 +374,7 @@
     const W = Math.max(300, node.clientWidth), H = 250, m = { l: 42, r: 16, t: 24, b: 26 };
     const x = d3.scalePoint(rows.map((r) => r.period), [m.l + 14, W - m.r - 14]);
     const y = d3.scaleLinear([0, 100], [H - m.b, m.t]);
-    const svg = svgIn(node, W, H, 'Share marked as improved, by month');
+    const svg = svgIn(node, W, H, 'Learners demonstrating improved learning outcomes, by month');
     [0, 25, 50, 75, 100].forEach((t) => {
       svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(t)).attr('y2', y(t)).attr('stroke', css(t === 0 ? '--axis' : '--grid'));
       svg.append('text').attr('x', m.l - 6).attr('y', y(t)).attr('dy', '0.35em').attr('text-anchor', 'end').text(`${t}%`);
@@ -384,7 +389,7 @@
       const c = svg.append('circle').attr('cx', cx).attr('cy', cy).attr('r', on ? 5.5 : 3.8)
         .attr('fill', css('--c1')).style('cursor', 'pointer')
         .on('click', () => pick(r.period));
-      hover(c, r.label, `${r.improved_pct}% marked as improved (${fmt(r.improved)} of ${fmt(r.learners)})`);
+      hover(c, r.label, `${r.improved_pct}% demonstrated improved learning outcomes (${fmt(r.improved)} of ${fmt(r.learners)})`);
       const i = rows.indexOf(r), show = x.step() >= 34 || on || i % 2 === 0; // thin labels on narrow screens
       if (show) svg.append('text').attr('x', cx).attr('y', cy - 11).attr('text-anchor', 'middle').attr('class', on ? 'strong' : null).text(`${r.improved_pct}%`);
       if (show) svg.append('text').attr('x', cx).attr('y', H - 8).attr('text-anchor', 'middle').attr('class', on ? 'strong' : null).text(short(r.label));
@@ -414,6 +419,87 @@
       t.append('tspan').attr('class', 'strong').text(`${rate}%`);
       t.append('tspan').text(` (${fmt(r.improved)} of ${fmt(r.reached)})`);
     });
+  }
+
+  // ---------- cumulative beneficiaries against the target ----------
+  function drawGrowth() {
+    const node = document.querySelector('#chart-growth'); node.replaceChildren();
+    if (!S.monthly.length) return empty(node, 'No data yet.');
+    let run = 0;
+    const rows = S.monthly.map((r) => ({ period: r.period, label: r.label, n: (run += (r.learners || 0) + (r.educators || 0)) }));
+    const T = S.target && S.target.beneficiaries;
+    const W = Math.max(300, node.clientWidth), H = 240, m = { l: 48, r: 16, t: 24, b: 38 };
+    const x = d3.scalePoint(rows.map((r) => r.period), [m.l + 8, W - m.r - 8]);
+    const y = d3.scaleLinear([0, Math.max(d3.max(rows, (r) => r.n), T || 0)], [H - m.b, m.t]).nice();
+    const svg = svgIn(node, W, H, 'Beneficiaries over time');
+    y.ticks(4).forEach((t) => {
+      svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(t)).attr('y2', y(t)).attr('stroke', css(t === 0 ? '--axis' : '--grid'));
+      svg.append('text').attr('x', m.l - 6).attr('y', y(t)).attr('dy', '0.35em').attr('text-anchor', 'end').text(fmt(t));
+    });
+    const grad = `g${Math.random().toString(36).slice(2, 7)}`;
+    const lg = svg.append('defs').append('linearGradient').attr('id', grad).attr('x1', 0).attr('x2', 1);
+    lg.append('stop').attr('offset', '0%').attr('stop-color', css('--purple'));
+    lg.append('stop').attr('offset', '100%').attr('stop-color', css('--blue'));
+    svg.append('path').attr('d', d3.area().x((r) => x(r.period)).y0(y(0)).y1((r) => y(r.n))(rows)).attr('fill', `url(#${grad})`).attr('fill-opacity', 0.15);
+    svg.append('path').attr('d', d3.line().x((r) => x(r.period)).y((r) => y(r.n))(rows)).attr('fill', 'none').attr('stroke', `url(#${grad})`).attr('stroke-width', 2.5);
+    if (T) {
+      svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(T)).attr('y2', y(T)).attr('stroke', css('--ink')).attr('stroke-dasharray', '4 4');
+      svg.append('text').attr('x', m.l + 4).attr('y', y(T) - 6).attr('class', 'strong').text(`Target ${fmt(T)}`);
+    }
+    const roomy = x.step() >= 34;
+    rows.forEach((r, i) => {
+      const picked = r.period === S.period, cx = x(r.period), cy = y(r.n);
+      const c = svg.append('circle').attr('cx', cx).attr('cy', cy).attr('r', picked ? 5.5 : 3.5).attr('fill', picked ? css('--ink') : css('--c1'))
+        .style('cursor', 'pointer').on('click', () => pick(r.period));
+      hover(c, r.label, `${fmt(r.n)} beneficiaries so far`);
+      if (picked || i === rows.length - 1) svg.append('text').attr('x', cx).attr('y', cy - 10).attr('text-anchor', i === rows.length - 1 ? 'end' : 'middle').attr('class', 'strong').text(fmt(r.n));
+      const month = r.period.slice(5), first = i === 0 || month === '01';
+      if (roomy || picked || i % 3 === 0 || first) {
+        svg.append('text').attr('x', cx).attr('y', H - 22).attr('text-anchor', 'middle').attr('class', picked ? 'strong' : null)
+          .text(roomy ? short(r.label) : short(r.label).slice(0, 1));
+      }
+      if (first) svg.append('text').attr('x', cx).attr('y', H - 6).attr('text-anchor', 'middle').text(r.period.slice(0, 4));
+    });
+  }
+
+  // ---------- map: learners by region (Zanzibar's regions shown together) ----------
+  const mapGroup = (name) => (/^zanzibar|mjini magharibi|pemba/i.test(name) ? 'Zanzibar' : name);
+  function drawMap() {
+    const node = document.querySelector('#map'), key = document.querySelector('#map-key');
+    node.replaceChildren(); key.replaceChildren();
+    if (!S.geo) return;
+    const totals = d3.rollup(regionRows(), (v) => d3.sum(v, (d) => d.learners), (d) => mapGroup(d.region));
+    const max = d3.max(totals.values()) || 1;
+    const color = d3.scaleSqrt([0, max], [css('--grid'), css('--c0')]);
+    const W = Math.max(280, node.clientWidth), H = Math.round(W * 0.9);
+    const proj = d3.geoMercator().fitSize([W, H], S.geo), path = d3.geoPath(proj);
+    const svg = svgIn(node, W, H, 'Map of learners by region');
+    svg.selectAll('path').data(S.geo.features).join('path').attr('d', path)
+      .attr('fill', (f) => (totals.get(f.properties.group) ? color(totals.get(f.properties.group)) : css('--grid')))
+      .each(function (f) {
+        const n = totals.get(f.properties.group) || 0, g = f.properties.group;
+        hover(d3.select(this), g === 'Zanzibar' ? 'Zanzibar' : f.properties.name, `${fmt(n)} ${n === 1 ? 'learner' : 'learners'}`);
+      });
+    const sw = document.createElement('i');
+    sw.style.background = `linear-gradient(90deg, ${css('--grid')}, ${css('--c0')})`;
+    key.append('Fewer', sw, 'More learners');
+  }
+
+  // Section menu: highlight the section in view.
+  function setupNav() {
+    const links = [...document.querySelectorAll('.secnav a')];
+    const secs = links.map((a) => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => {
+        if (!e.isIntersecting) return;
+        links.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === `#${e.target.id}`));
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    secs.forEach((s) => io.observe(s));
+    // Section links scroll without replacing the month in the address bar.
+    links.forEach((a) => a.addEventListener('click', (ev) => {
+      ev.preventDefault(); document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+    }));
   }
 
   // ---------- regions for the selected month ----------
