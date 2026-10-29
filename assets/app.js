@@ -40,7 +40,8 @@
     d3.json('data/meta.json').catch(() => ({}))
   ]).then(([monthly, levels, regions, meta]) => {
     S.monthly = monthly
-      .map((r) => num(r, ['learners', 'girls', 'boys', 'pwd', 'improved', 'improved_girls', 'improved_boys', 'completed', 'institutions', 'educators']))
+      .map((r) => num(r, ['learners', 'girls', 'boys', 'pwd', 'improved', 'improved_girls', 'improved_boys', 'completed', 'institutions', 'educators',
+        'needs_support', 'educators_female', 'educators_male']))
       .sort((a, b) => d3.ascending(a.period, b.period))
       .map((r, i, all) => {
         r.improved_pct = pct(r.improved, r.learners);
@@ -48,7 +49,7 @@
         return r;
       });
     S.levels = levels.map((r) => num(r, ['reached', 'improved']));
-    S.regions = regions.map((r) => num(r, ['learners', 'schools']));
+    S.regions = regions.map((r) => num(r, ['learners', 'schools', 'improved']));
     S.total = totals();
     S.target = meta.target || null;
     document.getElementById('updated').textContent = meta.updated ? d3.timeFormat('%-d %B %Y')(new Date(meta.updated)) : '—';
@@ -68,8 +69,8 @@
   function totals() {
     const sum = (k) => (S.monthly.some((r) => r[k] != null) ? d3.sum(S.monthly, (r) => r[k]) : null);
     const t = { period: ALL, label: 'all months', months: S.monthly.length, prevRow: null, note: '', highlight: '', priority: '' };
-    ['learners', 'girls', 'boys', 'pwd', 'improved', 'improved_girls', 'improved_boys', 'completed', 'institutions', 'educators']
-      .forEach((k) => { t[k] = sum(k); });
+    ['learners', 'girls', 'boys', 'pwd', 'improved', 'improved_girls', 'improved_boys', 'completed', 'institutions', 'educators',
+      'needs_support', 'educators_female', 'educators_male'].forEach((k) => { t[k] = sum(k); });
     // Improved share counts only months in which learning outcomes were assessed.
     const assessed = S.monthly.filter((r) => r.improved != null);
     t.assessed = d3.sum(assessed, (r) => r.learners);
@@ -150,7 +151,7 @@
   }
   function regionRows() {
     if (!isAll()) return S.regions.filter((x) => x.period === S.period);
-    return d3.rollups(S.regions, (v) => ({ learners: d3.sum(v, (x) => x.learners) }), (x) => x.region)
+    return d3.rollups(S.regions, (v) => ({ learners: d3.sum(v, (x) => x.learners), improved: d3.sum(v, (x) => x.improved) }), (x) => x.region)
       .map(([region, v]) => ({ region, ...v }));
   }
 
@@ -189,6 +190,69 @@
       { name: 'Boys', reached: isAll() ? r.assessed_boys : r.boys, improved: r.improved_boys }
     ] : [];
     hbars('#chart-gender', g, css('--mutedbar'), measured ? 'No gender breakdown for this month.' : '');
+    // Region outcomes: only months with assessed outcomes count, so the all-months view uses those months.
+    const assessed = new Set(S.monthly.filter((x) => x.improved != null).map((x) => x.period));
+    const rg = (isAll()
+      ? d3.rollups(S.regions.filter((x) => assessed.has(x.period)), (v) => ({ reached: d3.sum(v, (x) => x.learners), improved: d3.sum(v, (x) => x.improved) }), (x) => x.region)
+        .map(([name, v]) => ({ name, ...v }))
+      : S.regions.filter((x) => x.period === S.period).map((x) => ({ name: x.region, reached: x.learners, improved: x.improved })))
+      .sort((a, b) => d3.descending(a.reached, b.reached));
+    hbars('#chart-region-outcomes', measured ? rg : [], css('--c1'), measured ? 'No region breakdown for this month.' : none);
+    monthBars('#chart-support', 'needs_support', css('--c2'), 'Learners identified for support, by month');
+    monthBars('#chart-pwd', 'pwd', css('--c0'), 'Learners with disability, by month');
+    splits('#chart-split', [
+      { name: 'Learners', a: r.girls, b: r.boys, la: 'Girls', lb: 'Boys' },
+      { name: 'Educators', a: r.educators_female, b: r.educators_male, la: 'Female', lb: 'Male' }
+    ]);
+  }
+
+  // One bar per month for a single monthly count; months without the count are left out.
+  function monthBars(selector, key, color, label) {
+    const node = document.querySelector(selector); node.replaceChildren();
+    const rows = S.monthly.filter((r) => r[key] != null);
+    if (!rows.length) return empty(node, 'No data yet.');
+    const W = Math.max(300, node.clientWidth), H = 240, m = { l: 40, r: 6, t: 22, b: 38 };
+    const x = d3.scaleBand(rows.map((r) => r.period), [m.l, W - m.r]).padding(rows.length > 8 ? 0.2 : 0.36);
+    const y = d3.scaleLinear([0, d3.max(rows, (r) => r[key]) || 1], [H - m.b, m.t]).nice();
+    const roomy = x.bandwidth() >= 34;
+    const svg = svgIn(node, W, H, label);
+    y.ticks(4).forEach((t) => {
+      svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(t)).attr('y2', y(t)).attr('stroke', css(t === 0 ? '--axis' : '--grid'));
+      svg.append('text').attr('x', m.l - 6).attr('y', y(t)).attr('dy', '0.35em').attr('text-anchor', 'end').text(fmt(t));
+    });
+    rows.forEach((r, i) => {
+      const picked = r.period === S.period, on = isAll() || picked, cx = x(r.period) + x.bandwidth() / 2;
+      const bar = svg.append('rect').attr('x', x(r.period)).attr('width', x.bandwidth()).attr('y', y(r[key]))
+        .attr('height', Math.max(0, y(0) - y(r[key]))).attr('rx', 2).attr('fill', color).attr('fill-opacity', on ? 1 : 0.38)
+        .style('cursor', 'pointer').on('click', () => pick(r.period));
+      hover(bar, r.label, fmt(r[key]));
+      if (roomy || picked) svg.append('text').attr('x', cx).attr('y', y(r[key]) - 6).attr('text-anchor', 'middle').attr('class', on ? 'strong' : null).text(fmt(r[key]));
+      const month = r.period.slice(5), first = i === 0 || month === '01';
+      if (roomy || picked || i % 3 === 0 || first) {
+        svg.append('text').attr('x', cx).attr('y', H - 22).attr('text-anchor', 'middle').attr('class', picked ? 'strong' : null)
+          .text(roomy ? short(r.label) : short(r.label).slice(0, 1));
+      }
+      if (first) svg.append('text').attr('x', cx).attr('y', H - 6).attr('text-anchor', 'middle').text(r.period.slice(0, 4));
+    });
+  }
+
+  // Female/male split bars: each row is one 100% bar with counts and shares.
+  function splits(selector, rows) {
+    const node = document.querySelector(selector); node.replaceChildren();
+    rows = rows.filter((r) => (r.a || 0) + (r.b || 0) > 0);
+    if (!rows.length) return empty(node, 'No gender breakdown for this month.');
+    const W = Math.max(300, node.clientWidth), rowH = 58, H = rows.length * rowH;
+    const svg = svgIn(node, W, H, 'Female and male');
+    const ca = css('--c1'), cb = css('--c0');
+    rows.forEach((r, i) => {
+      const y0 = i * rowH, tot = r.a + r.b, xa = (r.a / tot) * W;
+      svg.append('text').attr('x', 0).attr('y', y0 + 12).attr('class', 'strong').text(`${r.name} · ${fmt(tot)}`);
+      const a = svg.append('rect').attr('x', 0).attr('y', y0 + 20).attr('width', Math.max(0, xa - 1)).attr('height', 14).attr('rx', 3).attr('fill', ca);
+      const b = svg.append('rect').attr('x', xa + 1).attr('y', y0 + 20).attr('width', Math.max(0, W - xa - 1)).attr('height', 14).attr('rx', 3).attr('fill', cb);
+      hover(a, r.la, `${fmt(r.a)} (${pct(r.a, tot)}%)`); hover(b, r.lb, `${fmt(r.b)} (${pct(r.b, tot)}%)`);
+      svg.append('text').attr('x', 0).attr('y', y0 + 50).text(`${r.la} ${fmt(r.a)} (${pct(r.a, tot)}%)`);
+      svg.append('text').attr('x', W).attr('y', y0 + 50).attr('text-anchor', 'end').text(`${r.lb} ${fmt(r.b)} (${pct(r.b, tot)}%)`);
+    });
   }
 
   const svgIn = (node, W, H, label) => d3.select(node).append('svg')

@@ -48,7 +48,7 @@
       <div class="tile"><h3>Learning institutions</h3><div class="val" data-k="institutions">—</div><p class="delta"><span data-d="institutions">—</span> vs <span data-k="prev">—</span></p></div>
       <div class="tile"><h3>Educators</h3><div class="val" data-k="educators">—</div><p class="delta"><span data-d="educators">—</span> vs <span data-k="prev">—</span></p></div>
       <div class="tile"><h3>Learners with disability</h3><div class="val" data-k="pwd">—</div><p class="delta"><span data-d="pwd">—</span> vs <span data-k="prev">—</span></p></div>
-      <div class="tile"><h3>Completed a programme</h3><div class="val" data-k="completed">—</div><p class="delta"><span data-d="completed">—</span> vs <span data-k="prev">—</span></p></div>
+      <div class="tile"><h3>Identified for support</h3><div class="val" data-k="needs_support">—</div><p class="delta"><span data-d="needs_support">—</span> vs <span data-k="prev">—</span></p></div>
     </section>
 
     <section class="sec" id="reach">
@@ -83,6 +83,32 @@
           <div class="chart short" id="chart-level"></div>
           <div class="chart short" id="chart-gender"></div>
         </div>
+        <div class="card" id="improved-regions">
+          <h3>Improved share by region, <span data-k="label">—</span></h3>
+          <p class="cap">Learners marked "Improved" out of learners reached in each region.</p>
+          <div class="chart short" id="chart-region-outcomes"></div>
+        </div>
+        <div class="card" id="support">
+          <h3>Learners identified for support, by month</h3>
+          <p class="cap">Learners TABASAM flagged as needing additional support, so teachers can respond. Click a bar to see that month.</p>
+          <div class="chart" id="chart-support"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="inclusion">
+      <h2>Inclusion</h2>
+      <div class="grid">
+        <div class="card" id="pwd">
+          <h3>Learners with disability, by month</h3>
+          <p class="cap">Learners with a disability recorded in each monthly report. Click a bar to see that month.</p>
+          <div class="chart" id="chart-pwd"></div>
+        </div>
+        <div class="card" id="gender-split">
+          <h3>Girls, boys and educators, <span data-k="label">—</span></h3>
+          <p class="cap">Female and male learners and educators reached.</p>
+          <div class="chart short" id="chart-split"></div>
+        </div>
       </div>
     </section>
 
@@ -92,9 +118,9 @@
         <div class="card">
           <h3>Download the data</h3>
           <ul class="files">
-            <li><a href="data/monthly.csv" download>monthly.csv</a><span>Headline figures for each month: learners, girls, boys, learners with disability, improved, completed, institutions, educators.</span></li>
+            <li><a href="data/monthly.csv" download>monthly.csv</a><span>Headline figures for each month: learners, girls, boys, learners with disability, improved, identified for support, completed, institutions, educators (female, male).</span></li>
             <li><a href="data/by_level.csv" download>by_level.csv</a><span>Learners reached and marked improved, by month and education level.</span></li>
-            <li><a href="data/regions.csv" download>regions.csv</a><span>Learners and schools by month and region.</span></li>
+            <li><a href="data/regions.csv" download>regions.csv</a><span>Learners, schools and learners marked improved, by month and region.</span></li>
           </ul>
           <p class="cap">Totals and breakdowns only. No learner names or IDs are published.</p>
         </div>
@@ -104,6 +130,7 @@
             <dt>Learners reached</dt><dd>Learners who used TABASAM for learning or assessment during the month.</dd>
             <dt>Marked as improved</dt><dd>Learners recorded as "Improved" rather than "Needs Support", divided by learners reached in months when outcomes were assessed. Learning outcomes have been assessed since January 2026.</dd>
             <dt>Learning institutions</dt><dd>Schools, centres and other institutions with learners or educators using TABASAM in the month.</dd>
+            <dt>Identified for support</dt><dd>Learners recorded as "Needs Support" in the month: TABASAM's diagnostic result that a learner needs additional help.</dd>
             <dt>Educators</dt><dd>Teachers and other educators using TABASAM in the month.</dd>
             <dt>MCF EdTech Fellowship target</dt><dd>Beneficiaries (learners plus educators) added up from the first monthly report to the month shown, against the fellowship target.</dd>
             <dt>All months</dt><dd>The opening view: totals across all monthly reports. Each learner is counted once.</dd>

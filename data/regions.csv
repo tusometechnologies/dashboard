@@ -1,76 +1,76 @@
-period,region,learners,schools
-2025-04,Dar es Salaam,375,6
-2025-05,Dar es Salaam,19,3
-2025-05,Kilimanjaro,0,1
-2025-06,Dar es Salaam,15,4
-2025-07,Dar es Salaam,36,13
-2025-08,Dar es Salaam,442,9
-2025-08,Mwanza,300,17
-2025-08,Arusha,3,0
-2025-08,Dodoma,1,0
-2025-08,Zanzibar,1,0
-2025-08,Pwani,1,0
-2025-09,Tanga,309,0
-2025-09,Mjini Magharibi,0,3
-2025-10,Tanga,151,4
-2025-10,Zanzibar South,0,1
-2025-11,Tanga,2116,12
-2025-11,Dar es Salaam,0,1
-2025-12,Tanga,1142,5
-2025-12,Dar es Salaam,258,2
-2025-12,Mwanza,169,0
-2026-01,Tanga,1621,1
-2026-01,Dar es Salaam,317,2
-2026-01,Mwanza,143,1
-2026-02,Dar es Salaam,393,2
-2026-02,Arusha,216,1
-2026-02,Mwanza,207,1
-2026-02,Tanga,195,1
-2026-03,Dar es Salaam,324,0
-2026-03,Morogoro,133,0
-2026-03,Zanzibar,117,0
-2026-03,Tanga,114,1
-2026-03,Arusha,112,4
-2026-03,Mwanza,100,1
-2026-04,Dar es Salaam,123,0
-2026-04,Mwanza,49,1
-2026-04,Arusha,46,4
-2026-04,Zanzibar,45,0
-2026-04,Morogoro,41,0
-2026-04,Tanga,38,1
-2026-05,Dar es Salaam,144,0
-2026-05,Mwanza,54,1
-2026-05,Zanzibar,53,0
-2026-05,Morogoro,48,0
-2026-05,Arusha,45,1
-2026-05,Tanga,45,1
-2026-06,Dar es Salaam,69,0
-2026-06,Arusha,28,0
-2026-06,Morogoro,19,0
-2026-06,Zanzibar,19,0
-2026-06,Tanga,18,1
-2026-06,Mwanza,15,2
-2026-07,Dar es Salaam,115,0
-2026-07,Morogoro,53,0
-2026-07,Zanzibar,40,0
-2026-07,Arusha,40,0
-2026-07,Mwanza,33,0
-2026-07,Tanga,30,0
-2026-08,Tanga,149,1
-2026-08,Dar es Salaam,8,3
-2026-08,Mwanza,3,1
-2026-08,Zanzibar,2,1
-2026-08,Morogoro,2,1
-2026-08,Arusha,2,1
-2026-09,Tanga,148,1
-2026-09,Dar es Salaam,8,3
-2026-09,Mwanza,3,1
-2026-09,Morogoro,2,1
-2026-09,Arusha,2,1
-2026-09,Zanzibar,2,1
-2026-10,Tanga,180,1
-2026-10,Dar es Salaam,9,3
-2026-10,Arusha,3,1
-2026-10,Zanzibar,3,1
-2026-10,Mwanza,3,1
-2026-10,Morogoro,2,1
+period,region,learners,schools,improved
+2025-04,Dar es Salaam,375,6,
+2025-05,Dar es Salaam,19,3,
+2025-05,Kilimanjaro,0,1,
+2025-06,Dar es Salaam,15,4,
+2025-07,Dar es Salaam,36,13,
+2025-08,Dar es Salaam,442,9,
+2025-08,Mwanza,300,17,
+2025-08,Arusha,3,0,
+2025-08,Dodoma,1,0,
+2025-08,Zanzibar,1,0,
+2025-08,Pwani,1,0,
+2025-09,Tanga,309,0,
+2025-09,Mjini Magharibi,0,3,
+2025-10,Tanga,151,4,
+2025-10,Zanzibar South,0,1,
+2025-11,Tanga,2116,12,
+2025-11,Dar es Salaam,0,1,
+2025-12,Tanga,1142,5,
+2025-12,Dar es Salaam,258,2,
+2025-12,Mwanza,169,0,
+2026-01,Tanga,1621,1,720
+2026-01,Dar es Salaam,317,2,142
+2026-01,Mwanza,143,1,70
+2026-02,Dar es Salaam,393,2,211
+2026-02,Arusha,216,1,138
+2026-02,Mwanza,207,1,121
+2026-02,Tanga,195,1,122
+2026-03,Dar es Salaam,324,0,235
+2026-03,Morogoro,133,0,101
+2026-03,Zanzibar,117,0,87
+2026-03,Tanga,114,1,81
+2026-03,Arusha,112,4,77
+2026-03,Mwanza,100,1,73
+2026-04,Dar es Salaam,123,0,88
+2026-04,Mwanza,49,1,37
+2026-04,Arusha,46,4,32
+2026-04,Zanzibar,45,0,36
+2026-04,Morogoro,41,0,31
+2026-04,Tanga,38,1,20
+2026-05,Dar es Salaam,144,0,112
+2026-05,Mwanza,54,1,39
+2026-05,Zanzibar,53,0,39
+2026-05,Morogoro,48,0,36
+2026-05,Arusha,45,1,29
+2026-05,Tanga,45,1,34
+2026-06,Dar es Salaam,69,0,51
+2026-06,Arusha,28,0,19
+2026-06,Morogoro,19,0,19
+2026-06,Zanzibar,19,0,14
+2026-06,Tanga,18,1,17
+2026-06,Mwanza,15,2,12
+2026-07,Dar es Salaam,115,0,83
+2026-07,Morogoro,53,0,39
+2026-07,Zanzibar,40,0,30
+2026-07,Arusha,40,0,27
+2026-07,Mwanza,33,0,24
+2026-07,Tanga,30,0,23
+2026-08,Tanga,149,1,107
+2026-08,Dar es Salaam,8,3,5
+2026-08,Mwanza,3,1,3
+2026-08,Zanzibar,2,1,2
+2026-08,Morogoro,2,1,2
+2026-08,Arusha,2,1,1
+2026-09,Tanga,148,1,111
+2026-09,Dar es Salaam,8,3,7
+2026-09,Mwanza,3,1,2
+2026-09,Morogoro,2,1,2
+2026-09,Arusha,2,1,1
+2026-09,Zanzibar,2,1,1
+2026-10,Tanga,180,1,125
+2026-10,Dar es Salaam,9,3,9
+2026-10,Arusha,3,1,1
+2026-10,Zanzibar,3,1,3
+2026-10,Mwanza,3,1,2
+2026-10,Morogoro,2,1,2

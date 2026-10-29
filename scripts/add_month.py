@@ -42,9 +42,9 @@ DATA = ROOT / "data"
 
 MONTHLY_COLS = ["period", "label", "learners", "girls", "boys", "pwd", "improved", "improved_girls",
                 "improved_boys", "completed", "institutions", "educators", "source", "note",
-                "highlight", "priority"]
+                "highlight", "priority", "needs_support", "educators_female", "educators_male"]
 LEVEL_COLS = ["period", "level", "reached", "improved"]
-REGION_COLS = ["period", "region", "learners", "schools"]
+REGION_COLS = ["period", "region", "learners", "schools", "improved"]
 
 LEVEL_MAP = {
     "pre primary/early childhood": "Pre-primary", "pre-primary": "Pre-primary", "pre primary": "Pre-primary",
@@ -233,15 +233,19 @@ def build(path, period_override=None, note="", highlight="", priority=""):
         "note": note or "",
         "highlight": highlight or "",
         "priority": priority or "",
+        "needs_support": count(lambda r: norm(r.get("improved")).startswith("needs")),
+        "educators_female": sum(g(e) == "f" for e in educators),
+        "educators_male": sum(g(e) == "m" for e in educators),
     }
     levels = defaultdict(lambda: [0, 0])
     for r in learners:
         lv = LEVEL_MAP.get(norm(r.get("level")), str(r.get("level") or "Not recorded").strip())
         levels[lv][0] += 1
         levels[lv][1] += imp(r)
-    regions = defaultdict(lambda: [0, 0])
+    regions = defaultdict(lambda: [0, 0, 0])
     for r in learners:
         regions[region_name(r.get("region"))][0] += 1
+        regions[region_name(r.get("region"))][2] += imp(r)
     for s in schools:
         regions[region_name(s.get("region"))][1] += 1
 
@@ -274,7 +278,8 @@ def build(path, period_override=None, note="", highlight="", priority=""):
 
     level_rows = [{"period": period, "level": k, "reached": v[0], "improved": v[1] if measured else ""}
                   for k, v in levels.items()]
-    region_rows = [{"period": period, "region": k, "learners": v[0], "schools": v[1]} for k, v in regions.items()]
+    region_rows = [{"period": period, "region": k, "learners": v[0], "schools": v[1], "improved": v[2] if measured else ""}
+                   for k, v in regions.items()]
     return row, level_rows, region_rows, warnings, (ls.title, es.title if es else None, ss.title if ss else None)
 
 
