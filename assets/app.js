@@ -37,8 +37,11 @@
     d3.csv('data/monthly.csv'),
     d3.csv('data/by_level.csv'),
     d3.csv('data/regions.csv'),
-    d3.json('data/meta.json').catch(() => ({}))
-  ]).then(([monthly, levels, regions, meta]) => {
+    d3.json('data/meta.json').catch(() => ({})),
+    d3.csv('data/milestones.csv').catch(() => []),
+    d3.csv('data/partners.csv').catch(() => [])
+  ]).then(([monthly, levels, regions, meta, milestones, partners]) => {
+    S.milestones = milestones; S.partners = partners;
     S.monthly = monthly
       .map((r) => num(r, ['learners', 'girls', 'boys', 'pwd', 'improved', 'improved_girls', 'improved_boys', 'completed', 'institutions', 'educators',
         'needs_support', 'educators_female', 'educators_male']))
@@ -177,8 +180,55 @@
       ? `Target reached in ${hit.label}.` : `${fmt(T - n)} beneficiaries to go.`;
   }
 
+  // ---------- milestones and partners (text from the narrative reports) ----------
+  const CATS = ['Product', 'Implementation', 'Training', 'Research', 'Event', 'Partnership', 'Organisation'];
+  const catColor = (c) => css(['--c1', '--c0', '--c2', '--c3', '--c4', '--ink', '--muted'][CATS.indexOf(c)] || '--muted');
+  const labelOf = (p) => (S.monthly.find((r) => r.period === p) || {}).label || p;
+  S.cat = 'All';
+
+  function renderMilestones() {
+    const items = S.milestones.filter((m) => (isAll() || m.period === S.period) && (S.cat === 'All' || m.category === S.cat))
+      .sort((a, b) => d3.descending(a.period, b.period));
+    const used = ['All', ...CATS.filter((c) => S.milestones.some((m) => m.category === c))];
+    document.getElementById('ms-filter').replaceChildren(...used.map((c) => {
+      const b = document.createElement('button'); b.type = 'button'; b.textContent = c;
+      b.setAttribute('aria-pressed', String(S.cat === c)); b.addEventListener('click', () => { S.cat = c; renderMilestones(); });
+      return b;
+    }));
+    const list = document.getElementById('ms-list'), out = [];
+    d3.groups(items, (m) => m.period).forEach(([p, ms]) => {
+      if (isAll()) {
+        const h = document.createElement('li'); h.className = 'ms-month';
+        const b = document.createElement('button'); b.textContent = labelOf(p); b.addEventListener('click', () => pick(p));
+        h.append(b); out.push(h);
+      }
+      ms.forEach((m) => {
+        const li = document.createElement('li'); li.className = 'ms-item';
+        const cat = document.createElement('span'); cat.className = 'ms-cat';
+        const dot = document.createElement('i'); dot.style.background = catColor(m.category); cat.append(dot, m.category);
+        const body = document.createElement('div'); body.append(bold(m.title)); const t = document.createElement('span'); t.textContent = m.text; body.append(t);
+        li.append(cat, body); out.push(li);
+      });
+    });
+    if (!out.length) { const li = document.createElement('li'); li.className = 'cap'; li.textContent = 'No milestones of this type for this month.'; out.push(li); }
+    list.replaceChildren(...out);
+  }
+
+  function renderPartners() {
+    const order = { agreement: 0, programme: 1, collaboration: 2 };
+    const tag = { agreement: 'Agreement signed', programme: 'Fellowship programme' };
+    document.getElementById('partner-list').replaceChildren(...S.partners.slice()
+      .sort((a, b) => (order[a.status] ?? 9) - (order[b.status] ?? 9) || d3.ascending(a.since, b.since)).map((p) => {
+        const d = document.createElement('div'); d.className = 'partner';
+        if (tag[p.status]) { const t = document.createElement('span'); t.className = 'tag'; t.textContent = tag[p.status]; d.append(t); }
+        const meta = document.createElement('span'); meta.className = 'meta'; meta.textContent = `${p.type} · since ${labelOf(p.since)}`;
+        const desc = document.createElement('p'); desc.textContent = p.description;
+        d.append(bold(p.name), meta, desc); return d;
+      }));
+  }
+
   function renderCharts() {
-    renderGoal();
+    renderGoal(); renderMilestones(); renderPartners();
     drawReach(); drawRegions(); drawTrend();
     const r = current();
     const lv = levelRows().map((x) => ({ name: x.level, reached: x.reached, improved: x.improved }));

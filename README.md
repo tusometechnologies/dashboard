@@ -28,6 +28,10 @@ step. Every push to `main` publishes the site through Vercel.
   for example `dashboard.tusome.africa/#2026-10`.
 - Learners reached each month by education level (pre-primary to professional), and by region.
 - Share marked as improved by month, and by level and gender.
+- Learners identified for support (marked "Needs Support") by month, and improved share by region.
+- Inclusion: learners with disability by month, and the female/male split of learners and educators.
+- Milestones from the narrative reports, filterable by type (product, implementation, training, research,
+  events, partnerships), and the partners TUSOME works with on TABASAM.
 - Downloadable CSVs (counts only, no learner records) and definitions.
 
 The page shows no notes or caveats. Data decisions are recorded in `CLAUDE.md` and the commit history.
@@ -72,6 +76,7 @@ git add data && git commit -m "Add November 2026 report" && git push
 | `index.html`, `assets/` | The page, styles, script and charting library (d3, kept locally) |
 | `data/monthly.csv` | One row per month: headline counts, highlight, priority |
 | `data/by_level.csv`, `data/regions.csv` | Learners (and improved, schools) by level and by region |
+| `data/milestones.csv`, `data/partners.csv` | Milestones and partners, written from the narrative reports |
 | `scripts/add_month.py` | Reads a monthly report and updates `data/` |
 | `scripts/check_data.py` | Checks the data before publishing |
 | `CLAUDE.md` | Instructions and data decisions for Claude Code |

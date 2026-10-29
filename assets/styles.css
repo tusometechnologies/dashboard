@@ -93,6 +93,26 @@ h1 { font-family: var(--display); font-weight: 500; font-size: clamp(26px, 4vw, 
 .cap { margin: 0; color: var(--muted); font-size: 13px; }
 .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12.5px; color: var(--muted); }
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
+.grid > .wide { grid-column: 1 / -1; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips button { font: inherit; font-size: 12.5px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--muted); cursor: pointer; }
+.chips button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.ms-list { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 2px; max-height: 560px; overflow-y: auto; }
+.ms-month { margin: 10px 0 2px; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.ms-month button { all: unset; cursor: pointer; }
+.ms-month button:hover { color: var(--purple); }
+.ms-item { display: grid; grid-template-columns: 7.5rem 1fr; gap: 4px 14px; padding: 8px 0; border-top: 1px solid var(--line); }
+.ms-cat { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); align-self: start; padding-top: 2px; }
+.ms-cat i { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.ms-item b { display: block; font-weight: 600; font-size: 14px; }
+.ms-item span { color: var(--muted); font-size: 13.5px; }
+.partners { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); }
+.partner { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; display: grid; gap: 4px; align-content: start; }
+.partner b { font-size: 14px; }
+.partner .meta { font-size: 12px; color: var(--muted); }
+.partner .tag { justify-self: start; font-size: 11.5px; padding: 2px 8px; border-radius: 999px; background: var(--purple); color: #fff; }
+.partner p { margin: 0; font-size: 13px; color: var(--muted); }
+@media (max-width: 560px) { .ms-item { grid-template-columns: 1fr; } }
 .split-key { display: flex; gap: 14px; font-size: 12.5px; color: var(--muted); }
 .goal { margin: 18px 0 0; padding: 16px 18px 14px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); }
 .goal[hidden] { display: none; }

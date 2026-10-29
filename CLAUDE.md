@@ -14,7 +14,17 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
   month's narrative report (purple). `priority` is the main priority for the next month, from the report's
   "Priority Activities for the Next Month" section (blue). Highlights and priorities never flag a month in the charts.
 - `data/by_level.csv`: period, level (Pre-primary / Primary / Secondary / Tertiary / Professional), reached, improved.
-- `data/regions.csv`: period, region, learners, schools.
+- `data/regions.csv`: period, region, learners, schools, improved.
+- `monthly.csv` also holds `needs_support` (learners marked "Needs Support"; blank when outcomes were not
+  assessed), `educators_female` and `educators_male` (May 2026: 10 educators have no gender recorded).
+- `data/milestones.csv`: period, category (Product / Implementation / Training / Research / Event /
+  Partnership / Organisation), title, text. Written by hand from the narrative reports (.docx), 1–4 per
+  month. Same rules as highlights: one factual sentence, no figures, no internal matters, nothing exploratory.
+- `data/partners.csv`: name, type, since (YYYY-MM), status (`agreement` = signed agreement stated in a report;
+  `programme` = fellowship funder or organiser; `collaboration` = concrete joint work described), description.
+  Only organisations with a signed agreement or concrete joint work are published. Talks, plans, MoUs in
+  progress and partners that are only listed (for example The Cube, CAS, Montessori, Patandi, Rwanda
+  Learnershood, HWPL Korea, One Million Teachers) stay off until a report shows an agreement or joint work.
 - `data/meta.json`: `{"updated": "YYYY-MM-DD", "target": {"beneficiaries": 8000, "label": "MCF EdTech Fellowship target"}}`.
   `updated` is shown in the footer. `target` drives the progress bar: beneficiaries (learners plus educators)
   added up from April 2025 to the selected month. `add_month.py` keeps `target` when it updates the date.
@@ -32,6 +42,7 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
    Add `--highlight "..."` with one thing that stood out in that month's narrative report (the .docx), and
    `--priority "..."` with the main priority for the next month from the same report. Propose both to the user first. Keep it to one factual sentence, with no figures that could disagree with
    the dashboard. Leave out internal matters (audits, finances, contracts) and unsigned partnerships or MoUs.
+   Also propose 1–4 rows for `data/milestones.csv` and any change to `data/partners.csv` from the same report.
 4. Check: `python3 scripts/check_data.py`. Fix every ERROR. Report every WARNING to the user in plain words.
 5. Preview the site: `python3 -m http.server 8000` and open http://localhost:8000. Check the new month
    is selected by default and the charts look right.
