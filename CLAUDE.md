@@ -42,8 +42,10 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
 - `monthly.csv` also holds `learners_urban`, `learners_semi_urban`, `learners_rural`, from the learner list's
   geographical column. Blank counts as urban (those learners have no region and are counted in Dar es Salaam).
   Korogwe/Tanga learners are recorded as semi-urban; only 5 learners (August 2025) are recorded as rural.
+  The page shows two groups, Urban and Rural, with semi-urban counted as rural (TUSOME's instruction).
 - `data/voices.csv`: quote, name, role, group. Quotes are published verbatim and attributed. Current quotes
-  are copied from TUSOME's own TABASAM site (screen.tusome.ac.tz). Add a quote only when TUSOME supplies it
+  were confirmed by TUSOME: two from screen.tusome.ac.tz (Ms. Amina Khamis, Dr. Grace Mlawa) and one supplied by
+  TUSOME (Mr. Hassa Ally, teacher, Dar es Salaam, lightly edited for grammar). Voices sits last, before Data. Add a quote only when TUSOME supplies it
   and confirms the person agreed to be quoted; the narrative reports contain no usable quotes.
   The Voices section is hidden when the file has no rows.
 - `data/meta.json`: `{"updated": "YYYY-MM-DD", "target": {"beneficiaries": 8000, "label": "MCF EdTech Fellowship target"}}`.

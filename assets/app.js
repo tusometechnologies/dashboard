@@ -274,10 +274,11 @@
       { name: 'Improved learning outcomes', n: r.improved, of: assessedN, color: css('--c1') },
       { name: 'Identified for support', n: r.needs_support, of: assessedN, color: css('--c2') }
     ] : [], none);
+    // Two groups on the page: semi-urban is counted as rural (TUSOME's instruction).
+    const rural = r.learners_semi_urban == null && r.learners_rural == null ? null : (r.learners_semi_urban || 0) + (r.learners_rural || 0);
     countRows('#chart-location', [
       { name: 'Urban', n: r.learners_urban, color: css('--c0') },
-      { name: 'Semi-urban', n: r.learners_semi_urban, color: css('--c1') },
-      { name: 'Rural', n: r.learners_rural, color: css('--c2') }
+      { name: 'Rural', n: rural, color: css('--c1') }
     ].map((x, i, all) => ({ ...x, of: d3.sum(all, (y) => y.n || 0) })), 'No location recorded for this month.');
     monthBars('#chart-support', 'needs_support', css('--c2'), 'Learners identified for support, by month');
     monthBars('#chart-pwd', 'pwd', css('--c0'), 'Learners with disability, by month');
