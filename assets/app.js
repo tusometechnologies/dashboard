@@ -217,21 +217,20 @@
   // Partners grouped by status: signed agreements and the fellowship first, then joint work, then talks.
   const GROUPS = [
     { title: 'Agreements and fellowship programme', status: ['agreement', 'programme'] },
-    { title: 'Working with', status: ['collaboration'] },
-    { title: 'Exploring', status: ['exploring'] }
+    { title: 'Working with', status: ['collaboration', 'exploring'], sortBy: 'since' }
   ];
-  const TAG = { agreement: 'Agreement signed', programme: 'Fellowship programme', exploring: 'Exploring' };
+  const TAG = { agreement: 'Agreement signed', programme: 'Fellowship programme' };
   function renderPartners() {
     const out = [];
     GROUPS.forEach((g) => {
       const ps = S.partners.filter((p) => g.status.includes(p.status))
-        .sort((a, b) => g.status.indexOf(a.status) - g.status.indexOf(b.status) || d3.ascending(a.since, b.since));
+        .sort((a, b) => (g.sortBy === 'since' ? 0 : g.status.indexOf(a.status) - g.status.indexOf(b.status)) || d3.ascending(a.since, b.since));
       if (!ps.length) return;
       const h = document.createElement('h4'); h.className = 'partner-group'; h.textContent = `${g.title} (${ps.length})`; out.push(h);
       ps.forEach((p) => {
-        const d = document.createElement('div'); d.className = `partner ${p.status}`;
+        const d = document.createElement('div'); d.className = 'partner';
         if (TAG[p.status]) { const t = document.createElement('span'); t.className = 'tag'; t.textContent = TAG[p.status]; d.append(t); }
-        const meta = document.createElement('span'); meta.className = 'meta'; meta.textContent = `${p.type} · since ${labelOf(p.since)}`;
+        const meta = document.createElement('span'); meta.className = 'meta'; meta.textContent = [p.type, p.schools ? `${fmt(+p.schools)} schools` : '', `since ${labelOf(p.since)}`].filter(Boolean).join(' · ');
         const desc = document.createElement('p'); desc.textContent = p.description;
         d.append(bold(p.name), meta, desc); out.push(d);
       });

@@ -29,8 +29,10 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
 - `data/partners.csv`: name, type, since (YYYY-MM), status (`agreement` = signed agreement stated in a report;
   `programme` = fellowship funder or organiser; `collaboration` = concrete joint work described;
   `exploring` = talks, plans, MoUs in preparation or partners only named in a report), description.
-  TUSOME asked for every partner named in the reports to be shown. Keep the status honest: an organisation
-  moves to `agreement` only when a report states an agreement was signed.
+  TUSOME asked for every partner named in the reports to be shown. `collaboration` and `exploring` partners
+  appear together under "Working with", with no label (TUSOME's instruction); the status stays in the CSV.
+  An organisation moves to `agreement` only when a report states an agreement was signed. Optional column
+  `schools`: schools per region supplied by TUSOME (Tanga 31, Mwanza 25, Zanzibar 268), shown on the card.
 - `data/meta.json`: `{"updated": "YYYY-MM-DD", "target": {"beneficiaries": 8000, "label": "MCF EdTech Fellowship target"}}`.
   `updated` is shown in the footer. `target` drives the progress bar: beneficiaries (learners plus educators)
   added up from April 2025 to the selected month. `add_month.py` keeps `target` when it updates the date.

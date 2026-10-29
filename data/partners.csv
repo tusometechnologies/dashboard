@@ -1,33 +1,33 @@
-name,type,since,status,description
-Carnegie Mellon University,Research,2025-05,agreement,"Research collaboration on TABASAM: teacher surveys, a research testbed and joint analysis of the Korogwe study data."
-Cardinal Rugambwa Hospital,Health,2025-09,agreement,TABASAM supports children with disabilities in the hospital's rehabilitation programme.
-Mastercard Foundation,Programme,2025-04,programme,Funds the EdTech Fellowship that supports TABASAM's development and implementation.
-Sahara Consult,Programme,2025-04,programme,"Runs the EdTech Fellowship, including mentoring, technical training and showcase events."
-Queen's University,University,2025-04,collaboration,Mentored TUSOME on vocational skills integration; TUSOME hosted its teacher candidates and professors in Tanzania for a month in March 2026.
-Aga Khan University,University,2025-04,collaboration,Facilitated fellowship training and hosted the Nairobi conference where TABASAM was presented.
-Schools in Korogwe,Schools,2025-07,collaboration,"Teachers are trained, mentored and observed using TABASAM in their classrooms."
-Primary schools in Mwanza,Schools,2025-08,collaboration,Took part in TABASAM outreach on early screening of learning needs.
-Butimba Teachers College,Teacher education,2025-08,collaboration,Hosted an AI literacy and learning innovation session for student teachers.
-Morogoro District Education Office,Government,2026-01,collaboration,Supported community outreach inviting schools and teachers to join TABASAM.
-Kwasa,Business support,2025-06,collaboration,Carried out a business assessment of TUSOME during the fellowship.
-ENEA,Business support,2025-10,collaboration,Gave TUSOME one-to-one business mentoring during the fellowship.
-QUASAR,Business support,2025-10,collaboration,Mentored TUSOME on strategic growth and data management.
-Abood FM Radio,Media,2026-01,collaboration,Carried community outreach in Morogoro inviting schools and teachers to join TABASAM.
-Secondary schools in Zanzibar and the mainland,Schools,2025-09,collaboration,"Hosted workshops on learning-disability awareness and the TABASAM tool, including Tumekuja, Magufuli and Kiembe Samaki Islamic secondary schools."
-One Million Teachers,NGO,2025-04,exploring,Named as a collaboration in teacher development; joint activities are still to be defined.
-Aga Khan Primary School,Schools,2025-04,exploring,Named as a partner school for TABASAM.
-Dyslexia Tanzania,NGO,2025-05,exploring,Collaboration on supporting learners with dyslexia under discussion.
-"Universities in Poland, India, Malaysia and the UAE",University,2025-05,exploring,"Vistula University, Kalinga University, Noida International University, Gurunanak University, Collins College and an institution in Dubai, named as international collaborations."
-David Game College,University,2025-06,exploring,Discussions on possible collaboration following a visit.
-Korogwe Teachers Training College,Teacher education,2025-07,exploring,Named as a partner for introducing TABASAM to student teachers.
-Winners Pre and Primary School,Schools,2025-07,exploring,Named as a partner school for TABASAM.
-Malinda Primary School,Schools,2025-07,exploring,Named as a partner school for TABASAM.
-The Cube,Private sector,2025-07,exploring,Partnership agreement in preparation.
-TECEC (Teacher Education and Community Engagement Center),NGO,2025-08,exploring,Named as a partner in teacher education and community engagement.
-Chemchemi,Partner,2025-07,exploring,Named as a partner for TABASAM.
-Abacus Prime,Private sector,2025-08,exploring,Named as a partner for TABASAM.
-Computer Access for Schools (CAS),Private sector,2025-11,exploring,Exploring putting TABASAM on the devices CAS supplies to schools.
-Montessori School,Schools,2025-11,exploring,Partnership agreement in preparation.
-Patandi Teachers College,Teacher education,2026-03,exploring,Exploring TABASAM as a tool in special-education teacher training.
-Rwanda Learnershood,Private sector,2026-06,exploring,Memorandum of understanding in preparation to integrate TABASAM into its learning ecosystem in Rwanda.
-HWPL Korea,NGO,2026-06,exploring,Testing how peace education can fit within TABASAM's social and emotional learning assessments.
+name,type,since,status,schools,description
+Carnegie Mellon University,Research,2025-05,agreement,,"Research collaboration on TABASAM: teacher surveys, a research testbed and joint analysis of the Korogwe study data."
+Cardinal Rugambwa Hospital,Health,2025-09,agreement,,TABASAM supports children with disabilities in the hospital's rehabilitation programme.
+Mastercard Foundation,Programme,2025-04,programme,,Funds the EdTech Fellowship that supports TABASAM's development and implementation.
+Sahara Consult,Programme,2025-04,programme,,"Runs the EdTech Fellowship, including mentoring, technical training and showcase events."
+Queen's University,University,2025-04,collaboration,,Mentored TUSOME on vocational skills integration; TUSOME hosted its teacher candidates and professors in Tanzania for a month in March 2026.
+Aga Khan University,University,2025-04,collaboration,,Facilitated fellowship training and hosted the Nairobi conference where TABASAM was presented.
+Schools in Tanga,Schools,2025-07,collaboration,31,"Schools in Tanga, including Korogwe District, where teachers are trained, mentored and observed using TABASAM in their classrooms."
+Schools in Mwanza,Schools,2025-08,collaboration,25,"Schools in Mwanza taking part in TABASAM, including outreach on early screening of learning needs."
+Butimba Teachers College,Teacher education,2025-08,collaboration,,Hosted an AI literacy and learning innovation session for student teachers.
+Morogoro District Education Office,Government,2026-01,collaboration,,Supported community outreach inviting schools and teachers to join TABASAM.
+Kwasa,Business support,2025-06,collaboration,,Carried out a business assessment of TUSOME during the fellowship.
+ENEA,Business support,2025-10,collaboration,,Gave TUSOME one-to-one business mentoring during the fellowship.
+QUASAR,Business support,2025-10,collaboration,,Mentored TUSOME on strategic growth and data management.
+Abood FM Radio,Media,2026-01,collaboration,,Carried community outreach in Morogoro inviting schools and teachers to join TABASAM.
+Schools in Zanzibar,Schools,2025-09,collaboration,268,"Schools in Zanzibar taking part in TABASAM, including Tumekuja, Magufuli and Kiembe Samaki Islamic secondary schools, which hosted workshops on learning-disability awareness."
+One Million Teachers,NGO,2025-04,exploring,,Named as a collaboration in teacher development; joint activities are still to be defined.
+Aga Khan Primary School,Schools,2025-04,exploring,,Named as a partner school for TABASAM.
+Dyslexia Tanzania,NGO,2025-05,exploring,,Collaboration on supporting learners with dyslexia under discussion.
+"Universities in Poland, India, Malaysia and the UAE",University,2025-05,exploring,,"Vistula University, Kalinga University, Noida International University, Gurunanak University, Collins College and an institution in Dubai, named as international collaborations."
+David Game College,University,2025-06,exploring,,Discussions on possible collaboration following a visit.
+Korogwe Teachers Training College,Teacher education,2025-07,exploring,,Named as a partner for introducing TABASAM to student teachers.
+Winners Pre and Primary School,Schools,2025-07,exploring,,Named as a partner school for TABASAM.
+Malinda Primary School,Schools,2025-07,exploring,,Named as a partner school for TABASAM.
+The Cube,Private sector,2025-07,exploring,,Partnership agreement in preparation.
+TECEC (Teacher Education and Community Engagement Center),NGO,2025-08,exploring,,Named as a partner in teacher education and community engagement.
+Chemchemi,Partner,2025-07,exploring,,Named as a partner for TABASAM.
+Abacus Prime,Private sector,2025-08,exploring,,Named as a partner for TABASAM.
+Computer Access for Schools (CAS),Private sector,2025-11,exploring,,Exploring putting TABASAM on the devices CAS supplies to schools.
+Montessori School,Schools,2025-11,exploring,,Partnership agreement in preparation.
+Patandi Teachers College,Teacher education,2026-03,exploring,,Exploring TABASAM as a tool in special-education teacher training.
+Rwanda Learnershood,Private sector,2026-06,exploring,,Memorandum of understanding in preparation to integrate TABASAM into its learning ecosystem in Rwanda.
+HWPL Korea,NGO,2026-06,exploring,,Testing how peace education can fit within TABASAM's social and emotional learning assessments.
