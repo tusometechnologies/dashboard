@@ -1,7 +1,31 @@
 period,region,learners,schools
+2026-06,Dar es Salaam,69,0
+2026-06,Arusha,28,0
+2026-06,Morogoro,19,0
+2026-06,Zanzibar,19,0
+2026-06,Tanga,18,1
+2026-06,Mwanza,15,2
+2026-07,Dar es Salaam,115,0
+2026-07,Morogoro,53,0
+2026-07,Zanzibar,40,0
+2026-07,Arusha,40,0
+2026-07,Mwanza,33,0
+2026-07,Tanga,30,0
+2026-08,Tanga,149,1
+2026-08,Dar es Salaam,8,3
+2026-08,Mwanza,3,1
+2026-08,Zanzibar,2,1
+2026-08,Morogoro,2,1
+2026-08,Arusha,2,1
+2026-09,Tanga,148,1
+2026-09,Dar es Salaam,8,3
+2026-09,Mwanza,3,1
+2026-09,Morogoro,2,1
+2026-09,Arusha,2,1
+2026-09,Zanzibar,2,1
 2026-10,Tanga,180,1
 2026-10,Dar es Salaam,9,3
 2026-10,Arusha,3,1
-2026-10,Mwanza,3,1
 2026-10,Zanzibar,3,1
+2026-10,Mwanza,3,1
 2026-10,Morogoro,2,1
