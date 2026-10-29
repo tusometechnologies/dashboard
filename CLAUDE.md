@@ -57,7 +57,8 @@ do, set `source` to `entered by hand` and say so in the commit message.
   learners reached, and only October has a region breakdown. Re-importing gives every month a region
   breakdown and replaces summary figures with counts from the lists. Expect some figures to change; show
   the user every change before writing.
-- Replace the text wordmark in `index.html` with the official TUSOME logo (`assets/logo.svg`).
+- Done: the header uses a text wordmark in TUSOME brand colours (no official logo file was available).
+  If an official logo file is supplied, put it at `assets/logo.svg` and swap the wordmark span in `index.html`.
 
 ## Local commands
 
