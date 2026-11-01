@@ -14,7 +14,7 @@ step. Every push to `main` publishes the site through Vercel.
 | Highlights | One highlight and one next-month priority per month, taken from the narrative reports (.docx). April–July 2025 reports have no priority |
 | Branding | Text wordmark in TUSOME colours. No official logo file has been added yet |
 | Repository | `tusometechnologies/dashboard`, branch `main` |
-| Hosting | Vercel, domain `dashboard.tusome.africa` (see setup below if not yet connected) |
+| Hosting | Vercel, live at `mcf.tusome.ac.tz` |
 | Source reports | TUSOME Google Drive, TABASAM reports folder. Copies go in `reports/`, which is never uploaded |
 
 ## What is on the page
@@ -25,7 +25,7 @@ step. Every push to `main` publishes the site through Vercel.
   the percentage reached and the month the target was passed. The target is set in `data/meta.json`.
 - **One month** (pick from the menu, or click a bar or point): that month's figures with the change from
   the previous month, its highlight and its priority for the next month. Each month has its own link,
-  for example `dashboard.tusome.africa/#2026-10`.
+  for example `mcf.tusome.ac.tz/#2026-10`.
 - Learners reached each month by education level (pre-primary to professional), and by region.
 - Share marked as improved by month, and by level and gender.
 - A section menu, a "How TABASAM works" explainer (linked to screen.tusome.ac.tz), the data period beside
@@ -66,7 +66,7 @@ git add data && git commit -m "Add November 2026 report" && git push
 
 1. **Connect Vercel.** Add New → Project → import `tusometechnologies/dashboard`. Framework preset:
    **Other**. Leave the build command and output directory empty. Deploy.
-2. **Add the domain.** Settings → Domains → add `dashboard.tusome.africa`, then add the DNS record Vercel
+2. **Add the domain.** Settings → Domains → add `mcf.tusome.ac.tz`, then add the DNS record Vercel
    shows (usually a CNAME) at the domain provider.
 3. **Optional: restrict access.** The site is public. To require a password, turn on Password Protection
    (Settings → Deployment Protection; a paid add-on on Pro).

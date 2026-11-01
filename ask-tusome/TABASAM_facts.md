@@ -1,6 +1,6 @@
 # TABASAM figures — MCF EdTech Fellowship (live)
 
-Source: the TABASAM Fellowship Dashboard (https://dashboard.tusome.africa), built from TUSOME's monthly reports to Sahara Consult. Data: April 2025 – October 2026. Last updated 2026-10-29. This document is regenerated from the dashboard data after every monthly update; quote figures from the latest version only.
+Source: the TABASAM Fellowship Dashboard (https://mcf.tusome.ac.tz), built from TUSOME's monthly reports to Sahara Consult. Data: April 2025 – October 2026. Last updated 2026-10-29. This document is regenerated from the dashboard data after every monthly update; quote figures from the latest version only.
 
 ## Headline figures (all months)
 
