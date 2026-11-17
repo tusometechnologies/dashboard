@@ -94,7 +94,7 @@ Working with (joint work described in reports): Queen's University; Aga Khan Uni
 
 Exploring (talks, plans or named only; do not describe as signed): One Million Teachers; Aga Khan Primary School; Dyslexia Tanzania; Universities in Poland, India, Malaysia and the UAE; David Game College; Korogwe Teachers Training College; Winners Pre and Primary School; Malinda Primary School; The Cube; TECEC (Teacher Education and Community Engagement Center); Chemchemi; Abacus Prime; Computer Access for Schools (CAS); Montessori School; Patandi Teachers College; Rwanda Learnershood; HWPL Korea.
 
-## Recent milestones
+## Milestones (55, newest first)
 
 - 2026-11 · Research: TUSOME carried out the endline evaluation of the AI for Schools programme to assess outcomes and guide future implementation.
 - 2026-11 · Product: Three teachers and the technical team tested the TABASAM offline app screen by screen, gathering feedback on usability and navigation.
@@ -108,6 +108,49 @@ Exploring (talks, plans or named only; do not describe as signed): One Million T
 - 2026-06 · Implementation: Learners took part in TABASAM-supported learning activities during a June school-holiday programme.
 - 2026-06 · Event: The team took part in community education events, raising awareness of TABASAM among educators, parents and stakeholders.
 - 2026-06 · Partnership: Two meetings with Rwanda Learnershood advanced a memorandum of understanding on integrating TABASAM into its learning ecosystem.
+- 2026-06 · Product: TUSOME and HWPL Korea began testing how peace education competencies could fit within TABASAM's social and emotional learning assessments.
+- 2026-05 · Implementation: New schools were onboarded to TABASAM and began using the platform with implementation support.
+- 2026-05 · Research: Analysis of the Korogwe study data continued with Carnegie Mellon University.
+- 2026-05 · Event: TUSOME was invited to contribute to eLearning Africa discussions, sharing lessons from TABASAM implementation.
+- 2026-04 · Implementation: The team followed up with partner schools to support teachers, monitor TABASAM use and gather classroom feedback.
+- 2026-04 · Event: TUSOME shared TABASAM implementation experience at education conferences and stakeholder forums.
+- 2026-03 · Event: TUSOME presented its product, research and implementation progress at the EdTech Fellowship Demo Day.
+- 2026-03 · Implementation: TABASAM was introduced to new schools and to a teachers' college specialising in special education.
+- 2026-03 · Event: TUSOME took part in the International Day of Women in Science event in Dodoma.
+- 2026-03 · Partnership: TUSOME hosted teacher candidates and professors from Queen's University in Tanzania for a month, visiting schools and institutions using TABASAM.
+- 2026-03 · Partnership: TUSOME began exploring with Patandi Teachers College the use of TABASAM in special-education teacher training.
+- 2026-02 · Research: The team analysed school data with Carnegie Mellon University and helped refine research protocols.
+- 2026-02 · Implementation: Classroom observations and teacher discussions in Korogwe informed improvements to TABASAM's usability.
+- 2026-01 · Research: TUSOME took part in a Carnegie Mellon University testbed to validate data collection tools and refine research workflows.
+- 2026-01 · Implementation: Data collection continued in participating Korogwe schools using TABASAM-informed classroom practice.
+- 2026-01 · Event: Outreach through local radio and the district education office in Morogoro invited schools and teachers to join the next cohort.
+- 2025-12 · Training: Teachers in Korogwe District government schools were trained on updated TABASAM features and gave structured feedback.
+- 2025-12 · Research: An endline survey of Korogwe teachers with Carnegie Mellon University allowed comparison of changes in attitudes, skills and technology use.
+- 2025-11 · Implementation: TABASAM was introduced to new teachers and administrators in additional schools in Korogwe.
+- 2025-11 · Product: AI-assisted components of TABASAM were refined to make individual education plan development faster.
+- 2025-11 · Event: At a Tech Founders Meetup, TUSOME presented TABASAM and argued for purposeful use of AI to support teachers and learning.
+- 2025-11 · Partnership: TUSOME began exploring with Computer Access for Schools how TABASAM could run on the devices it supplies to schools.
+- 2025-10 · Product: Design began on a TABASAM analytical dashboard to track learner progress in literacy, numeracy and behaviour.
+- 2025-10 · Implementation: Trained teachers in urban and peri-urban schools used TABASAM diagnostic reports to guide classroom support.
+- 2025-10 · Event: TUSOME attended Zanzibar Innovation Day.
+- 2025-09 · Partnership: TUSOME signed a memorandum of understanding with Cardinal Rugambwa Hospital to support children with disabilities in its rehabilitation programme.
+- 2025-09 · Product: TABASAM's navigation and reports were improved, giving teachers and parents clearer summaries and individual learning recommendations.
+- 2025-09 · Event: TABASAM was demonstrated at the Sahara Sparks 2025 exhibition in Dar es Salaam.
+- 2025-09 · Research: A mid-point evaluation of TABASAM use was carried out with Korogwe teachers, together with Carnegie Mellon University.
+- 2025-09 · Implementation: Workshops on learning-disability awareness and the TABASAM tool were held in secondary schools in Zanzibar and on the mainland.
+- 2025-08 · Event: TABASAM was presented as a story of change at the Foundation for Learning conference organised by Aga Khan University in Nairobi.
+- 2025-08 · Training: Korogwe teachers received online mentoring on learning disabilities and on using TABASAM reports to plan classroom support.
+- 2025-08 · Implementation: Outreach took TABASAM to primary schools in Mwanza and to Butimba Teachers College, including an AI literacy session for student teachers.
+- 2025-08 · Product: TABASAM gained streamlined reporting features and localised guidance modules in response to teacher feedback.
+- 2025-07 · Training: A workshop in Korogwe trained teachers to use the TABASAM diagnostic tool in their schools.
+- 2025-07 · Product: Feedback from Korogwe outreach led to more accurate assessments, simpler interfaces and content for diverse learning needs.
+- 2025-07 · Research: A baseline survey of the first cohort of Korogwe teachers was carried out with Carnegie Mellon University.
+- 2025-06 · Training: The team joined the fellowship's technical boot camp and AI and data science workshops, applying the skills to refine TABASAM's features.
+- 2025-06 · Event: The team took part in the African Cities Forum and the Tanzania Mental Health Summit.
+- 2025-05 · Event: TABASAM was showcased at the eLearning Africa conference, where the team joined workshops on inclusive early learning and foundational skills.
+- 2025-05 · Product: Informed by user testing, TABASAM moved from a lengthy offline assessment to an online tool that generates personalised learning plans for teachers.
+- 2025-05 · Product: Literacy and numeracy assessments, social-emotional learning tracking, behaviour monitoring and offline functionality for low-connectivity settings were added to TABASAM.
+- 2025-04 · Training: Queen's University mentored TUSOME on integrating vocational skills development into its platform, in line with Tanzania's competence-based curriculum.
 
 ## How the figures are counted (read before quoting)
 

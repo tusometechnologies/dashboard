@@ -154,8 +154,8 @@ def build():
         if ps:
             Pp(f"{title}: " + "; ".join(p["name"] for p in ps) + ".")
 
-    H(2, "Recent milestones")
-    UL([f"{m['period']} · {m['category']}: {m['text']}" for m in sorted(MS, key=lambda m: m["period"], reverse=True)[:12]])
+    H(2, f"Milestones ({len(MS)}, newest first)")
+    UL([f"{m['period']} · {m['category']}: {m['text']}" for m in sorted(MS, key=lambda m: m["period"], reverse=True)])
 
     H(2, "How the figures are counted (read before quoting)")
     UL([
