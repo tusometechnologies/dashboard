@@ -86,7 +86,7 @@ Schools per region supplied by TUSOME: Tanga 31; Mwanza 25; Zanzibar 268.
 
 ## Partners
 
-Signed agreements: Carnegie Mellon University; Cardinal Rugambwa Hospital; IIT Madras Zanzibar.
+Signed agreements: Carnegie Mellon University; Cardinal Rugambwa Hospital; IIT Madras Zanzibar; Eduten.
 
 Fellowship programme: Mastercard Foundation; Sahara Consult.
 
