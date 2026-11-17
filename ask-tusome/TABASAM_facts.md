@@ -1,18 +1,18 @@
 # TABASAM figures — MCF EdTech Fellowship (live)
 
-Source: the TABASAM Fellowship Dashboard (https://mcf.tusome.ac.tz), built from TUSOME's monthly reports to Sahara Consult. Data: March 2025 – October 2026. Last updated 2026-11-17. This document is regenerated from the dashboard data after every monthly update; quote figures from the latest version only.
+Source: the TABASAM Fellowship Dashboard (https://mcf.tusome.ac.tz), built from TUSOME's monthly reports to Sahara Consult. Data: March 2025 – November 2026. Last updated 2026-11-17. This document is regenerated from the dashboard data after every monthly update; quote figures from the latest version only.
 
 ## Headline figures (all months)
 
-- Beneficiaries (learners + educators): 13,973 against the MCF EdTech Fellowship target of 8,000 (175%); target reached in January 2026. Made up of TABASAM 12,237 and AI for Schools 1,736.
-- Learners reached: 11,487 across 20 months (March 2025 – October 2026).
-- Learners demonstrating improved learning outcomes: 60% of learners assessed (3,455 of 5,806 learners reached in months with outcomes, January 2026 – October 2026).
-- Learners identified for support (marked “Needs Support”): 2,278 (40% of 5,733 learners with an outcome recorded).
-- Educators reached: 750 (female 375, male 375).
-- Learning institutions: 132 (monthly figures added up).
-- Learners with disability: 208.
-- Girls 6,025, boys 5,389 (from the learner lists).
-- Urban 4,373, rural 6,698 (semi-urban counted as rural).
+- Beneficiaries (learners + educators): 14,297 against the MCF EdTech Fellowship target of 8,000 (179%); target reached in January 2026. Made up of TABASAM 12,561 and AI for Schools 1,736.
+- Learners reached: 11,788 across 21 months (March 2025 – November 2026).
+- Learners demonstrating improved learning outcomes: 60% of learners assessed (3,662 of 6,107 learners reached in months with outcomes, January 2026 – November 2026).
+- Learners identified for support (marked “Needs Support”): 2,372 (39% of 6,034 learners with an outcome recorded).
+- Educators reached: 773 (female 393, male 380).
+- Learning institutions: 138 (monthly figures added up).
+- Learners with disability: 214.
+- Girls 6,185, boys 5,530 (from the learner lists).
+- Urban 4,674, rural 6,698 (semi-urban counted as rural).
 
 ## AI for Schools (counted toward the target, not TABASAM)
 
@@ -29,7 +29,7 @@ TUSOME's AI for Schools programme in secondary schools. Partners: ChatGPT (OpenA
 | Period | Learners | Educators | Improved | Identified for support | With disability |
 |---|---|---|---|---|---|
 | March–December 2025 | 5,681 | 568 | not assessed | — | 64 |
-| January–October 2026 | 5,806 | 182 | 60% | 2,278 | 144 |
+| January–November 2026 | 6,107 | 205 | 60% | 2,372 | 150 |
 
 ## Month by month
 
@@ -55,19 +55,22 @@ TUSOME's AI for Schools programme in secondary schools. Partners: ChatGPT (OpenA
 | August 2026 | 166 | 54 | 112 | 15 | 8 | 72% | 46 | 6 |
 | September 2026 | 165 | 102 | 63 | 15 | 8 | 75% | 41 | 6 |
 | October 2026 | 200 | 108 | 92 | 15 | 8 | 71% | 58 | 8 |
+| November 2026 | 301 | 160 | 141 | 23 | 6 | 69% | 94 | 6 |
 
 ## By region (learners, all months)
 
 | Region | Learners |
 |---|---|
-| Tanga | 6,256 |
+| Tanga | 6,328 |
 | Dar es Salaam | 2,655 |
-| Mwanza | 1,079 |
+| Mwanza | 1,151 |
 | Arusha | 497 |
+| Zanzibar | 354 |
 | Morogoro | 300 |
-| Zanzibar | 282 |
+| Pwani | 73 |
+| Singida | 10 |
+| Ruvuma | 3 |
 | Dodoma | 1 |
-| Pwani | 1 |
 
 Schools per region supplied by TUSOME: Tanga 31; Mwanza 25; Zanzibar 268.
 
@@ -75,9 +78,9 @@ Schools per region supplied by TUSOME: Tanga 31; Mwanza 25; Zanzibar 268.
 
 | Level | Learners |
 |---|---|
-| Pre-primary | 1,134 |
-| Primary | 8,552 |
-| Secondary | 686 |
+| Pre-primary | 1,209 |
+| Primary | 8,732 |
+| Secondary | 732 |
 | Tertiary | 271 |
 | Professional | 428 |
 
