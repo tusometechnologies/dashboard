@@ -97,7 +97,7 @@ Exploring (talks, plans or named only; do not describe as signed): One Million T
 ## Recent milestones
 
 - 2026-11 · Research: TUSOME carried out the endline evaluation of the AI for Schools programme to assess outcomes and guide future implementation.
-- 2026-11 · Product: Teachers and the technical team tested the TABASAM offline app screen by screen, gathering feedback on usability and navigation.
+- 2026-11 · Product: Three teachers and the technical team tested the TABASAM offline app screen by screen, gathering feedback on usability and navigation.
 - 2026-10 · Organisation: TUSOME completed its company formation, becoming TUSOME Technologies Limited.
 - 2026-10 · Event: TUSOME took part in a product conference in Nigeria.
 - 2026-09 · Implementation: TABASAM was used to support a pilot of Grade 2 examinations, testing administration, data capture, usability and reporting.

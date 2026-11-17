@@ -31,7 +31,8 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
   Teacher evaluation with CMU (confirmed by TUSOME): baseline July 2025, mid-point September 2025, endline
   December 2025. Events confirmed by TUSOME: Aga Khan University conference, Nairobi (Aug 2025); Zanzibar
   Innovation Day (Oct 2025); Women in Science Day, Dodoma, and hosting Queen's University for a month
-  (Mar 2026); product conference in Nigeria (Oct 2026).
+  (Mar 2026); product conference in Nigeria (Oct 2026); November 2026 narrative supplied by TUSOME as text
+  (AI for Schools endline evaluation; three teachers tested the TABASAM offline app).
 - `data/partners.csv`: name, type, since (YYYY-MM), status (`agreement` = signed agreement stated in a report;
   `programme` = fellowship funder or organiser; `collaboration` = concrete joint work described;
   `exploring` = talks, plans, MoUs in preparation or partners only named in a report), description.
