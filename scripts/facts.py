@@ -78,7 +78,7 @@ def build():
     UL([
         f"Beneficiaries (learners + educators): {fmt(benef)} against the MCF EdTech Fellowship target of "
         f"{fmt(target)} ({pct(benef, target)}); target reached in {reached_in or '—'}.",
-        f"Learners reached: {fmt(t['learners'])} across {len(M)} monthly reports.",
+        f"Learners reached: {fmt(t['learners'])} across {len(M)} months ({first} – {last}).",
         f"Learners demonstrating improved learning outcomes: {pct(imp, assessed_learners)} of learners assessed "
         f"({fmt(imp)} of {fmt(assessed_learners)} learners reached in months with outcomes, "
         f"{assessed[0]['label']} – {assessed[-1]['label']}).",
@@ -94,7 +94,7 @@ def build():
 
     H(2, "By fellowship period")
     body = []
-    for label, ms in (("April–December 2025", [m for m in M if m["period"] < "2026-01"]),
+    for label, ms in ((M[0]["label"].split()[0] + "–December 2025", [m for m in M if m["period"] < "2026-01"]),
                       ("January–" + last, [m for m in M if m["period"] >= "2026-01"])):
         a = [m for m in ms if n(m["improved"]) is not None]
         body.append([label, fmt(total(ms, "learners")), fmt(total(ms, "educators")),
@@ -149,6 +149,9 @@ def build():
         "Entered by hand on TUSOME's instruction: July 2026 institutions (8); December 2025 one learner without "
         "gender counted as female; May 2026 ten educators without gender split equally.",
         "Learners with no region are counted in Dar es Salaam; semi-urban is counted as rural.",
+        "March 2025 (entered by hand, TUSOME's instruction): 532 beneficiaries reached before the first monthly "
+        "report, recorded as 343 learners and 189 educators, 53% female (182 girls, 161 boys; 100 female, 89 male "
+        "educators). No region, level, disability, institution or outcome breakdown.",
         "Public figures elsewhere may differ: screen.tusome.ac.tz shows 8,673 learners, 670 teachers and 75 partner "
         "schools (period not stated). Use this document's figures for MCF/Sahara reporting and say which period "
         "they cover.",

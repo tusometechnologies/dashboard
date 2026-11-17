@@ -50,7 +50,7 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
   The Voices section is hidden when the file has no rows.
 - `data/meta.json`: `{"updated": "YYYY-MM-DD", "target": {"beneficiaries": 8000, "label": "MCF EdTech Fellowship target"}}`.
   `updated` is shown in the footer. `target` drives the progress bar: beneficiaries (learners plus educators)
-  added up from April 2025 to the selected month. `add_month.py` keeps `target` when it updates the date.
+  added up from March 2025 to the selected month. `add_month.py` keeps `target` when it updates the date.
 - `scripts/add_month.py`: reads a monthly Sahara report (.xlsx) and updates the three CSVs and meta.json.
 - `scripts/check_data.py`: checks the data files; run before every publish.
 - `scripts/facts.py`: builds `ask-tusome/TABASAM_facts.md` and `.html`, the internal figures document for the
@@ -101,7 +101,7 @@ do, set `source` to `entered by hand` and say so in the commit message.
 
 ## Data decisions (keep these on re-import)
 
-- All 19 months (April 2025 to October 2026) are counted from the learner lists, not the summary sheets.
+- All 19 reported months (April 2025 to October 2026) are counted from the learner lists, not the summary sheets.
   The summary sheets often differ (for example June 2026: 174 submitted, 168 in the list; several months
   mark every learner improved). The user agreed to use the lists.
 - April–December 2025: every learner is "Too early to measure", so improved, improved_girls, improved_boys
@@ -112,6 +112,10 @@ do, set `source` to `entered by hand` and say so in the commit message.
 - Where a summary sheet reports more learners than the list (June 2026 and January, March, April and
   May 2026), learners reached uses the summary figure; `add_month.py` does this automatically. Gender,
   level and region breakdowns come from the list, so they add up to less than learners reached.
+- March 2025 (entered by hand, TUSOME's instruction): 532 beneficiaries reached before the first monthly report,
+  recorded as 343 learners and 189 educators, 53% female applied to both (girls 182, boys 161; educators female
+  100, male 89). No report file, so no region, level, disability, institution, location or outcome figures.
+  Never re-import over it; keep `source` = `entered by hand`.
 - December 2025: one learner has no gender recorded; the user asked to count them as female (girls 863,
   entered by hand). Re-importing December resets this to 862: re-enter 863.
 - Learners (and schools) with no region recorded are counted in Dar es Salaam (TUSOME's instruction);

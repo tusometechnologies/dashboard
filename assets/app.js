@@ -108,12 +108,15 @@
     document.getElementById('month').value = r.period;
     const tk = document.querySelector('.take');
     if (isAll()) {
-      tk.replaceChildren('Across ', bold(`${r.months} monthly reports`), ` (${document.getElementById('range').textContent}), TABASAM reached `,
+      tk.replaceChildren('Across ', bold(`${r.months} months`), ` (${document.getElementById('range').textContent}), TABASAM reached `,
         bold(fmt(r.learners)), ' learners in ', bold(fmt(r.institutions)), ' learning institutions, with ', bold(fmt(r.educators)),
         ' educators. ', bold(`${r.improved_pct}%`), ' of learners assessed demonstrated improved learning outcomes.');
     } else {
-      tk.replaceChildren('In ', bold(r.label), ', TABASAM reached ', bold(fmt(r.learners)), ' learners in ', bold(fmt(r.institutions)),
-        ` learning ${r.institutions === 1 ? 'institution' : 'institutions'}`,
+      // Months without an institutions figure (March 2025) name educators instead.
+      const where = r.institutions == null
+        ? [' learners and ', bold(fmt(r.educators)), ' educators']
+        : [' learners in ', bold(fmt(r.institutions)), ` learning ${r.institutions === 1 ? 'institution' : 'institutions'}`];
+      tk.replaceChildren('In ', bold(r.label), ', TABASAM reached ', bold(fmt(r.learners)), ...where,
         ...(r.improved_pct == null ? ['.'] : [', and ', bold(`${r.improved_pct}%`), ' of them demonstrated improved learning outcomes.']));
     }
     const first = S.monthly[0], last = S.monthly[S.monthly.length - 1];
@@ -398,6 +401,12 @@
         hover(rect, `${r.label} · ${L}`, `${fmt(seg.reached)} learners`);
         acc += seg.reached;
       });
+      if (!acc && r.learners) { // no level breakdown for this month: one plain bar
+        const rect = svg.append('rect').attr('x', x(r.period) + off).attr('width', bw).attr('y', y(r.learners))
+          .attr('height', Math.max(0, y(0) - y(r.learners))).attr('fill', css('--mutedbar')).attr('fill-opacity', on ? 1 : 0.38)
+          .style('cursor', 'pointer').on('click', () => pick(r.period));
+        hover(rect, r.label, `${fmt(r.learners)} learners`);
+      }
       const cx = x(r.period) + x.bandwidth() / 2, picked = r.period === S.period, i = S.monthly.indexOf(r);
       if (roomy || picked) {
         svg.append('text').attr('x', cx).attr('y', y(r.learners) - 6).attr('text-anchor', 'middle')
@@ -553,7 +562,7 @@
     const node = document.querySelector('#chart-regions'); node.replaceChildren();
     const r = current();
     const rows = regionRows().filter((d) => d.learners > 0 || d.schools > 0).sort((a, b) => d3.descending(a.learners, b.learners));
-    if (!rows.length) return empty(node, `Region figures for ${r ? r.label : 'this month'} have not been imported yet.`);
+    if (!rows.length) return empty(node, `No region breakdown for ${r ? r.label : 'this month'}.`);
     // Schools are shown for a single month only; across months they would not add up to the institutions figure.
     const noSchools = isAll() || rows.every((d) => !d.schools);
     const W = Math.max(300, node.clientWidth), rowH = 32, H = rows.length * rowH + 6;

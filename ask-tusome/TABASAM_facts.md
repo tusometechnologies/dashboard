@@ -1,30 +1,31 @@
 # TABASAM figures — MCF EdTech Fellowship (live)
 
-Source: the TABASAM Fellowship Dashboard (https://mcf.tusome.ac.tz), built from TUSOME's monthly reports to Sahara Consult. Data: April 2025 – October 2026. Last updated 2026-10-29. This document is regenerated from the dashboard data after every monthly update; quote figures from the latest version only.
+Source: the TABASAM Fellowship Dashboard (https://mcf.tusome.ac.tz), built from TUSOME's monthly reports to Sahara Consult. Data: March 2025 – October 2026. Last updated 2026-10-29. This document is regenerated from the dashboard data after every monthly update; quote figures from the latest version only.
 
 ## Headline figures (all months)
 
-- Beneficiaries (learners + educators): 11,705 against the MCF EdTech Fellowship target of 8,000 (146%); target reached in February 2026.
-- Learners reached: 11,144 across 19 monthly reports.
+- Beneficiaries (learners + educators): 12,237 against the MCF EdTech Fellowship target of 8,000 (153%); target reached in January 2026.
+- Learners reached: 11,487 across 20 months (March 2025 – October 2026).
 - Learners demonstrating improved learning outcomes: 60% of learners assessed (3,455 of 5,806 learners reached in months with outcomes, January 2026 – October 2026).
 - Learners identified for support (marked “Needs Support”): 2,278 (40% of 5,733 learners with an outcome recorded).
-- Educators reached: 561 (female 275, male 286).
+- Educators reached: 750 (female 375, male 375).
 - Learning institutions: 132 (monthly figures added up).
 - Learners with disability: 208.
-- Girls 5,843, boys 5,228 (from the learner lists).
+- Girls 6,025, boys 5,389 (from the learner lists).
 - Urban 4,373, rural 6,698 (semi-urban counted as rural).
 
 ## By fellowship period
 
 | Period | Learners | Educators | Improved | Identified for support | With disability |
 |---|---|---|---|---|---|
-| April–December 2025 | 5,338 | 379 | not assessed | — | 64 |
+| March–December 2025 | 5,681 | 568 | not assessed | — | 64 |
 | January–October 2026 | 5,806 | 182 | 60% | 2,278 | 144 |
 
 ## Month by month
 
 | Month | Learners | Girls | Boys | Educators | Institutions | Improved | For support | Disability |
 |---|---|---|---|---|---|---|---|---|
+| March 2025 | 343 | 182 | 161 | 189 | — | — | — | — |
 | April 2025 | 375 | 177 | 198 | 128 | 6 | — | — | 0 |
 | May 2025 | 19 | 9 | 10 | 16 | 4 | — | — | 0 |
 | June 2025 | 15 | 8 | 7 | 14 | 4 | — | — | 0 |
@@ -103,4 +104,5 @@ Exploring (talks, plans or named only; do not describe as signed): One Million T
 - November 2025 counts all 2,116 list records, including 150 dated October 2025.
 - Entered by hand on TUSOME's instruction: July 2026 institutions (8); December 2025 one learner without gender counted as female; May 2026 ten educators without gender split equally.
 - Learners with no region are counted in Dar es Salaam; semi-urban is counted as rural.
+- March 2025 (entered by hand, TUSOME's instruction): 532 beneficiaries reached before the first monthly report, recorded as 343 learners and 189 educators, 53% female (182 girls, 161 boys; 100 female, 89 male educators). No region, level, disability, institution or outcome breakdown.
 - Public figures elsewhere may differ: screen.tusome.ac.tz shows 8,673 learners, 670 teachers and 75 partner schools (period not stated). Use this document's figures for MCF/Sahara reporting and say which period they cover.
