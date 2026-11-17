@@ -157,6 +157,11 @@ def build():
     H(2, f"Milestones ({len(MS)}, newest first)")
     UL([f"{m['period']} · {m['category']}: {m['text']}" for m in sorted(MS, key=lambda m: m["period"], reverse=True)])
 
+    SB = rows("sandbox.csv") if (DATA / "sandbox.csv").exists() else []
+    if SB:
+        H(2, "TUSOME Sandbox (other products in development)")
+        UL([f"{p['name']} ({p['area']}, {p['status']}): {p['description']}" for p in SB])
+
     H(2, "How the figures are counted (read before quoting)")
     UL([
         "Learners, gender, level and region come from each report's learner list, not the summary sheet. Where a "

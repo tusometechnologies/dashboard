@@ -42,11 +42,13 @@
     d3.csv('data/partners.csv').catch(() => []),
     d3.json('assets/tza-regions.json').catch(() => null),
     d3.csv('data/voices.csv').catch(() => []),
+    d3.csv('data/sandbox.csv').catch(() => []),
     d3.csv('data/programmes.csv').catch(() => [])
-  ]).then(([monthly, levels, regions, meta, milestones, partners, geo, voices, programmes]) => {
+  ]).then(([monthly, levels, regions, meta, milestones, partners, geo, voices, sandbox, programmes]) => {
     S.prog = programmes.map((r) => num(r, ['learners', 'educators']));
     S.milestones = milestones; S.partners = partners; S.geo = geo;
     renderVoices(voices);
+    renderSandbox(sandbox);
     S.monthly = monthly
       .map((r) => num(r, ['learners', 'girls', 'boys', 'pwd', 'improved', 'improved_girls', 'improved_boys', 'completed', 'institutions', 'educators',
         'needs_support', 'educators_female', 'educators_male', 'learners_urban', 'learners_semi_urban', 'learners_rural']))
@@ -375,6 +377,19 @@
       const bar = svg.append('rect').attr('x', 0).attr('y', y0 + 22).attr('width', w).attr('height', 14).attr('rx', 3).attr('fill', r.color);
       hover(bar, r.name, `${fmt(n)}${share}`);
     });
+  }
+
+  // TUSOME Sandbox: other products in development (data/sandbox.csv), shown as cards with their stage.
+  function renderSandbox(rows) {
+    const sec = document.getElementById('sandbox');
+    sec.hidden = !rows.length;
+    document.getElementById('sandbox-list').replaceChildren(...rows.map((p) => {
+      const d = document.createElement('div'); d.className = 'partner';
+      const t = document.createElement('span'); t.className = 'tag'; t.textContent = p.status;
+      const meta = document.createElement('span'); meta.className = 'meta'; meta.textContent = p.area;
+      const desc = document.createElement('p'); desc.textContent = p.description;
+      d.append(t, bold(p.name), meta, desc); return d;
+    }));
   }
 
   function renderVoices(rows) {

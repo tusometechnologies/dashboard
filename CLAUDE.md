@@ -59,6 +59,13 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
   tiles, charts, map and target include it. Outcome shares and charts stay TABASAM-only (`tab_learners`, rows
   marked `prog`). A line under Reach (`#reach-note`, built from the CSV) explains this. monthly.csv stays
   TABASAM-only.
+- `data/sandbox.csv`: name, area, status, description. Other TUSOME products in development (Amali Lab, iDroid,
+  Soma Vyema, Skulidata, Study Abroad Pathways), shown in the "TUSOME Sandbox" section, not in TABASAM figures or
+  milestones (TUSOME's instruction). Plans such as the 2027 Zanzibar STEAM Challenge and HATUA camps are not listed.
+- Milestones added on 17 Nov 2026 from Drive and public sources (Sahara blog, Daily News, draft Sahara grant request,
+  weekly project tracker); existing milestones were left unchanged (TUSOME's instruction). IIT Madras Zanzibar MoU
+  signed 4 Oct 2025 and Books Are Power MoU due 20 Nov 2026 (confirmed by TUSOME). Accessibility work and the AI and
+  Inclusion Meetups have no month in the sources; they are dated November 2026 ("by November") from the draft.
 - `data/meta.json`: `{"updated": "YYYY-MM-DD", "target": {"beneficiaries": 8000, "label": "MCF EdTech Fellowship target"}}`.
   `updated` is shown in the footer. `target` drives the progress bar: beneficiaries (learners plus educators)
   added up from March 2025 to the selected month. `add_month.py` keeps `target` when it updates the date.
