@@ -96,6 +96,8 @@ Exploring (talks, plans or named only; do not describe as signed): One Million T
 
 ## Recent milestones
 
+- 2026-11 · Research: TUSOME carried out the endline evaluation of the AI for Schools programme to assess outcomes and guide future implementation.
+- 2026-11 · Product: Teachers and the technical team tested the TABASAM offline app screen by screen, gathering feedback on usability and navigation.
 - 2026-10 · Organisation: TUSOME completed its company formation, becoming TUSOME Technologies Limited.
 - 2026-10 · Event: TUSOME took part in a product conference in Nigeria.
 - 2026-09 · Implementation: TABASAM was used to support a pilot of Grade 2 examinations, testing administration, data capture, usability and reporting.
@@ -106,8 +108,6 @@ Exploring (talks, plans or named only; do not describe as signed): One Million T
 - 2026-06 · Event: The team took part in community education events, raising awareness of TABASAM among educators, parents and stakeholders.
 - 2026-06 · Partnership: Two meetings with Rwanda Learnershood advanced a memorandum of understanding on integrating TABASAM into its learning ecosystem.
 - 2026-06 · Product: TUSOME and HWPL Korea began testing how peace education competencies could fit within TABASAM's social and emotional learning assessments.
-- 2026-05 · Implementation: New schools were onboarded to TABASAM and began using the platform with implementation support.
-- 2026-05 · Research: Analysis of the Korogwe study data continued with Carnegie Mellon University.
 
 ## How the figures are counted (read before quoting)
 
