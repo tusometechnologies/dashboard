@@ -5,16 +5,16 @@ Source: the TABASAM Fellowship Dashboard (https://mcf.tusome.ac.tz), built from 
 ## Headline figures (all months)
 
 - Beneficiaries (learners + educators): 14,297 against the MCF EdTech Fellowship target of 8,000 (179%); target reached in January 2026. Made up of TABASAM 12,561 and AI for Schools 1,736.
-- Learners reached: 11,788 across 21 months (March 2025 – November 2026).
+- Learners reached: 13,492 across 21 months (March 2025 – November 2026): TABASAM 11,788, AI for Schools 1,704.
 - Learners demonstrating improved learning outcomes: 60% of learners assessed (3,662 of 6,107 learners reached in months with outcomes, January 2026 – November 2026).
 - Learners identified for support (marked “Needs Support”): 2,372 (39% of 6,034 learners with an outcome recorded).
-- Educators reached: 773 (female 393, male 380).
-- Learning institutions: 138 (monthly figures added up).
+- Educators reached: 805: TABASAM 773 (female 393, male 380), AI for Schools 32.
+- Learning institutions: 140 (monthly figures added up; includes 2 AI for Schools schools).
 - Learners with disability: 214.
 - Girls 6,185, boys 5,530 (from the learner lists).
 - Urban 4,674, rural 6,698 (semi-urban counted as rural).
 
-## AI for Schools (counted toward the target, not TABASAM)
+## AI for Schools (included in TUSOME totals; no TABASAM outcomes)
 
 TUSOME's AI for Schools programme in secondary schools. Partners: ChatGPT (OpenAI), LSE, IITM, ASE. Region: Zanzibar. Started 2026-07. Not yet reported to Sahara/MCF as of this update. These learners are different from those in the TABASAM monthly reports (confirmed by TUSOME).
 
@@ -31,7 +31,7 @@ TUSOME's AI for Schools programme in secondary schools. Partners: ChatGPT (OpenA
 | March–December 2025 | 5,681 | 568 | not assessed | — | 64 |
 | January–November 2026 | 6,107 | 205 | 60% | 2,372 | 150 |
 
-## Month by month
+## Month by month (TABASAM monthly reports; AI for Schools is counted in its start month on the dashboard)
 
 | Month | Learners | Girls | Boys | Educators | Institutions | Improved | For support | Disability |
 |---|---|---|---|---|---|---|---|---|
@@ -57,15 +57,15 @@ TUSOME's AI for Schools programme in secondary schools. Partners: ChatGPT (OpenA
 | October 2026 | 200 | 108 | 92 | 15 | 8 | 71% | 58 | 8 |
 | November 2026 | 301 | 160 | 141 | 23 | 6 | 69% | 94 | 6 |
 
-## By region (learners, all months)
+## By region (learners, all months, TABASAM and AI for Schools)
 
 | Region | Learners |
 |---|---|
 | Tanga | 6,328 |
 | Dar es Salaam | 2,655 |
+| Zanzibar | 2,058 |
 | Mwanza | 1,151 |
 | Arusha | 497 |
-| Zanzibar | 354 |
 | Morogoro | 300 |
 | Pwani | 73 |
 | Singida | 10 |
@@ -74,13 +74,13 @@ TUSOME's AI for Schools programme in secondary schools. Partners: ChatGPT (OpenA
 
 Schools per region supplied by TUSOME: Tanga 31; Mwanza 25; Zanzibar 268.
 
-## By education level (learners, all months)
+## By education level (learners, all months, TABASAM and AI for Schools)
 
 | Level | Learners |
 |---|---|
 | Pre-primary | 1,209 |
 | Primary | 8,732 |
-| Secondary | 732 |
+| Secondary | 2,436 |
 | Tertiary | 271 |
 | Professional | 428 |
 

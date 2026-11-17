@@ -60,6 +60,9 @@ def build():
     prog_at = lambda period: sum((n(p["learners"]) or 0) + (n(p["educators"]) or 0) for p in PR if p["start"] <= period)
     tab_benef = t["learners"] + t["educators"]
     prog_benef = prog_at("9999-12")
+    pl = sum(n(p["learners"]) or 0 for p in PR)
+    pe = sum(n(p["educators"]) or 0 for p in PR)
+    ps = sum(1 for p in PR if n(p["learners"]))
     benef = tab_benef + prog_benef
     run, reached_in = 0, None
     for m in M:
@@ -83,14 +86,17 @@ def build():
         f"Beneficiaries (learners + educators): {fmt(benef)} against the MCF EdTech Fellowship target of "
         f"{fmt(target)} ({pct(benef, target)}); target reached in {reached_in or '—'}. "
         + (f"Made up of TABASAM {fmt(tab_benef)} and AI for Schools {fmt(prog_benef)}." if prog_benef else ""),
-        f"Learners reached: {fmt(t['learners'])} across {len(M)} months ({first} – {last}).",
+        f"Learners reached: {fmt(t['learners'] + pl)} across {len(M)} months ({first} – {last}): TABASAM "
+        f"{fmt(t['learners'])}" + (f", AI for Schools {fmt(pl)}." if pl else "."),
         f"Learners demonstrating improved learning outcomes: {pct(imp, assessed_learners)} of learners assessed "
         f"({fmt(imp)} of {fmt(assessed_learners)} learners reached in months with outcomes, "
         f"{assessed[0]['label']} – {assessed[-1]['label']}).",
         f"Learners identified for support (marked “Needs Support”): {fmt(t['needs_support'])} "
         f"({pct(t['needs_support'], with_outcome)} of {fmt(with_outcome)} learners with an outcome recorded).",
-        f"Educators reached: {fmt(t['educators'])} (female {fmt(t['educators_female'])}, male {fmt(t['educators_male'])}).",
-        f"Learning institutions: {fmt(t['institutions'])} (monthly figures added up).",
+        f"Educators reached: {fmt(t['educators'] + pe)}: TABASAM {fmt(t['educators'])} (female {fmt(t['educators_female'])}, "
+        f"male {fmt(t['educators_male'])})" + (f", AI for Schools {fmt(pe)}." if pe else "."),
+        f"Learning institutions: {fmt(t['institutions'] + ps)} (monthly figures added up"
+        + (f"; includes {ps} AI for Schools schools)." if ps else ")."),
         f"Learners with disability: {fmt(t['pwd'])}.",
         f"Girls {fmt(t['girls'])}, boys {fmt(t['boys'])} (from the learner lists).",
         f"Urban {fmt(t['learners_urban'])}, rural {fmt((t['learners_semi_urban'] or 0) + (t['learners_rural'] or 0))} "
@@ -98,7 +104,7 @@ def build():
     ])
 
     if PR:
-        H(2, "AI for Schools (counted toward the target, not TABASAM)")
+        H(2, "AI for Schools (included in TUSOME totals; no TABASAM outcomes)")
         Pp(f"{PR[0]['description']} Partners: {PR[0]['partners'].replace(';', ',')}. Region: {PR[0]['region']}. "
            f"Started {min(p['start'] for p in PR)}. Not yet reported to Sahara/MCF as of this update. These learners are "
            "different from those in the TABASAM monthly reports (confirmed by TUSOME).")
@@ -115,25 +121,28 @@ def build():
                      fmt(total(ms, "needs_support")), fmt(total(ms, "pwd"))])
     TB(["Period", "Learners", "Educators", "Improved", "Identified for support", "With disability"], body)
 
-    H(2, "Month by month")
+    H(2, "Month by month (TABASAM monthly reports; AI for Schools is counted in its start month on the dashboard)")
     body = [[m["label"], fmt(n(m["learners"])), fmt(n(m["girls"])), fmt(n(m["boys"])), fmt(n(m["educators"])),
              fmt(n(m["institutions"])), pct(n(m["improved"]), n(m["learners"])) if n(m["improved"]) is not None else "—",
              fmt(n(m["needs_support"])), fmt(n(m["pwd"]))] for m in M]
     TB(["Month", "Learners", "Girls", "Boys", "Educators", "Institutions", "Improved", "For support", "Disability"], body)
 
-    H(2, "By region (learners, all months)")
+    H(2, "By region (learners, all months, TABASAM and AI for Schools)")
     reg = defaultdict(int)
     for r in R:
         reg[r["region"]] += n(r["learners"]) or 0
+    for p in PR:
+        reg[p["region"]] += n(p["learners"]) or 0
     TB(["Region", "Learners"], [[k, fmt(v)] for k, v in sorted(reg.items(), key=lambda kv: -kv[1]) if v])
     sch = [p for p in P if (p.get("schools") or "").strip()]
     if sch:
         Pp("Schools per region supplied by TUSOME: " + "; ".join(f"{p['name'].replace('Schools in ', '')} {p['schools']}" for p in sch) + ".")
 
-    H(2, "By education level (learners, all months)")
+    H(2, "By education level (learners, all months, TABASAM and AI for Schools)")
     lv = defaultdict(int)
     for r in L:
         lv[r["level"]] += n(r["reached"]) or 0
+    lv["Secondary"] += pl  # AI for Schools runs in secondary schools
     order = ["Pre-primary", "Primary", "Secondary", "Tertiary", "Professional"]
     TB(["Level", "Learners"], [[k, fmt(lv[k])] for k in order if lv.get(k)])
 

@@ -52,9 +52,12 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
   Other TUSOME programmes counted toward the MCF target but kept out of TABASAM figures (TUSOME's instruction).
   Now: AI for Schools (Zanzibar, from July 2026): Tumekuja Secondary 1,074 learners, Magufuli Secondary 630,
   32 teachers; partners ChatGPT (OpenAI), LSE, IITM, ASE. Different learners from the TABASAM reports
-  (confirmed by TUSOME). Not reported to Sahara/MCF when published (17 Nov 2026). The page adds it to the
-  target bar (striped segment) and the beneficiaries chart (stacked band) from its start month, and shows it in
-  its own "AI for Schools" section; the headline, tiles and other charts stay TABASAM-only.
+  (confirmed by TUSOME). Not reported to Sahara/MCF when published (17 Nov 2026). TUSOME asked to join it with
+  TABASAM as TUSOME reach: `mergeProgrammes()` in app.js adds it to its start month (July 2026) on load
+  (learners, educators, 1 institution per school, region, level Secondary), so headline ("TUSOME reached"),
+  tiles, charts, map and target include it. Outcome shares and charts stay TABASAM-only (`tab_learners`, rows
+  marked `prog`). A line under Reach (`#reach-note`, built from the CSV) explains this. monthly.csv stays
+  TABASAM-only.
 - `data/meta.json`: `{"updated": "YYYY-MM-DD", "target": {"beneficiaries": 8000, "label": "MCF EdTech Fellowship target"}}`.
   `updated` is shown in the footer. `target` drives the progress bar: beneficiaries (learners plus educators)
   added up from March 2025 to the selected month. `add_month.py` keeps `target` when it updates the date.
