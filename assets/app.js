@@ -41,8 +41,11 @@
     d3.csv('data/milestones.csv').catch(() => []),
     d3.csv('data/partners.csv').catch(() => []),
     d3.json('assets/tza-regions.json').catch(() => null),
-    d3.csv('data/voices.csv').catch(() => [])
-  ]).then(([monthly, levels, regions, meta, milestones, partners, geo, voices]) => {
+    d3.csv('data/voices.csv').catch(() => []),
+    d3.csv('data/programmes.csv').catch(() => [])
+  ]).then(([monthly, levels, regions, meta, milestones, partners, geo, voices, programmes]) => {
+    S.prog = programmes.map((r) => num(r, ['learners', 'educators']));
+    renderProgrammes();
     S.milestones = milestones; S.partners = partners; S.geo = geo;
     renderVoices(voices);
     S.monthly = monthly
@@ -171,23 +174,31 @@
 
   // Progress to the fellowship target: beneficiaries (learners plus educators) added up from the first
   // report to the selected month.
+  // Other TUSOME programmes (data/programmes.csv) count toward the target from their start month.
+  const progUpto = (period) => d3.sum((S.prog || []).filter((p) => !period || p.start <= period), (p) => (p.learners || 0) + (p.educators || 0));
   function renderGoal() {
     const box = document.getElementById('goal'), T = S.target && S.target.beneficiaries;
     box.hidden = !T; if (!T) return;
     const reached = (r) => (r.learners || 0) + (r.educators || 0);
     const upto = isAll() ? S.monthly : S.monthly.filter((r) => r.period <= S.period);
-    const n = d3.sum(upto, reached), last = upto[upto.length - 1], scale = Math.max(n, T);
-    let run = 0; const hit = S.monthly.find((r) => (run += reached(r)) >= T);
+    const last = upto[upto.length - 1];
+    const tab = d3.sum(upto, reached), prog = progUpto(isAll() ? null : last.period), n = tab + prog, scale = Math.max(n, T);
+    let run = 0; const hit = S.monthly.find((r) => (run += reached(r)) + progUpto(r.period) >= T);
     box.querySelector('.goal-label').textContent = `${S.target.label}${isAll() ? '' : `, by end of ${last.label}`}`;
     box.querySelector('.goal-n').textContent = fmt(n);
     box.querySelector('.goal-t').textContent = fmt(T);
     box.querySelector('.goal-pct').textContent = `${Math.round((n / T) * 100)}%`;
-    box.querySelector('.goal-fill').style.width = `${(n / scale) * 100}%`;
+    const [f1, f2] = box.querySelectorAll('.goal-fill');
+    f1.style.width = `${(tab / scale) * 100}%`;
+    f2.style.left = `${(tab / scale) * 100}%`; f2.style.width = `${(prog / scale) * 100}%`; f2.hidden = !prog;
+    const key = box.querySelector('.goal-key'); key.replaceChildren();
+    const sw = (c, label) => { const s = document.createElement('span'); const i = document.createElement('i'); i.style.background = css(c); s.append(i, label); return s; };
+    if (prog) key.append(sw('--c1', `TABASAM ${fmt(tab)}`), sw('--c2', `AI for Schools ${fmt(prog)}`));
     const mark = box.querySelector('.goal-mark');
     mark.style.left = `${(T / scale) * 100}%`;
     mark.classList.toggle('end', T / scale > 0.9);
     mark.firstElementChild.textContent = `Target ${fmt(T)}`;
-    box.querySelector('.goal-sub').textContent = hit && hit.period <= last.period
+    box.querySelector('.goal-hit').textContent = hit && hit.period <= last.period
       ? `Target reached in ${hit.label}.` : `${fmt(T - n)} beneficiaries to go.`;
   }
 
@@ -340,6 +351,26 @@
     });
   }
 
+  function renderProgrammes() {
+    const P = S.prog || [], sec = document.getElementById('programmes');
+    sec.hidden = !P.length; if (!P.length) return;
+    const first = P[0], start = d3.min(P, (p) => p.start);
+    const label = new Date(`${start}-01`).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+    document.getElementById('prog-intro').textContent = `${first.description} ${first.region}, ${label} to date. Counted toward the MCF EdTech Fellowship target alongside TABASAM.`;
+    const L = d3.sum(P, (p) => p.learners || 0), E = d3.sum(P, (p) => p.educators || 0), schools = P.filter((p) => p.learners).length;
+    document.getElementById('prog-figs').replaceChildren(...[['Learners reached', L], ['Teachers reached', E], ['Schools', schools], ['Beneficiaries', L + E]].map(([h, v]) => {
+      const d = document.createElement('div'); d.className = 'tile'; const t = document.createElement('h3'); t.textContent = h;
+      const val = document.createElement('div'); val.className = 'val'; val.textContent = fmt(v); d.append(t, val); return d;
+    }));
+    document.getElementById('prog-cards').replaceChildren(...P.filter((p) => p.learners).map((p) => {
+      const d = document.createElement('div'); d.className = 'prog-card';
+      const big = document.createElement('span'); big.className = 'big'; big.style.color = 'var(--ink)'; big.textContent = fmt(p.learners);
+      const s = document.createElement('span'); s.textContent = `learners · ${p.region}`;
+      d.append(bold(p.school), big, s); return d;
+    }));
+    document.getElementById('prog-partners').textContent = `Partners: ${first.partners.replace(/;\s*/g, ' · ')}`;
+  }
+
   function renderVoices(rows) {
     const sec = document.getElementById('voices');
     sec.hidden = !rows.length;
@@ -481,7 +512,7 @@
     const node = document.querySelector('#chart-growth'); node.replaceChildren();
     if (!S.monthly.length) return empty(node, 'No data yet.');
     let run = 0;
-    const rows = S.monthly.map((r) => ({ period: r.period, label: r.label, n: (run += (r.learners || 0) + (r.educators || 0)) }));
+    const rows = S.monthly.map((r) => { run += (r.learners || 0) + (r.educators || 0); const p = progUpto(r.period); return { period: r.period, label: r.label, tab: run, p, n: run + p }; });
     const T = S.target && S.target.beneficiaries;
     const W = Math.max(300, node.clientWidth), H = 240, m = { l: 48, r: 16, t: 24, b: 38 };
     const x = d3.scalePoint(rows.map((r) => r.period), [m.l + 8, W - m.r - 8]);
@@ -496,6 +527,15 @@
     lg.append('stop').attr('offset', '0%').attr('stop-color', css('--purple'));
     lg.append('stop').attr('offset', '100%').attr('stop-color', css('--blue'));
     svg.append('path').attr('d', d3.area().x((r) => x(r.period)).y0(y(0)).y1((r) => y(r.n))(rows)).attr('fill', `url(#${grad})`).attr('fill-opacity', 0.15);
+    const withProg = rows.filter((r) => r.p > 0);
+    if (withProg.length) {
+      const band = rows.filter((r, i) => r.p > 0 || (rows[i + 1] && rows[i + 1].p > 0));
+      svg.append('path').attr('d', d3.area().x((r) => x(r.period)).y0((r) => y(r.tab)).y1((r) => y(r.n))(band))
+        .attr('fill', css('--c2')).attr('fill-opacity', 0.35);
+      svg.append('path').attr('d', d3.line().x((r) => x(r.period)).y((r) => y(r.tab))(rows)).attr('fill', 'none').attr('stroke', `url(#${grad})`).attr('stroke-width', 1.5).attr('stroke-dasharray', '3 3');
+      const lx = x(withProg[0].period) - 6, ly = y((withProg[0].tab + withProg[0].n) / 2);
+      svg.append('text').attr('x', lx).attr('y', ly).attr('text-anchor', 'end').attr('class', 'strong').text('AI for Schools');
+    }
     svg.append('path').attr('d', d3.line().x((r) => x(r.period)).y((r) => y(r.n))(rows)).attr('fill', 'none').attr('stroke', `url(#${grad})`).attr('stroke-width', 2.5);
     if (T) {
       svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(T)).attr('y2', y(T)).attr('stroke', css('--ink')).attr('stroke-dasharray', '4 4');
@@ -506,7 +546,7 @@
       const picked = r.period === S.period, cx = x(r.period), cy = y(r.n);
       const c = svg.append('circle').attr('cx', cx).attr('cy', cy).attr('r', picked ? 5.5 : 3.5).attr('fill', picked ? css('--ink') : css('--c1'))
         .style('cursor', 'pointer').on('click', () => pick(r.period));
-      hover(c, r.label, `${fmt(r.n)} beneficiaries so far`);
+      hover(c, r.label, `${fmt(r.n)} beneficiaries so far${r.p ? ` (TABASAM ${fmt(r.tab)}, AI for Schools ${fmt(r.p)})` : ''}`);
       if (picked || i === rows.length - 1) svg.append('text').attr('x', cx).attr('y', cy - 10).attr('text-anchor', i === rows.length - 1 ? 'end' : 'middle').attr('class', 'strong').text(fmt(r.n));
       const month = r.period.slice(5), first = i === 0 || month === '01';
       if (roomy || picked || i % 3 === 0 || first) {

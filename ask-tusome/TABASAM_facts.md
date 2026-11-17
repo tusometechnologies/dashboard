@@ -4,7 +4,7 @@ Source: the TABASAM Fellowship Dashboard (https://mcf.tusome.ac.tz), built from 
 
 ## Headline figures (all months)
 
-- Beneficiaries (learners + educators): 12,237 against the MCF EdTech Fellowship target of 8,000 (153%); target reached in January 2026.
+- Beneficiaries (learners + educators): 13,973 against the MCF EdTech Fellowship target of 8,000 (175%); target reached in January 2026. Made up of TABASAM 12,237 and AI for Schools 1,736.
 - Learners reached: 11,487 across 20 months (March 2025 – October 2026).
 - Learners demonstrating improved learning outcomes: 60% of learners assessed (3,455 of 5,806 learners reached in months with outcomes, January 2026 – October 2026).
 - Learners identified for support (marked “Needs Support”): 2,278 (40% of 5,733 learners with an outcome recorded).
@@ -13,6 +13,16 @@ Source: the TABASAM Fellowship Dashboard (https://mcf.tusome.ac.tz), built from 
 - Learners with disability: 208.
 - Girls 6,025, boys 5,389 (from the learner lists).
 - Urban 4,373, rural 6,698 (semi-urban counted as rural).
+
+## AI for Schools (counted toward the target, not TABASAM)
+
+TUSOME's AI for Schools programme in secondary schools. Partners: ChatGPT (OpenAI), LSE, IITM, ASE. Region: Zanzibar. Started 2026-07. Not yet reported to Sahara/MCF as of this update. These learners are different from those in the TABASAM monthly reports (confirmed by TUSOME).
+
+| School / group | Learners | Teachers |
+|---|---|---|
+| Tumekuja Secondary School | 1,074 | — |
+| Magufuli Secondary School | 630 | — |
+| Teachers (both schools) | — | 32 |
 
 ## By fellowship period
 

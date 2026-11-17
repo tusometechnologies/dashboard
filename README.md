@@ -34,6 +34,7 @@ step. Every push to `main` publishes the site through Vercel.
 - Urban and rural learners (semi-urban counted as rural); quotes from two teachers and a school head (Voices).
 - Learners identified for support (marked "Needs Support") by month, and improved share by region.
 - Inclusion: learners with disability by month, and the female/male split of learners and educators.
+- AI for Schools (Zanzibar, from July 2026): learners and teachers counted toward the target in their own section.
 - Milestones from the narrative reports, filterable by type (product, implementation, training, research,
   events, partnerships), and the partners TUSOME works with on TABASAM.
 - Downloadable CSVs (counts only, no learner records) and definitions.

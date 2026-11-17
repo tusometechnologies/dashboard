@@ -56,11 +56,15 @@ def build():
                                     "learners_rural")}
     imp, assessed_learners = total(assessed, "improved"), total(assessed, "learners")
     with_outcome = imp + (total(assessed, "needs_support") or 0)
-    benef = t["learners"] + t["educators"]
+    PR = rows("programmes.csv") if (DATA / "programmes.csv").exists() else []
+    prog_at = lambda period: sum((n(p["learners"]) or 0) + (n(p["educators"]) or 0) for p in PR if p["start"] <= period)
+    tab_benef = t["learners"] + t["educators"]
+    prog_benef = prog_at("9999-12")
+    benef = tab_benef + prog_benef
     run, reached_in = 0, None
     for m in M:
         run += (n(m["learners"]) or 0) + (n(m["educators"]) or 0)
-        if target and reached_in is None and run >= target:
+        if target and reached_in is None and run + prog_at(m["period"]) >= target:
             reached_in = m["label"]
 
     doc = []  # list of (kind, payload)
@@ -77,7 +81,8 @@ def build():
     H(2, "Headline figures (all months)")
     UL([
         f"Beneficiaries (learners + educators): {fmt(benef)} against the MCF EdTech Fellowship target of "
-        f"{fmt(target)} ({pct(benef, target)}); target reached in {reached_in or '—'}.",
+        f"{fmt(target)} ({pct(benef, target)}); target reached in {reached_in or '—'}. "
+        + (f"Made up of TABASAM {fmt(tab_benef)} and AI for Schools {fmt(prog_benef)}." if prog_benef else ""),
         f"Learners reached: {fmt(t['learners'])} across {len(M)} months ({first} – {last}).",
         f"Learners demonstrating improved learning outcomes: {pct(imp, assessed_learners)} of learners assessed "
         f"({fmt(imp)} of {fmt(assessed_learners)} learners reached in months with outcomes, "
@@ -91,6 +96,14 @@ def build():
         f"Urban {fmt(t['learners_urban'])}, rural {fmt((t['learners_semi_urban'] or 0) + (t['learners_rural'] or 0))} "
         "(semi-urban counted as rural).",
     ])
+
+    if PR:
+        H(2, "AI for Schools (counted toward the target, not TABASAM)")
+        Pp(f"{PR[0]['description']} Partners: {PR[0]['partners'].replace(';', ',')}. Region: {PR[0]['region']}. "
+           f"Started {min(p['start'] for p in PR)}. Not yet reported to Sahara/MCF as of this update. These learners are "
+           "different from those in the TABASAM monthly reports (confirmed by TUSOME).")
+        TB(["School / group", "Learners", "Teachers"],
+           [[p["school"], fmt(n(p["learners"])), fmt(n(p["educators"]))] for p in PR])
 
     H(2, "By fellowship period")
     body = []
