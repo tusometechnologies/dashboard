@@ -1,6 +1,6 @@
 # TABASAM figures — MCF EdTech Fellowship (live)
 
-Source: the TABASAM Fellowship Dashboard (https://mcf.tusome.ac.tz), built from TUSOME's monthly reports to Sahara Consult. Data: March 2025 – October 2026. Last updated 2026-10-29. This document is regenerated from the dashboard data after every monthly update; quote figures from the latest version only.
+Source: the TABASAM Fellowship Dashboard (https://mcf.tusome.ac.tz), built from TUSOME's monthly reports to Sahara Consult. Data: March 2025 – October 2026. Last updated 2026-11-17. This document is regenerated from the dashboard data after every monthly update; quote figures from the latest version only.
 
 ## Headline figures (all months)
 
@@ -100,7 +100,7 @@ Exploring (talks, plans or named only; do not describe as signed): One Million T
 
 - Learners, gender, level and region come from each report's learner list, not the summary sheet. Where a summary sheet reports more learners than its list (June 2026; January, March, April and May 2026), learners reached uses the summary figure, so breakdowns add up to slightly less than the total.
 - Each month's learners are treated as different learners (TUSOME's instruction); all-months totals add the months up. Institutions and educators are also added up, so the same school or teacher can be counted once per month they appear.
-- Learning outcomes were not measured April–December 2025 (all learners “Too early to measure”); improved share uses only months with outcomes.
+- Learning outcomes were not measured March–December 2025 (all learners “Too early to measure”); improved share uses only months with outcomes.
 - November 2025 counts all 2,116 list records, including 150 dated October 2025.
 - Entered by hand on TUSOME's instruction: July 2026 institutions (8); December 2025 one learner without gender counted as female; May 2026 ten educators without gender split equally.
 - Learners with no region are counted in Dar es Salaam; semi-urban is counted as rural.

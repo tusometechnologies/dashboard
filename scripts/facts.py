@@ -143,7 +143,7 @@ def build():
         "Each month's learners are treated as different learners (TUSOME's instruction); all-months totals add the "
         "months up. Institutions and educators are also added up, so the same school or teacher can be counted once "
         "per month they appear.",
-        "Learning outcomes were not measured April–December 2025 (all learners “Too early to measure”); improved "
+        "Learning outcomes were not measured March–December 2025 (all learners “Too early to measure”); improved "
         "share uses only months with outcomes.",
         "November 2025 counts all 2,116 list records, including 150 dated October 2025.",
         "Entered by hand on TUSOME's instruction: July 2026 institutions (8); December 2025 one learner without "
