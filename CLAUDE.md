@@ -60,6 +60,7 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
   added up from March 2025 to the selected month. `add_month.py` keeps `target` when it updates the date.
 - `scripts/add_month.py`: reads a monthly Sahara report (.xlsx) and updates the three CSVs and meta.json.
 - `scripts/check_data.py`: checks the data files; run before every publish.
+- `scripts/doc_sync.py`: turns the facts document into one Google Docs batch that rebuilds the Ask TUSOME Doc's body.
 - `scripts/facts.py`: builds `ask-tusome/TABASAM_facts.md` and `.html`, the internal figures document for the
   Claude Project "Ask TUSOME" (staff-facing, so it states counting rules and data issues). Not published on the site.
 - `reports/`: where the monthly .xlsx reports go. Git-ignored. Never commit them.
@@ -82,8 +83,10 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
    Vercel publishes automatically within a minute or two.
 7. Refresh the organisation's "Ask TUSOME" knowledge: run `python3 scripts/facts.py`, commit
    `ask-tusome/TABASAM_facts.md`, and replace the content of the Google Doc "Ask TUSOME — TABASAM Figures (live)"
-   (TUSOME shared drive, id `10NPExXu5uz2jMX0GltgtsR1u2iKETL54DWIOZLgDpSw`) with `ask-tusome/TABASAM_facts.html`,
-   keeping the same Doc so its link and the Claude Project "Ask TUSOME" connection stay the same.
+   (TUSOME shared drive, id `10NPExXu5uz2jMX0GltgtsR1u2iKETL54DWIOZLgDpSw`) in place, so its link and the Claude
+   Project "Ask TUSOME" connection stay the same: read the Doc (Google Docs `read_doc`), take the body end index
+   and revisionId, run `python3 scripts/doc_sync.py --end END --revision REV`, send its `requests` and
+   `writeControl` in one `update_doc` call, then read the Doc back and compare it with the .md file.
 
 If `add_month.py` cannot find the learner list or the month (for example the template changed), open the
 workbook with openpyxl, look at the sheet names and header rows, and adjust `HEADER_KEYS` or
