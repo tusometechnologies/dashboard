@@ -59,6 +59,11 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
   tiles, charts, map and target include it. Outcome shares and charts stay TABASAM-only (`tab_learners`, rows
   marked `prog`). A line under Reach (`#reach-note`, built from the CSV) explains this. monthly.csv stays
   TABASAM-only.
+- AI for Schools dates (confirmed by TUSOME): teacher training September 2025, baseline June 2026, teacher refresher
+  July 2026. Pilot planning from March 2025 (emails); budgets, people's names and finance follow-ups stay out of the site.
+- `ask-tusome/activities.csv`: date, area, activity, status. Internal record of other activities and events from
+  emails (invitations, webinars, supervision, finance follow-ups). Shown only in the Ask TUSOME document, never on the
+  site. Items that are confirmed TUSOME activities also go to `data/milestones.csv` without names or budgets.
 - `data/sandbox.csv`: name, area, status, description. Other TUSOME products in development (Amali Lab, iDroid,
   Soma Vyema, Skulidata, Study Abroad Pathways), shown in the "TUSOME Sandbox" section, not in TABASAM figures or
   milestones (TUSOME's instruction). Plans such as the 2027 Zanzibar STEAM Challenge and HATUA camps are not listed.

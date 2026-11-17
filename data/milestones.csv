@@ -1,11 +1,16 @@
 period,category,title,text
 2025-03,Organisation,Selected for the MCF EdTech Fellowship,"TUSOME was selected for the second cohort of the Mastercard Foundation EdTech Fellowship run by Sahara Consult, and signed its fellowship contract."
+2025-03,Research,AI for Schools pilot proposal,TUSOME scoped an AI-powered schools pilot for Zanzibar with the Tanzania AI Community and submitted a proposal designed as a randomised controlled trial.
+2025-03,Training,Open Education for a Better World mentoring,TUSOME's Head of Research and Innovation began mentoring in UNESCO's Open Education for a Better World 2025 programme.
+2025-03,Partnership,Teacher development with ElimuMatokeo,TUSOME worked with ElimuMatokeo on continuing professional development programmes for in-service teachers.
 2025-04,Training,Mentoring on vocational skills,"Queen's University mentored TUSOME on integrating vocational skills development into its platform, in line with Tanzania's competence-based curriculum."
 2025-04,Product,Free autism screening with TABASAM,TUSOME offered free autism screening through the TABASAM diagnostic tool.
+2025-04,Implementation,AI for Schools school visits,TUSOME visited the Zanzibar pilot schools to check that their computer facilities met the programme's needs.
 2025-05,Event,TABASAM showcased at eLearning Africa,"TABASAM was showcased at the eLearning Africa conference, where the team joined workshops on inclusive early learning and foundational skills."
 2025-05,Product,Online assessment with personalised learning plans,"Informed by user testing, TABASAM moved from a lengthy offline assessment to an online tool that generates personalised learning plans for teachers."
 2025-05,Product,New assessment and offline features,"Literacy and numeracy assessments, social-emotional learning tracking, behaviour monitoring and offline functionality for low-connectivity settings were added to TABASAM."
 2025-05,Research,Carnegie Mellon University testbed,"TUSOME took part in a testbed with Carnegie Mellon University researchers, testing its product with learners, parents and teachers alongside the second fellowship cohort."
+2025-05,Research,AI for Schools research documents,"TUSOME prepared the programme's child protection policy, data management plan, training curricula and baseline questionnaires in English and Kiswahili for research approval in Zanzibar."
 2025-06,Training,Technical boot camp and AI workshops,"The team joined the fellowship's technical boot camp and AI and data science workshops, applying the skills to refine TABASAM's features."
 2025-06,Event,Education and wellbeing forums,The team took part in the African Cities Forum and the Tanzania Mental Health Summit.
 2025-07,Training,Korogwe teachers trained on TABASAM,A workshop in Korogwe trained teachers to use the TABASAM diagnostic tool in their schools.
@@ -20,6 +25,7 @@ period,category,title,text
 2025-09,Event,TABASAM exhibited at Sahara Sparks,TABASAM was demonstrated at the Sahara Sparks 2025 exhibition in Dar es Salaam.
 2025-09,Research,Mid-point evaluation,"A mid-point evaluation of TABASAM use was carried out with Korogwe teachers, together with Carnegie Mellon University."
 2025-09,Implementation,Awareness workshops in secondary schools,Workshops on learning-disability awareness and the TABASAM tool were held in secondary schools in Zanzibar and on the mainland.
+2025-09,Training,AI for Schools teacher training,Teachers in the AI for Schools programme in Zanzibar were trained to use AI tools in their teaching.
 2025-10,Product,Analytical dashboard design begins,"Design began on a TABASAM analytical dashboard to track learner progress in literacy, numeracy and behaviour."
 2025-10,Implementation,Teachers using TABASAM reports,Trained teachers in urban and peri-urban schools used TABASAM diagnostic reports to guide classroom support.
 2025-10,Event,Zanzibar Innovation Day,TUSOME attended Zanzibar Innovation Day.
@@ -50,9 +56,11 @@ period,category,title,text
 2026-06,Event,Community education events,"The team took part in community education events, raising awareness of TABASAM among educators, parents and stakeholders."
 2026-06,Partnership,MoU discussions with Rwanda Learnershood,Two meetings with Rwanda Learnershood advanced a memorandum of understanding on integrating TABASAM into its learning ecosystem.
 2026-06,Product,Peace education trial with HWPL Korea,TUSOME and HWPL Korea began testing how peace education competencies could fit within TABASAM's social and emotional learning assessments.
+2026-06,Research,AI for Schools baseline,TUSOME carried out the baseline assessment for the AI for Schools programme in Zanzibar.
 2026-07,Product,Linking assessment to teacher guidance,Development focused on connecting learner assessment results with practical recommendations and professional development guidance for teachers.
 2026-07,Implementation,Continued school and community engagement,"TABASAM implementation continued through follow-up with participating schools, institutions and communities."
 2026-07,Implementation,"Gender, safeguarding and accessibility field visits","Between July and August, TUSOME made field visits focused on gender, safeguarding and accessibility."
+2026-07,Training,AI for Schools teacher refresher,Teachers in the AI for Schools programme in Zanzibar took part in refresher training.
 2026-08,Event,Guest speakers at international conference,TUSOME was invited to speak at an international education conference on using TABASAM for assessment and inclusive education.
 2026-09,Implementation,Grade 2 examination pilot,"TABASAM was used to support a pilot of Grade 2 examinations, testing administration, data capture, usability and reporting."
 2026-10,Organisation,TUSOME Technologies Limited formed,"TUSOME completed its company formation, becoming TUSOME Technologies Limited."
@@ -64,3 +72,5 @@ period,category,title,text
 2026-11,Product,Accessibility and Kiswahili access,"By November, TABASAM product work had targeted mobile accessibility for learners with disabilities and access in Kiswahili."
 2026-11,Event,AI Meetup and Inclusion Meetup,"By November, TUSOME had taken part in an AI Meetup and an Inclusion Meetup, contributing on AI and inclusive education."
 2026-11,Partnership,Agreement with Books Are Power in preparation,"TUSOME and Books Are Power finalised a memorandum of understanding, due to be signed on 20 November 2026."
+2026-11,Event,Women Parliamentarians Congress,TUSOME was represented at the Women Parliamentarians Congress.
+2026-11,Training,ITEC course in India,"A TUSOME team member took part in an ITEC course in India on building and scaling startups, for women leaders of African startups."

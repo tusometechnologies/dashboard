@@ -162,6 +162,13 @@ def build():
         H(2, "TUSOME Sandbox (other products in development)")
         UL([f"{p['name']} ({p['area']}, {p['status']}): {p['description']}" for p in SB])
 
+    act = ROOT / "ask-tusome" / "activities.csv"  # internal record from email and Drive; not published on the site
+    if act.exists():
+        with act.open(newline="", encoding="utf-8") as f:
+            AC = list(csv.DictReader(f))
+        H(2, "Other activities and events (internal record, not on the public dashboard)")
+        UL([f"{a['date']} · {a['area']}: {a['activity']} ({a['status']})" for a in AC])
+
     H(2, "How the figures are counted (read before quoting)")
     UL([
         "Learners, gender, level and region come from each report's learner list, not the summary sheet. Where a "

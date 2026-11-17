@@ -16,7 +16,7 @@ Live at **https://mcf.tusome.ac.tz**
 | Sources | Monthly Sahara reports (learner, educator and school lists), narrative reports (.docx), and figures supplied by TUSOME: March 2025 opening figures, AI for Schools, schools per region, quotes |
 | AI for Schools | TUSOME's programme in Zanzibar (July 2026 to date): 1,704 learners and 32 teachers in two secondary schools, counted in July 2026 with TABASAM as TUSOME reach. Not yet reported to Sahara |
 | Learning outcomes | TABASAM assessments only, recorded from January 2026 (earlier reports mark learners "Too early to measure"): 60% of learners assessed improved; 2,372 identified for support |
-| Narrative content | One highlight and next-month priority per month, 55 milestones and 32 partners, written from the narrative reports |
+| Narrative content | One highlight and next-month priority per month, 75 milestones and 36 partners, written from the narrative reports |
 | Ask TUSOME | The Google Doc "Ask TUSOME — TABASAM Figures (live)" in the TUSOME shared drive holds the same figures, with the counting rules, for the Ask TUSOME Claude Project. It is refreshed after every monthly update |
 | Branding | Text wordmark in TUSOME colours; no official logo file yet |
 | Repository | `tusometechnologies/dashboard`, branch `main` |
@@ -94,7 +94,7 @@ Then refresh the Ask TUSOME Doc as described in step 7 of `CLAUDE.md` (it needs 
 | `scripts/add_month.py` | Reads a monthly report and updates `data/` |
 | `scripts/check_data.py` | Checks the data before publishing |
 | `scripts/facts.py`, `scripts/doc_sync.py` | Build the Ask TUSOME document and the batch that refreshes the Google Doc |
-| `ask-tusome/` | The generated Ask TUSOME document (Markdown and HTML) |
+| `ask-tusome/` | The generated Ask TUSOME document (Markdown and HTML) and `activities.csv`, an internal record of other activities and events |
 | `reports/` | Monthly report workbooks; git-ignored, never uploaded |
 | `CLAUDE.md` | Instructions and data decisions for Claude Code |
 
