@@ -94,7 +94,7 @@ Working with (joint work described in reports): Queen's University; Aga Khan Uni
 
 Exploring (talks, plans or named only; do not describe as signed): One Million Teachers; Aga Khan Primary School; Dyslexia Tanzania; Universities in Poland, India, Malaysia and the UAE; David Game College; Korogwe Teachers Training College; Winners Pre and Primary School; Malinda Primary School; The Cube; TECEC (Teacher Education and Community Engagement Center); Chemchemi; Abacus Prime; Computer Access for Schools (CAS); Montessori School; Patandi Teachers College; Rwanda Learnershood; HWPL Korea; Books Are Power.
 
-## Milestones (75, newest first)
+## Milestones (76, newest first)
 
 - 2026-11 · Research: TUSOME carried out the endline evaluation of the AI for Schools programme to assess outcomes and guide future implementation.
 - 2026-11 · Product: Three teachers and the technical team tested the TABASAM offline app screen by screen, gathering feedback on usability and navigation.
@@ -144,6 +144,7 @@ Exploring (talks, plans or named only; do not describe as signed): One Million T
 - 2025-10 · Implementation: Trained teachers in urban and peri-urban schools used TABASAM diagnostic reports to guide classroom support.
 - 2025-10 · Event: TUSOME attended Zanzibar Innovation Day.
 - 2025-10 · Partnership: TUSOME signed a memorandum of understanding with IIT Madras Zanzibar on education, technology and research.
+- 2025-10 · Partnership: TUSOME signed an agreement with Eduten, a Finnish education technology company, on exchange, research and data collaboration.
 - 2025-09 · Partnership: TUSOME signed a memorandum of understanding with Cardinal Rugambwa Hospital to support children with disabilities in its rehabilitation programme.
 - 2025-09 · Product: TABASAM's navigation and reports were improved, giving teachers and parents clearer summaries and individual learning recommendations.
 - 2025-09 · Event: TABASAM was demonstrated at the Sahara Sparks 2025 exhibition in Dar es Salaam.

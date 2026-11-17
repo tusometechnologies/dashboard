@@ -35,7 +35,7 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
   (AI for Schools endline evaluation; three teachers tested the TABASAM offline app).
 - `data/partners.csv`: name, type, since (YYYY-MM), status (`agreement` = signed agreement stated in a report;
   `programme` = fellowship funder or organiser; `collaboration` = concrete joint work described;
-  Eduten (Finland) agreement signed October 2025 (confirmed by TUSOME). `exploring` = talks, plans, MoUs in preparation or partners only named in a report), description.
+  `exploring` = talks, plans, MoUs in preparation or partners only named in a report), description.
   TUSOME asked for every partner named in the reports to be shown. `collaboration` and `exploring` partners
   appear together under "Working with", with no label (TUSOME's instruction); the status stays in the CSV.
   An organisation moves to `agreement` only when a report states an agreement was signed. Optional column
@@ -69,7 +69,7 @@ Hosted on Vercel from this GitHub repository; every push to `main` publishes the
   milestones (TUSOME's instruction). Plans such as the 2027 Zanzibar STEAM Challenge and HATUA camps are not listed.
 - Milestones added on 17 Nov 2026 from Drive and public sources (Sahara blog, Daily News, draft Sahara grant request,
   weekly project tracker); existing milestones were left unchanged (TUSOME's instruction). IIT Madras Zanzibar MoU
-  signed 4 Oct 2025 and Books Are Power MoU due 20 Nov 2026 (confirmed by TUSOME). Accessibility work and the AI and
+  signed 4 Oct 2025, Eduten (Finland) agreement signed Oct 2025 (exchange, research and data collaboration), and Books Are Power MoU due 20 Nov 2026 (confirmed by TUSOME). Accessibility work and the AI and
   Inclusion Meetups have no month in the sources; they are dated November 2026 ("by November") from the draft.
 - `data/meta.json`: `{"updated": "YYYY-MM-DD", "target": {"beneficiaries": 8000, "label": "MCF EdTech Fellowship target"}}`.
   `updated` is shown in the footer. `target` drives the progress bar: beneficiaries (learners plus educators)
